@@ -9,10 +9,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users", schema = "public")
@@ -29,6 +26,12 @@ public class Users extends BaseEntity implements UserDetails {
     Date create;
     @Column(name = "email")
     String email;
+
+    @OneToMany()
+    List<IntershipsInfo> infoList = new ArrayList<>();
+
+
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
