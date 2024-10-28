@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.Date;
 
 @Entity
-@Table(name="Reports")
+@Table(name="reports")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 public class Reports extends BaseEntity {
@@ -19,7 +19,7 @@ public class Reports extends BaseEntity {
     String description;
 
     @ManyToOne
-    @JoinColumn(name="report_id")
+    @JoinColumn(name="user_info_id")
     UsersInfo userInfo;
 
     @OneToOne(mappedBy = "report")

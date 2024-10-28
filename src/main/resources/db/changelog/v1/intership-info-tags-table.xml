@@ -1,0 +1,73 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="intership-info-tags-table" author="ElovskikhMM">
+
+        <createTable tableName="interships_info">
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fields" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="creator_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <createTable tableName="tags">
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+        </createTable>
+
+        <createTable tableName="tag_interships_info">
+
+            <column name="tag_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="interships_info_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="interships_info"
+                baseColumnNames="creator_id"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                constraintName="fk_interships_info_users"/>
+
+        <addForeignKeyConstraint
+                baseTableName="tag_interships_info"
+                baseColumnNames="tag_id"
+                referencedTableName="tags"
+                referencedColumnNames="id"
+                constraintName="tag__fk"/>
+
+        <addForeignKeyConstraint
+                baseTableName="tag_interships_info"
+                baseColumnNames="interships_info_id"
+                referencedTableName="interships_info"
+                referencedColumnNames="id"
+                constraintName="interships_info__fk"/>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.Date;
 
 @Entity
-@Table(name="InternshipsResult")
+@Table(name="internships_result")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 public class InternshipsResult extends BaseEntity {

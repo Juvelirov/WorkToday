@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.Date;
 
 @Entity
-@Table(name="Portfolios")
+@Table(name="portfolios")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 public class Portfolios extends BaseEntity {
@@ -23,7 +23,7 @@ public class Portfolios extends BaseEntity {
     @Column(name="upload_date")
     Date uploadDate;
 
-
     @OneToOne
+    @JoinColumn(name = "user_info_id")
     UsersInfo userInfo;
 }

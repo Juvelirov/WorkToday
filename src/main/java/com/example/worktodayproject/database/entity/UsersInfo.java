@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="UsersInfo")
+@Table(name="users_info")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 public class UsersInfo extends BaseEntity {
@@ -30,12 +30,10 @@ public class UsersInfo extends BaseEntity {
     @Column(name="town")
     String town;
 
-    @OneToOne(mappedBy = "userInfo")
-    @JoinColumn(name = "portfolio_id")
+    @OneToOne
     Portfolios portfolio;
 
     @OneToOne(mappedBy = "userInfo")
-    @JoinColumn(name = "resume_id")
     Resumes resume;
 
     @OneToMany(mappedBy = "userInfo")

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="IntershipsInfo", schema="public")
+@Table(name="interships_info", schema="public")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 public class IntershipsInfo extends BaseEntity {
@@ -21,7 +21,7 @@ public class IntershipsInfo extends BaseEntity {
     @Column(name="fields")
     String fields;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "creator_id")
     Users user;
 

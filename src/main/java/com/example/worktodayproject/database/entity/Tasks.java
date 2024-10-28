@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 import java.util.Date;
 
 @Entity
-@Table(name="Tasks")
+@Table(name="tasks")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 public class Tasks extends BaseEntity {
@@ -20,8 +20,8 @@ public class Tasks extends BaseEntity {
     @Column(name="deadline")
     Date deadline;
 
-    @ManyToOne()
-    @JoinColumn(name="task_id")
+    @ManyToOne
+    @JoinColumn(name="users_info_id")
     UsersInfo usersInfo;
 
 }
