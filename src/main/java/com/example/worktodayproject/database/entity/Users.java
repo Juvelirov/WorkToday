@@ -15,12 +15,11 @@ import java.util.*;
 @Table(name = "users", schema = "public")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
-@Setter
 public class Users extends BaseEntity implements UserDetails {
 
     @Column(name = "login")
     String login;
-    @Column(name = "passwsord")
+    @Column(name = "password")
     String password;
     @Column(name = "created_at")
     Date create;
@@ -29,8 +28,6 @@ public class Users extends BaseEntity implements UserDetails {
 
     @OneToMany()
     List<IntershipsInfo> infoList = new ArrayList<>();
-
-
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

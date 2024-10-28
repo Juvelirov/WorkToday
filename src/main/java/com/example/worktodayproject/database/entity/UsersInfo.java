@@ -2,12 +2,17 @@ package com.example.worktodayproject.database.entity;
 
 import com.example.worktodayproject.database.entity.base.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="UsersInfo")
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter
 public class UsersInfo extends BaseEntity {
 
     // Информация по персональным данным User
