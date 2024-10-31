@@ -6,7 +6,3 @@ export type nn = number[];
 
 // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
 export type v = void;
-
-//
-
-export type DivRef = React.RefObject<HTMLDivElement>;
