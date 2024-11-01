@@ -1,8 +1,8 @@
+import { StudentPrivatePage } from "./pages/StudentPrivatePage";
 import "./App.css";
-import { SignUpForm } from "./components/SignUpForm";
 
 function App() {
-  return <SignUpForm />;
+  return <StudentPrivatePage />;
 }
 
 export default App;
