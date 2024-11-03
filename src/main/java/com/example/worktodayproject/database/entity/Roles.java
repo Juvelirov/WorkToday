@@ -23,6 +23,6 @@ public class Roles extends BaseEntity implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return this.role;
+        return role;
     }
 }

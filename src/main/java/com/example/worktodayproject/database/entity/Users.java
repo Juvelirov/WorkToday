@@ -4,16 +4,19 @@ import com.example.worktodayproject.database.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
 @Table(name = "users", schema = "public")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
+@Setter
 public class Users extends BaseEntity implements UserDetails {
 
     @Column(name = "login")
@@ -21,7 +24,7 @@ public class Users extends BaseEntity implements UserDetails {
     @Column(name = "password")
     String password;
     @Column(name = "created_at")
-    Date create;
+    LocalDateTime create;
     @Column(name = "email")
     String email;
 
