@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration{
 
     /**
      * Бин шифрации пароля
@@ -34,14 +34,19 @@ public class SecurityConfiguration {
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/v1/public/**").permitAll()
                         .requestMatchers("/api/v1/private/admin").hasRole("ADMIN")
                         .requestMatchers("/api/v1/private/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/private/**").hasAnyRole("STUDENT", "HR", "ADMIN")
                         .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults())
-                .build();
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login") // Укажите свой URL для страницы входа, если необходимо
+                )
+                .httpBasic(Customizer.withDefaults());
+        return http.build();
     }
+
+
 }

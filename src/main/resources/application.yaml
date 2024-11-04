@@ -11,3 +11,22 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.xml
+
+  spring:
+    security:
+      oauth2:
+        client:
+          registration:
+            vkontakte:
+              client-id: 52615858
+              client-secret: ${VK_CLIENT_SECRET}
+              authorization-grant-type: authorization_code
+              redirect-uri: "http://localhost"
+              client-name: VKontakte
+              scope: email
+          provider:
+            vkontakte:
+              authorization-uri: https://oauth.vk.com/authorize
+              token-uri: https://oauth.vk.com/access_token
+              user-info-uri: https://api.vk.com/method/users.get?v=5.103&fields=uid,first_name,last_name,screen_name,photo_200
+              user-name-attribute: response

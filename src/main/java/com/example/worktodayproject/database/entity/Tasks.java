@@ -23,5 +23,4 @@ public class Tasks extends BaseEntity {
     @ManyToOne
     @JoinColumn(name="users_info_id")
     UsersInfo usersInfo;
-
 }
