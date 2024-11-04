@@ -1,4 +1,4 @@
-package com.example.worktodayproject.security.web;
+package com.example.worktodayproject.web;
 
 import com.example.worktodayproject.security.dto.UserDto;
 import com.example.worktodayproject.security.service.UserService;

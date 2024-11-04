@@ -3,13 +3,15 @@ package com.example.worktodayproject.database.repository;
 
 import com.example.worktodayproject.database.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Взаимодейтсвие с таблицей Users
  */
+@Repository
 public interface UsersRepository extends JpaRepository<Users, Long> {
 
     /**

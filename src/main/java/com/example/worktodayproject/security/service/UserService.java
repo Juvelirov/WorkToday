@@ -4,12 +4,12 @@ import com.example.worktodayproject.database.entity.Roles;
 import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.repository.RoleRepository;
 import com.example.worktodayproject.database.repository.UsersRepository;
+import com.example.worktodayproject.exception.custom.RoleNotFoundException;
 import com.example.worktodayproject.security.dto.UserDto;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +43,9 @@ public class UserService {
         user.setCreate(LocalDateTime.now());
 
         if (role != null) {
+            if (roleRepository.existsByRole(role.getRole())) {
+                throw new RoleNotFoundException(role.getRole());
+            }
             user.getRoles().add(role);
         }
 
