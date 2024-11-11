@@ -3,7 +3,7 @@ package com.example.worktodayproject.service;
 import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.entity.UsersInfo;
 import com.example.worktodayproject.database.repository.*;
-import com.example.worktodayproject.dto.UsersInfoDto;
+import com.example.worktodayproject.dto.request.UsersInfoDto;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

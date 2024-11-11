@@ -7,6 +7,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Table(name = "tags", schema = "public")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
+@Setter
 public class Tags extends BaseEntity {
     @Column(name = "name")
     String name;

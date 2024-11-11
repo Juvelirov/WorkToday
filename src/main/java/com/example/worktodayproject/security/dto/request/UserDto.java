@@ -1,4 +1,4 @@
-package com.example.worktodayproject.security.dto;
+package com.example.worktodayproject.security.dto.request;
 
 import java.util.Date;
 

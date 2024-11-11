@@ -39,11 +39,9 @@ public class SecurityConfiguration{
                         .requestMatchers("/api/v1/public/**").permitAll()
                         .requestMatchers("/api/v1/private/admin").hasRole("ADMIN")
                         .requestMatchers("/api/v1/private/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/v1/private/**").hasAnyRole("STUDENT", "HR", "ADMIN")
+                        .requestMatchers("/api/v1/private/hr/**").hasAnyRole("HR", "ADMIN")
+                        .requestMatchers("/api/v1/private/student/**").hasAnyRole("STUDENT", "HR", "ADMIN")
                         .anyRequest().authenticated())
-//                .oauth2Login(oauth2 -> oauth2
-//                        .loginPage("/login") // Укажите свой URL для страницы входа, если необходимо
-//                )
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }

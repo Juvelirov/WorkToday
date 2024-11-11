@@ -4,6 +4,7 @@ import com.example.worktodayproject.database.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Table(name="interships_info", schema="public")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
+@Setter
 public class IntershipsInfo extends BaseEntity {
     @Column(name="title")
     String title;
@@ -27,9 +29,9 @@ public class IntershipsInfo extends BaseEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "tag_intership_info",
+            name = "tag_interships_info",
             joinColumns = {
-                    @JoinColumn(name = "intership_id")
+                    @JoinColumn(name = "interships_info_id")
             },
             inverseJoinColumns = {
                     @JoinColumn(name = "tag_id")

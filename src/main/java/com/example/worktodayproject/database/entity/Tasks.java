@@ -4,6 +4,7 @@ import com.example.worktodayproject.database.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Table(name="tasks")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
+@Setter
 public class Tasks extends BaseEntity {
     @Column(name="title")
     String title;

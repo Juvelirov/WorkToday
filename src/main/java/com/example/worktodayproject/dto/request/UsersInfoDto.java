@@ -1,4 +1,4 @@
-package com.example.worktodayproject.dto;
+package com.example.worktodayproject.dto.request;
 
 /**
  * Дто профиля
