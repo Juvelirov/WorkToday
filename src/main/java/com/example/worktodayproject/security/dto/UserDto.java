@@ -10,7 +10,8 @@ import java.util.Date;
  * @param email почта
  * @param role роль
  */
-public record UserDto(String login,
+public record UserDto(String fio,
+                      String login,
                       String password,
                       Date create,
                       String email,

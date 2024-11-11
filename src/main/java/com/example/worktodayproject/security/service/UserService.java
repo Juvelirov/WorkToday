@@ -2,7 +2,9 @@ package com.example.worktodayproject.security.service;
 
 import com.example.worktodayproject.database.entity.Roles;
 import com.example.worktodayproject.database.entity.Users;
+import com.example.worktodayproject.database.entity.UsersInfo;
 import com.example.worktodayproject.database.repository.RoleRepository;
+import com.example.worktodayproject.database.repository.UsersInfoRepository;
 import com.example.worktodayproject.database.repository.UsersRepository;
 import com.example.worktodayproject.exception.custom.RoleNotFoundException;
 import com.example.worktodayproject.security.dto.UserDto;
@@ -28,6 +30,8 @@ public class UserService {
     UsersRepository usersRepository;
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
+    UsersInfoRepository usersInfoRepository;
+
 
     /**
      * Создать пользователя
@@ -37,19 +41,43 @@ public class UserService {
         Users user = new Users();
         Roles role = roleRepository.findByRole(userDto.role());
 
+        user.setFio(userDto.fio());
         user.setLogin(userDto.login());
         user.setPassword(passwordEncoder.encode(userDto.password()));
         user.setEmail(userDto.email());
         user.setCreate(LocalDateTime.now());
 
         if (role != null) {
-            if (roleRepository.existsByRole(role.getRole())) {
-                throw new RoleNotFoundException(role.getRole());
-            }
+//            if (roleRepository.existsByRole(role.getRole())) {
+//                throw new RoleNotFoundException(role.getRole());
+//            }
             user.getRoles().add(role);
         }
 
+        setFioOnBio(userDto.fio(), createBio(user));
+
         usersRepository.save(user);
+    }
+
+    /**
+     * Создать профиль сразу после регистрации
+     */
+    private UsersInfo createBio(Users user) {
+        UsersInfo usersInfo = new UsersInfo();
+        usersInfo.setUsers(user);
+
+        usersInfoRepository.save(usersInfo);
+        return usersInfo;
+    }
+
+    /**
+     * Отправить ФИО в профиль
+     */
+    private void setFioOnBio(String fio, UsersInfo usersInfo) {
+        String[] splitFio = fio.split(" ");
+        usersInfo.setName(splitFio[0]);
+        usersInfo.setSurname(splitFio[1]);
+        usersInfo.setPatronymic(splitFio[2]);
     }
 
     /**

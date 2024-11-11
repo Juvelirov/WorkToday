@@ -19,6 +19,8 @@ import java.util.*;
 @Setter
 public class Users extends BaseEntity implements UserDetails {
 
+    @Column(name = "fio")
+    String fio;
     @Column(name = "login")
     String login;
     @Column(name = "password")
@@ -30,6 +32,9 @@ public class Users extends BaseEntity implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     List<IntershipsInfo> infoList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "users")
+    UsersInfo userInfo;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

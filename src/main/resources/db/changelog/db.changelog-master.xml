@@ -10,5 +10,7 @@
     <include file="v1/user-info-table.xml" relativeToChangelogFile="true"/>
     <include file="v1/update-portfolios-reports-resumes-tasks-tables.xml" relativeToChangelogFile="true"/>
     <include file="v1/add-any-role.xml" relativeToChangelogFile="true"/>
+    <include file="v1/user-user-info.xml" relativeToChangelogFile="true"/>
+    <include file="v1/add-fio-user.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

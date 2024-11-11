@@ -4,6 +4,7 @@ import com.example.worktodayproject.database.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 @Table(name="users_info")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
+@Setter
 public class UsersInfo extends BaseEntity {
 
     // Информация по персональным данным User
@@ -31,6 +33,10 @@ public class UsersInfo extends BaseEntity {
     String town;
 
     @OneToOne
+    @JoinColumn(name = "user_id")
+    Users users;
+
+    @OneToOne(mappedBy = "userInfo")
     Portfolios portfolio;
 
     @OneToOne(mappedBy = "userInfo")
