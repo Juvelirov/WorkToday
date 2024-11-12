@@ -5,10 +5,7 @@ import com.example.worktodayproject.service.IntershipInfoService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,5 +37,15 @@ public class IntershipInfoControllerForAll {
     @GetMapping()
     public List<IntershipInfoResponse> getAllInterships() {
         return intershipInfoService.getAllInterships();
+    }
+
+    /**
+     * Найти стажировки по запросу
+     * @param query
+     * @return список стажировок по запросу
+     */
+    @GetMapping("/search")
+    public List<IntershipInfoResponse> getIntershipByQuery(@RequestParam String query) {
+        return intershipInfoService.searchIntership(query);
     }
 }

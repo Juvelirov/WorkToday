@@ -10,7 +10,7 @@ import com.example.worktodayproject.dto.request.IntershipInfoDto;
 import com.example.worktodayproject.dto.response.IntershipInfoResponse;
 import com.example.worktodayproject.exception.custom.IntershipTitleNotFoundException;
 import com.example.worktodayproject.exception.custom.UnauthorizedException;
-import com.example.worktodayproject.security.dto.response.UserResponse;
+import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -54,24 +54,9 @@ public class IntershipInfoService {
         }
 
         Optional<IntershipsInfo> info = Optional.of(intershipInfoRepository.findById(id).orElseThrow());
-        List<String> tagsList = new ArrayList<>();
-
         IntershipsInfo intershipsInfo = info.get();
 
-        UserResponse userResponse = new UserResponse(intershipsInfo.getUser().getFio(),
-                intershipsInfo.getUser().getLogin(),
-                intershipsInfo.getUser().getEmail());
-
-        for (Tags tags : intershipsInfo.getTags()) {
-            tagsList.add(tags.getName());
-        }
-
-        return new IntershipInfoResponse(intershipsInfo.getId(),
-                intershipsInfo.getTitle(),
-                intershipsInfo.getDescription(),
-                intershipsInfo.getFields(),
-                tagsList,
-                userResponse);
+        return new MapperUtils().mappingIntership(intershipsInfo);
     }
 
     /**
@@ -83,22 +68,9 @@ public class IntershipInfoService {
         List<IntershipInfoResponse> intershipInfoResponses = new ArrayList<>();
 
         for (IntershipsInfo info : intershipsInfos) {
-            List<String> tagsList = new ArrayList<>();
+            IntershipInfoResponse response = new MapperUtils().mappingIntership(info);
 
-            UserResponse userResponse = new UserResponse(info.getUser().getFio(),
-                    info.getUser().getLogin(),
-                    info.getUser().getEmail());
-
-            for (Tags tags : info.getTags()) {
-                tagsList.add(tags.getName());
-            }
-
-            intershipInfoResponses.add(new IntershipInfoResponse(info.getId(),
-                    info.getTitle(),
-                    info.getDescription(),
-                    info.getFields(),
-                    tagsList,
-                    userResponse));
+            intershipInfoResponses.add(response);
         }
 
         return intershipInfoResponses;
@@ -138,6 +110,23 @@ public class IntershipInfoService {
         } else {
             throw new UnauthorizedException("У вас нет прав для удаления этой стажировки.");
         }
+    }
+
+    /**
+     * Найти стажировку по запросу
+     * @param searchQuery запрос
+     */
+    public List<IntershipInfoResponse> searchIntership(String searchQuery) {
+        MapperUtils mapper = new MapperUtils();
+        List<IntershipsInfo> intershipsInfos;
+
+        if (searchQuery == null || searchQuery.isEmpty()) {
+            intershipsInfos = intershipInfoRepository.findAll();
+            return mapper.mappingListIntarship(intershipsInfos);
+        }
+
+        intershipsInfos = intershipInfoRepository.findByTitleContaining(searchQuery);
+        return mapper.mappingListIntarship(intershipsInfos);
     }
 
     /**
