@@ -83,4 +83,30 @@ public class ExceptionAdvice {
         log.error(Arrays.toString(ex.getStackTrace()));
         return new ExceptionResponse(ex.getMessage(), AuthorizedUserEnrollException.CODE);
     }
+
+    /**
+     * Отлов ошибки не нахождения портфолио
+     * @param ex ошибка
+     * @return ответ ошибки
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handlePortfolioNotFoundException(PortfolioNotFoundException ex) {
+        log.info(ex.getMessage());
+        log.error(Arrays.toString(ex.getStackTrace()));
+        return new ExceptionResponse(ex.getMessage(), PortfolioNotFoundException.CODE);
+    }
+
+    /**
+     * Отлов ошибки не нахождения профиля
+     * @param ex ошибка
+     * @return ответ ошибки
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleUserInfoNotFoundException(UserInfoNotFoundException ex) {
+        log.info(ex.getMessage());
+        log.error(Arrays.toString(ex.getStackTrace()));
+        return new ExceptionResponse(ex.getMessage(), UserInfoNotFoundException.CODE);
+    }
 }

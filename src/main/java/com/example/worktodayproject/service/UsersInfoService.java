@@ -1,10 +1,12 @@
 package com.example.worktodayproject.service;
 
+import com.example.worktodayproject.database.entity.Portfolios;
 import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.entity.UsersInfo;
 import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.request.UsersInfoDto;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
+import com.example.worktodayproject.exception.custom.UserInfoNotFoundException;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -67,8 +69,15 @@ public class UsersInfoService {
     public UsersInfoResponse getUserInfo(String username) {
         Users currentUser = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
+        if (usersInfo == null) {
+            throw new UserInfoNotFoundException(currentUser.getUsername());
+        }
+
         if (usersInfo.getRecomendationFlag() == null) {
             usersInfo.setRecomendationFlag(Boolean.FALSE);
+        }
+        if (usersInfo.getPortfolio() == null) {
+            usersInfo.setPortfolio(null);
         }
         return mapperUtils.mappingUserInfo(usersInfo);
     }
@@ -81,6 +90,9 @@ public class UsersInfoService {
     public UsersInfoResponse getOtherUserInfo(String username) {
         Users currentUser = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
+        if (usersInfo == null) {
+            throw new UserInfoNotFoundException(currentUser.getUsername());
+        }
 
         return mapperUtils.mappingUserInfo(usersInfo);
     }
@@ -91,5 +103,17 @@ public class UsersInfoService {
      */
     public List<UsersInfoResponse> getAllUsersInfo() {
         return mapperUtils.mappingUserInfoList(usersInfoRepository.findAll());
+    }
+
+    /**
+     * Установить портфолио за пользователем
+     * @param portfolios портфолио
+     * @param username имя пользователя, которому надо добавить портфолио
+     */
+    public void setPortfolioForUserInfo(Portfolios portfolios, String username) {
+        Users currentUser = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
+
+        usersInfo.setPortfolio(portfolios);
     }
 }

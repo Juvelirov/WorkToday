@@ -11,6 +11,7 @@ import com.example.worktodayproject.security.dto.response.UserResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Преобразование из одного класса в другой
@@ -62,13 +63,17 @@ public class MapperUtils {
      * @return ответ профиля
      */
     public UsersInfoResponse mappingUserInfo(UsersInfo usersInfo) {
+        Optional<PortfolioResponse> portfolioResponse = Optional.ofNullable(usersInfo.getPortfolio())
+                .map(this::mappingPortfolio);
+
         return new UsersInfoResponse(usersInfo.getId(),
                 usersInfo.getName(),
                 usersInfo.getSurname(),
                 usersInfo.getPatronymic(),
                 usersInfo.getRecomendationFlag(),
                 usersInfo.getPhoneNumber(),
-                usersInfo.getTown());
+                usersInfo.getTown(),
+                portfolioResponse);
     }
 
     /**

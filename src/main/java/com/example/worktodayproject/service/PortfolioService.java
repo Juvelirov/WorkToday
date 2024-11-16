@@ -8,6 +8,7 @@ import com.example.worktodayproject.database.repository.UsersInfoRepository;
 import com.example.worktodayproject.database.repository.UsersRepository;
 import com.example.worktodayproject.dto.request.PortfolioDto;
 import com.example.worktodayproject.dto.response.PortfolioResponse;
+import com.example.worktodayproject.exception.custom.PortfolioNotFoundException;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -30,6 +31,7 @@ public class PortfolioService {
 
     MapperUtils mapperUtils = new MapperUtils();
 
+    UsersInfoService usersInfoService;
     PortfoliosRepository portfoliosRepository;
     UsersRepository usersRepository;
     UsersInfoRepository usersInfoRepository;
@@ -49,6 +51,8 @@ public class PortfolioService {
         portfolio.setUploadDate(LocalDateTime.now());
         portfolio.setUserInfo(usersInfoRepository.findByUsers(currentUser));
 
+        usersInfoService.setPortfolioForUserInfo(portfolio, username);
+
         portfoliosRepository.save(portfolio);
     }
 
@@ -62,6 +66,9 @@ public class PortfolioService {
         Users user = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
         Portfolios portfolios = portfoliosRepository.findByIdAndUserInfo(id, usersInfo);
+        if (portfolios == null) {
+            throw new PortfolioNotFoundException(id);
+        }
 
         return mapperUtils.mappingPortfolio(portfolios);
     }
@@ -87,7 +94,7 @@ public class PortfolioService {
     public void deletePortfolio(Long id, String username) {
         Optional<Portfolios> portfolioOptional = portfoliosRepository.findById(id);
         if (portfolioOptional.isEmpty()) {
-            throw new IllegalArgumentException("Портфолио с ID " + id + " не найдено.");
+            throw new PortfolioNotFoundException(id);
         }
 
         Portfolios portfolio = portfolioOptional.get();
