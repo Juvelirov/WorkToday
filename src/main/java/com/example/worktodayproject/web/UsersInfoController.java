@@ -1,6 +1,7 @@
 package com.example.worktodayproject.web;
 
 import com.example.worktodayproject.dto.request.UsersInfoDto;
+import com.example.worktodayproject.dto.response.UsersInfoResponse;
 import com.example.worktodayproject.service.UsersInfoService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,15 @@ public class UsersInfoController {
         usersInfoService.updateUsersInfo(usersInfoDto, principal.getName());
 
         return ResponseEntity.ok("succes");
+    }
+
+    /**
+     * Получить данные профиля пользователя
+     * @param principal текущий пользователь
+     * @return ответ профиля пользователя
+     */
+    @GetMapping()
+    public UsersInfoResponse getUserInfo(Principal principal) {
+        return usersInfoService.getUserInfo(principal.getName());
     }
 }

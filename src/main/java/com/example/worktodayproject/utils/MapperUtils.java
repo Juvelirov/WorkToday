@@ -2,7 +2,9 @@ package com.example.worktodayproject.utils;
 
 import com.example.worktodayproject.database.entity.IntershipsInfo;
 import com.example.worktodayproject.database.entity.Tags;
+import com.example.worktodayproject.database.entity.UsersInfo;
 import com.example.worktodayproject.dto.response.IntershipInfoResponse;
+import com.example.worktodayproject.dto.response.UsersInfoResponse;
 import com.example.worktodayproject.security.dto.response.UserResponse;
 
 import java.util.ArrayList;
@@ -50,5 +52,20 @@ public class MapperUtils {
         }
 
         return intershipInfoResponses;
+    }
+
+    /**
+     * Превратить UsersInfo в UsersInfoResponse
+     * @param usersInfo профиль пользователя
+     * @return ответ профиля
+     */
+    public UsersInfoResponse mappingUserInfo(UsersInfo usersInfo) {
+        return new UsersInfoResponse(usersInfo.getId(),
+                usersInfo.getName(),
+                usersInfo.getSurname(),
+                usersInfo.getPatronymic(),
+                usersInfo.getRecomendationFlag(),
+                usersInfo.getPhoneNumber(),
+                usersInfo.getTown());
     }
 }

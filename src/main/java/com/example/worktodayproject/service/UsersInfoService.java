@@ -4,11 +4,15 @@ import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.entity.UsersInfo;
 import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.request.UsersInfoDto;
+import com.example.worktodayproject.dto.response.UsersInfoResponse;
+import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Сервис страницы пользователя
@@ -18,6 +22,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Transactional
 public class UsersInfoService {
+
+    MapperUtils mapperUtils = new MapperUtils();
 
     UsersInfoRepository usersInfoRepository;
     UsersRepository usersRepository;
@@ -52,5 +58,18 @@ public class UsersInfoService {
         }
 
         usersInfoRepository.save(usersInfo);
+    }
+
+    /**
+     * Получить информацию по текущему пользователю
+     * @param username имя текущего пользователя
+     */
+    public UsersInfoResponse getUserInfo(String username) {
+        Users currentUser = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
+        if (usersInfo.getRecomendationFlag() == null) {
+            usersInfo.setRecomendationFlag(Boolean.FALSE);
+        }
+        return mapperUtils.mappingUserInfo(usersInfo);
     }
 }
