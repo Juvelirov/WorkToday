@@ -12,6 +12,6 @@ public class IntershipTitleNotFoundException extends RuntimeException {
      * @param id идентификатор
      */
     public IntershipTitleNotFoundException(Long id) {
-        super("Id " + id + " not found");
+        super("Стажировка с таким id: " + id + " не найдена");
     }
 }

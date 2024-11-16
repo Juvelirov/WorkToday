@@ -1,8 +1,6 @@
 package com.example.worktodayproject.exception;
 
-import com.example.worktodayproject.exception.custom.IntershipTitleNotFoundException;
-import com.example.worktodayproject.exception.custom.RoleNotFoundException;
-import com.example.worktodayproject.exception.custom.UnauthorizedException;
+import com.example.worktodayproject.exception.custom.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -58,5 +56,31 @@ public class ExceptionAdvice {
         log.info(ex.getMessage());
         log.error(Arrays.toString(ex.getStackTrace()));
         return new ExceptionResponse(ex.getMessage(), UnauthorizedException.CODE);
+    }
+
+    /**
+     * Отлов ошибки записи на стажировку из-за того, что пользователь уже записан на нее
+     * @param ex ошибка
+     * @return ответ ошибки
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleUserAlreadyEnrolledException(UserAlreadyEnrolledException ex) {
+        log.info(ex.getMessage());
+        log.error(Arrays.toString(ex.getStackTrace()));
+        return new ExceptionResponse(ex.getMessage(), UserAlreadyEnrolledException.CODE);
+    }
+
+    /**
+     * Отлов ошибки записи на стажировку не авторизованных пользователей
+     * @param ex ошибка
+     * @return ответ ошибки
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleAuthorizedUserEnrollException(AuthorizedUserEnrollException ex) {
+        log.info(ex.getMessage());
+        log.error(Arrays.toString(ex.getStackTrace()));
+        return new ExceptionResponse(ex.getMessage(), AuthorizedUserEnrollException.CODE);
     }
 }
