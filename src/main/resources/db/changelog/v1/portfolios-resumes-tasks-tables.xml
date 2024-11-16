@@ -16,7 +16,7 @@
             <column name="url" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="upload_date" type="DATE">
+            <column name="upload_date" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
 
@@ -33,7 +33,7 @@
             <column name="file_path" type="VARCHAR(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="upload_date" type="DATE">
+            <column name="upload_date" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
 
@@ -50,7 +50,7 @@
             <column name="info" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="deadline" type="DATE">
+            <column name="deadline" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
 

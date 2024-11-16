@@ -30,7 +30,7 @@
             <column name="recomendation" type="BOOLEAN">
                 <constraints nullable="true"/>
             </column>
-            <column name="final_date" type="DATE">
+            <column name="final_date" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
             <column name="report_id" type="BIGINT">

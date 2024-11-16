@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,6 +28,9 @@ public class IntershipsInfo extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "creator_id")
     Users user;
+
+    @OneToMany(mappedBy = "intershipsInfo")
+    List<Enrollment> enrollments = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(

@@ -17,8 +17,6 @@ import java.util.List;
 @Setter
 public class UsersInfo extends BaseEntity {
 
-    // Информация по персональным данным User
-
     @Column(name="name")
     String name;
     @Column(name="surname")
