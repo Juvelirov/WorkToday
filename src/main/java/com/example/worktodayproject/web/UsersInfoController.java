@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 /**
  * Контроллер профиля
@@ -17,7 +18,7 @@ import java.security.Principal;
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/private/student/my-profile")
+@RequestMapping("/api/v1/private/student/profiles")
 public class UsersInfoController {
 
     UsersInfoService usersInfoService;
@@ -27,7 +28,7 @@ public class UsersInfoController {
      * @param usersInfoDto
      * @param principal
      */
-    @PostMapping("/set-data")
+    @PostMapping("/my-profile/set-data")
     public ResponseEntity<String> setProfile(@RequestBody UsersInfoDto usersInfoDto, Principal principal) {
         usersInfoService.updateUsersInfo(usersInfoDto, principal.getName());
 
@@ -39,8 +40,27 @@ public class UsersInfoController {
      * @param principal текущий пользователь
      * @return ответ профиля пользователя
      */
-    @GetMapping()
+    @GetMapping("/my-profile")
     public UsersInfoResponse getUserInfo(Principal principal) {
         return usersInfoService.getUserInfo(principal.getName());
+    }
+
+    /**
+     * Получить данные другого пользователя
+     * @param username имя пользователя
+     * @return ответ профиля пользователя
+     */
+    @GetMapping("/{username}")
+    public UsersInfoResponse getOtherUserInfo(@PathVariable String username) {
+        return usersInfoService.getOtherUserInfo(username);
+    }
+
+    /**
+     * Получить все профили пользователей
+     * @return список профилей пользователей
+     */
+    @GetMapping()
+    public List<UsersInfoResponse> getAllUserInfo() {
+        return usersInfoService.getAllUsersInfo();
     }
 }

@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * Сервис страницы пользователя
@@ -71,5 +71,25 @@ public class UsersInfoService {
             usersInfo.setRecomendationFlag(Boolean.FALSE);
         }
         return mapperUtils.mappingUserInfo(usersInfo);
+    }
+
+    /**
+     * Получить данные профиля другого пользователя
+     * @return ответ профиля пользователя
+     * @param username имя пользователя
+     */
+    public UsersInfoResponse getOtherUserInfo(String username) {
+        Users currentUser = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
+
+        return mapperUtils.mappingUserInfo(usersInfo);
+    }
+
+    /**
+     * Получить все профили пользователей
+     * @return список ответов профилей пользователей
+     */
+    public List<UsersInfoResponse> getAllUsersInfo() {
+        return mapperUtils.mappingUserInfoList(usersInfoRepository.findAll());
     }
 }

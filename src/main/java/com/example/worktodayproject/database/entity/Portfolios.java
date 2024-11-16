@@ -4,24 +4,29 @@ import com.example.worktodayproject.database.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Table(name="portfolios")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
+@Setter
 public class Portfolios extends BaseEntity {
 
-    // Техническая информация по портфолио
-
+    @Column(name = "title")
+    String title;
+    @Column(name = "description")
+    String description;
     @Column(name="file_path")
     String filePath;
     @Column(name="url")
     String url;
     @Column(name="upload_date")
-    Date uploadDate;
+    LocalDateTime uploadDate;
 
     @OneToOne
     @JoinColumn(name = "user_info_id")

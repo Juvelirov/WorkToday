@@ -1,9 +1,11 @@
 package com.example.worktodayproject.utils;
 
 import com.example.worktodayproject.database.entity.IntershipsInfo;
+import com.example.worktodayproject.database.entity.Portfolios;
 import com.example.worktodayproject.database.entity.Tags;
 import com.example.worktodayproject.database.entity.UsersInfo;
 import com.example.worktodayproject.dto.response.IntershipInfoResponse;
+import com.example.worktodayproject.dto.response.PortfolioResponse;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
 import com.example.worktodayproject.security.dto.response.UserResponse;
 
@@ -67,5 +69,47 @@ public class MapperUtils {
                 usersInfo.getRecomendationFlag(),
                 usersInfo.getPhoneNumber(),
                 usersInfo.getTown());
+    }
+
+    /**
+     * Превратить список UsersInfo в список UsersInfoResponse
+     * @param usersInfoList список профилей пользователей
+     * @return список ответов пользователей
+     */
+    public List<UsersInfoResponse> mappingUserInfoList(List<UsersInfo> usersInfoList) {
+        List<UsersInfoResponse> usersInfoResponses = new ArrayList<>();
+        for (UsersInfo info : usersInfoList) {
+            usersInfoResponses.add(mappingUserInfo(info));
+        }
+
+        return usersInfoResponses;
+    }
+
+    /**
+     * Превратить Portfolios в PortfolioResponse
+     * @param portfolios
+     * @return
+     */
+    public PortfolioResponse mappingPortfolio(Portfolios portfolios) {
+        return new PortfolioResponse(portfolios.getId(),
+                portfolios.getTitle(),
+                portfolios.getDescription(),
+                portfolios.getFilePath(),
+                portfolios.getUrl(),
+                portfolios.getUploadDate());
+    }
+
+    /**
+     * Превратить список Portfolios в список PortfolioResponse
+     * @param portfoliosList список Portfolios
+     * @return список PortfolioResponse
+     */
+    public List<PortfolioResponse> mappingPortfolioList(List<Portfolios> portfoliosList) {
+        List<PortfolioResponse> portfolioResponses = new ArrayList<>();
+        for (Portfolios portfolio : portfoliosList) {
+            portfolioResponses.add(mappingPortfolio(portfolio));
+        }
+
+        return portfolioResponses;
     }
 }
