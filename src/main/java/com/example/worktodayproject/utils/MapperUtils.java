@@ -1,15 +1,13 @@
 package com.example.worktodayproject.utils;
 
 import com.example.worktodayproject.database.entity.*;
-import com.example.worktodayproject.dto.response.IntershipInfoResponse;
-import com.example.worktodayproject.dto.response.PortfolioResponse;
-import com.example.worktodayproject.dto.response.ResumeResponse;
-import com.example.worktodayproject.dto.response.UsersInfoResponse;
+import com.example.worktodayproject.dto.response.*;
 import com.example.worktodayproject.security.dto.response.UserResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Преобразование из одного класса в другой
@@ -65,6 +63,13 @@ public class MapperUtils {
                 .map(this::mappingPortfolio);
         Optional<ResumeResponse> resumeResponse = Optional.ofNullable(usersInfo.getResume())
                 .map(this::mappingResume);
+        Optional<List<TaskResponse>> taskResponses = Optional.ofNullable(usersInfo.getTasks())
+                .map(tasks -> tasks.stream()
+                        .map(this::mappingTasks)
+                        .collect(Collectors.toList()));
+        if (usersInfo.getRecomendationFlag() == null) {
+            usersInfo.setRecomendationFlag(Boolean.FALSE);
+        }
 
         return new UsersInfoResponse(usersInfo.getId(),
                 usersInfo.getUsers().getUsername(),
@@ -75,7 +80,8 @@ public class MapperUtils {
                 usersInfo.getPhoneNumber(),
                 usersInfo.getTown(),
                 portfolioResponse,
-                resumeResponse);
+                resumeResponse,
+                taskResponses);
     }
 
     /**
@@ -146,5 +152,38 @@ public class MapperUtils {
         }
 
         return resumeResponses;
+    }
+
+    /**
+     * Превратить Tasks в TaskResponse
+     * @param task задание
+     * @return ответ задания
+     */
+    public TaskResponse mappingTasks(Tasks task) {
+        return new TaskResponse(task.getId(),
+                task.getUsersInfo().getId(),
+                task.getIntershipsInfo().getId(),
+                task.getTitle(),
+                task.getInfo(),
+                task.getDeadline(),
+                task.getUrl(),
+                task.getFilePath(),
+                task.getStatus(),
+                task.getGrade(),
+                task.getResult());
+    }
+
+    /**
+     * Превратить список Tasks в список TaskResponse
+     * @param tasksList список задач
+     * @return список ответа задач
+     */
+    public List<TaskResponse> mappingTasksList(List<Tasks> tasksList) {
+        List<TaskResponse> taskResponses = new ArrayList<>();
+        for (Tasks tasks : tasksList) {
+            taskResponses.add(mappingTasks(tasks));
+        }
+
+        return taskResponses;
     }
 }

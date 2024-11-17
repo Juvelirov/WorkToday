@@ -30,7 +30,7 @@ public class ResumeController {
      * @return ответ
      */
     @PostMapping("/create")
-    public ResponseEntity<String> createResume(ResumeDto resumeDto, Principal principal) {
+    public ResponseEntity<String> createResume(@RequestBody ResumeDto resumeDto, Principal principal) {
         resumeService.createResume(principal.getName(), resumeDto);
         return ResponseEntity.ok("success");
     }

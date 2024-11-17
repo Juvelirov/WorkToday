@@ -6,7 +6,7 @@ import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.repository.EnrollmentRepository;
 import com.example.worktodayproject.database.repository.IntershipInfoRepository;
 import com.example.worktodayproject.database.repository.UsersRepository;
-import com.example.worktodayproject.exception.custom.AuthorizedUserEnrollException;
+import com.example.worktodayproject.exception.custom.AuthorizedUserException;
 import com.example.worktodayproject.exception.custom.IntershipTitleNotFoundException;
 import com.example.worktodayproject.exception.custom.UserAlreadyEnrolledException;
 import jakarta.transaction.Transactional;
@@ -38,7 +38,7 @@ public class EnrollmentService {
     public void enrollUser(String login, Long id) {
         Users currentUser = usersRepository.findByLogin(login);
         if (currentUser == null) {
-            throw new AuthorizedUserEnrollException();
+            throw new AuthorizedUserException("Только авторизованные пользователи могут записаться на стажировку");
         }
 
         Optional<IntershipsInfo> intershipsInfoOptional = intershipInfoRepository.findById(id);

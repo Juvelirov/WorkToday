@@ -29,6 +29,9 @@ public class IntershipsInfo extends BaseEntity {
     @JoinColumn(name = "creator_id")
     Users user;
 
+    @OneToOne(mappedBy = "intershipsInfo")
+    Tasks tasks;
+
     @OneToMany(mappedBy = "intershipsInfo")
     List<Enrollment> enrollments = new ArrayList<>();
 

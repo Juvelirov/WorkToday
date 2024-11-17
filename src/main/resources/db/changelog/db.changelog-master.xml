@@ -14,7 +14,7 @@
     <include file="v1/add-fio-user.xml" relativeToChangelogFile="true"/>
 
     <include file="v2/create-enrollments-table.xml" relativeToChangelogFile="true"/>
-    <include file="v2/add-column-in-tasks.xml" relativeToChangelogFile="true"/>
     <include file="v2/add-title-and-description-columns.xml" relativeToChangelogFile="true"/>
+    <include file="v2/update-tasks-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

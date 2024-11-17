@@ -1,6 +1,6 @@
 package com.example.worktodayproject.web;
 
-import com.example.worktodayproject.exception.custom.AuthorizedUserEnrollException;
+import com.example.worktodayproject.exception.custom.AuthorizedUserException;
 import com.example.worktodayproject.service.EnrollmentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class EnrollController {
     @PostMapping("/{id}/enroll")
     public ResponseEntity<String> enrollUser(@PathVariable Long id, Principal principal) {
         if (principal == null) {
-            throw new AuthorizedUserEnrollException();
+            throw new AuthorizedUserException("Только авторизованные пользователи могут записаться на стажировку");
         }
         String username = principal.getName();
         enrollmentService.enrollUser(username, id);

@@ -17,8 +17,6 @@ import java.util.Date;
 @Setter
 public class Resumes extends BaseEntity {
 
-    // Техническая информация по резюме
-
     @Column(name="url")
     String url;
     @Column(name="file_path")

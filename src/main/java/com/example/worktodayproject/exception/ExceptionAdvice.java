@@ -78,10 +78,10 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ExceptionResponse handleAuthorizedUserEnrollException(AuthorizedUserEnrollException ex) {
+    public ExceptionResponse handleAuthorizedUserEnrollException(AuthorizedUserException ex) {
         log.info(ex.getMessage());
         log.error(Arrays.toString(ex.getStackTrace()));
-        return new ExceptionResponse(ex.getMessage(), AuthorizedUserEnrollException.CODE);
+        return new ExceptionResponse(ex.getMessage(), AuthorizedUserException.CODE);
     }
 
     /**
@@ -121,5 +121,44 @@ public class ExceptionAdvice {
         log.info(ex.getMessage());
         log.error(Arrays.toString(ex.getStackTrace()));
         return new ExceptionResponse(ex.getMessage(), ResumeNotFoundException.CODE);
+    }
+
+    /**
+     * Отлов ошибки не нахождения id стажировки
+     * @param ex ошибка
+     * @return ответ ошибки
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleInternshipNotFoundException(InternshipNotFoundException ex) {
+        log.info(ex.getMessage());
+        log.error(Arrays.toString(ex.getStackTrace()));
+        return new ExceptionResponse(ex.getMessage(), InternshipNotFoundException.CODE);
+    }
+
+    /**
+     * Отлов ошибки не нахождения id пользователя
+     * @param ex ошибка
+     * @return ответ ошибки
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleUserIdNotFoundException(UserIdNotFoundException ex) {
+        log.info(ex.getMessage());
+        log.error(Arrays.toString(ex.getStackTrace()));
+        return new ExceptionResponse(ex.getMessage(), UserIdNotFoundException.CODE);
+    }
+
+    /**
+     * Отлов ошибки, когда пользователь не записан на стажировку
+     * @param ex ошибка
+     * @return ответ ошибки
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleUserNotEnrolledException(UserNotEnrolledException ex) {
+        log.info(ex.getMessage());
+        log.error(Arrays.toString(ex.getStackTrace()));
+        return new ExceptionResponse(ex.getMessage(), UserNotEnrolledException.CODE);
     }
 }

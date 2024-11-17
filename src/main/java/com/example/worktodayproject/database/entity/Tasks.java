@@ -1,6 +1,8 @@
 package com.example.worktodayproject.database.entity;
 
 import com.example.worktodayproject.database.entity.base.BaseEntity;
+import com.example.worktodayproject.database.enums.TaskGrade;
+import com.example.worktodayproject.database.enums.TaskStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,8 +23,24 @@ public class Tasks extends BaseEntity {
     String info;
     @Column(name="deadline")
     Date deadline;
+    @Column(name = "url")
+    String url;
+    @Column(name = "file_path")
+    String filePath;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    TaskStatus status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "grade")
+    TaskGrade grade;
+    @Column(name = "result")
+    String result;
+
+    @OneToOne
+    @JoinColumn(name = "internship_info_id")
+    IntershipsInfo intershipsInfo;
 
     @ManyToOne
-    @JoinColumn(name="users_info_id")
+    @JoinColumn(name="user_info_id")
     UsersInfo usersInfo;
 }

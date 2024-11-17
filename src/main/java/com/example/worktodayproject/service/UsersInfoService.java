@@ -1,9 +1,6 @@
 package com.example.worktodayproject.service;
 
-import com.example.worktodayproject.database.entity.Portfolios;
-import com.example.worktodayproject.database.entity.Resumes;
-import com.example.worktodayproject.database.entity.Users;
-import com.example.worktodayproject.database.entity.UsersInfo;
+import com.example.worktodayproject.database.entity.*;
 import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.request.UsersInfoDto;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
@@ -30,10 +27,6 @@ public class UsersInfoService {
 
     UsersInfoRepository usersInfoRepository;
     UsersRepository usersRepository;
-    ResumesRepository resumesRepository;
-    PortfoliosRepository portfoliosRepository;
-    ReportsRepository reportsRepository;
-    TasksRepository tasksRepository;
 
     /**
      * Обновить информацию о пользователе
@@ -129,6 +122,19 @@ public class UsersInfoService {
         UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
 
         usersInfo.setResume(resumes);
+        usersInfoRepository.save(usersInfo);
+    }
+
+    /**
+     * Добавить задачу пользователю
+     * @param task задача
+     * @param username пользователь
+     */
+    public void setTaskForUserInfo(Tasks task, String username) {
+        Users currentUser = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
+
+        usersInfo.getTasks().add(task);
         usersInfoRepository.save(usersInfo);
     }
 }
