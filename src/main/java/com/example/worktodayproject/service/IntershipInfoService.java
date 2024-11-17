@@ -125,11 +125,10 @@ public class IntershipInfoService {
         }
 
         titleResults = intershipInfoRepository.findByTitleContaining(searchQuery);
-        tagResults = intershipInfoRepository.findByTitleContaining(searchQuery);
+        tagResults = intershipInfoRepository.findByTagNameContaining(searchQuery);
 
         Set<IntershipsInfo> combinedResults = new HashSet<>(titleResults);
         combinedResults.addAll(tagResults);
-
         return mapper.mappingListIntarship(new ArrayList<>(combinedResults));
     }
 

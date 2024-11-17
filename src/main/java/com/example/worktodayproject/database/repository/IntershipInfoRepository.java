@@ -3,6 +3,7 @@ package com.example.worktodayproject.database.repository;
 import com.example.worktodayproject.database.entity.IntershipsInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -33,6 +34,13 @@ public interface IntershipInfoRepository extends JpaRepository<IntershipsInfo, L
      */
     List<IntershipsInfo> findByTitleContaining(String title);
 
+    /**
+     * Найти стажировку по тегу
+     * @param tagName имя тега
+     * @return список стажировок по указанному тегу
+     */
     @Query("SELECT i FROM IntershipsInfo i JOIN i.tags t WHERE t.name LIKE %:tagName%")
-    List<IntershipsInfo> findByNagNameContaining(@Param("tagName") String tagName);
+    List<IntershipsInfo> findByTagNameContaining(@Param("tagName") String tagName);
+
+
 }
