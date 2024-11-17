@@ -109,4 +109,17 @@ public class ExceptionAdvice {
         log.error(Arrays.toString(ex.getStackTrace()));
         return new ExceptionResponse(ex.getMessage(), UserInfoNotFoundException.CODE);
     }
+
+    /**
+     * Отлов ошибки не нахождения резюме
+     * @param ex ошибка
+     * @return ответ ошибки
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleResumeNotFoundException(ResumeNotFoundException ex) {
+        log.info(ex.getMessage());
+        log.error(Arrays.toString(ex.getStackTrace()));
+        return new ExceptionResponse(ex.getMessage(), ResumeNotFoundException.CODE);
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.worktodayproject.service;
 
 import com.example.worktodayproject.database.entity.Portfolios;
+import com.example.worktodayproject.database.entity.Resumes;
 import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.entity.UsersInfo;
 import com.example.worktodayproject.database.repository.*;
@@ -115,5 +116,19 @@ public class UsersInfoService {
         UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
 
         usersInfo.setPortfolio(portfolios);
+        usersInfoRepository.save(usersInfo);
+    }
+
+    /**
+     * Установить резюме за пользователем
+     * @param resumes резюме
+     * @param username имя пользователя, которому надо добавить резюме
+     */
+    public void setResumeForUserInfo(Resumes resumes, String username) {
+        Users currentUser = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
+
+        usersInfo.setResume(resumes);
+        usersInfoRepository.save(usersInfo);
     }
 }

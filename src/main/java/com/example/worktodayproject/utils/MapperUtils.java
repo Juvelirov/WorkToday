@@ -1,11 +1,9 @@
 package com.example.worktodayproject.utils;
 
-import com.example.worktodayproject.database.entity.IntershipsInfo;
-import com.example.worktodayproject.database.entity.Portfolios;
-import com.example.worktodayproject.database.entity.Tags;
-import com.example.worktodayproject.database.entity.UsersInfo;
+import com.example.worktodayproject.database.entity.*;
 import com.example.worktodayproject.dto.response.IntershipInfoResponse;
 import com.example.worktodayproject.dto.response.PortfolioResponse;
+import com.example.worktodayproject.dto.response.ResumeResponse;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
 import com.example.worktodayproject.security.dto.response.UserResponse;
 
@@ -65,15 +63,19 @@ public class MapperUtils {
     public UsersInfoResponse mappingUserInfo(UsersInfo usersInfo) {
         Optional<PortfolioResponse> portfolioResponse = Optional.ofNullable(usersInfo.getPortfolio())
                 .map(this::mappingPortfolio);
+        Optional<ResumeResponse> resumeResponse = Optional.ofNullable(usersInfo.getResume())
+                .map(this::mappingResume);
 
         return new UsersInfoResponse(usersInfo.getId(),
+                usersInfo.getUsers().getUsername(),
                 usersInfo.getName(),
                 usersInfo.getSurname(),
                 usersInfo.getPatronymic(),
                 usersInfo.getRecomendationFlag(),
                 usersInfo.getPhoneNumber(),
                 usersInfo.getTown(),
-                portfolioResponse);
+                portfolioResponse,
+                resumeResponse);
     }
 
     /**
@@ -97,6 +99,7 @@ public class MapperUtils {
      */
     public PortfolioResponse mappingPortfolio(Portfolios portfolios) {
         return new PortfolioResponse(portfolios.getId(),
+                portfolios.getUserInfo().getUsers().getId(),
                 portfolios.getTitle(),
                 portfolios.getDescription(),
                 portfolios.getFilePath(),
@@ -116,5 +119,32 @@ public class MapperUtils {
         }
 
         return portfolioResponses;
+    }
+
+    /**
+     * Превратить Resumes в ResumeResponse
+     * @param resumes резюме
+     * @return ответ резюме
+     */
+    public ResumeResponse mappingResume(Resumes resumes) {
+        return new ResumeResponse(resumes.getId(),
+                resumes.getUserInfo().getUsers().getId(),
+                resumes.getUrl(),
+                resumes.getFilePath(),
+                resumes.getUploadDate());
+    }
+
+    /**
+     * Превратить список resumesList в список ResumeResponse
+     * @param resumesList список Resumes
+     * @return список ResumeResponse
+     */
+    public List<ResumeResponse> mappingResumeList(List<Resumes> resumesList) {
+        List<ResumeResponse> resumeResponses = new ArrayList<>();
+        for (Resumes resumes : resumesList) {
+            resumeResponses.add(mappingResume(resumes));
+        }
+
+        return resumeResponses;
     }
 }

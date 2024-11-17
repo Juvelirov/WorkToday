@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 /**
  * Ответ портфолио
+ * @param id идентификатор
  * @param title название
  * @param description описание
  * @param filePath путь до файла проекта
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  * @param uploadDate дата загрузки
  */
 public record PortfolioResponse(Long id,
+                                Long userId,
                                 String title,
                                 String description,
                                 String filePath,

@@ -17,9 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Сервис работы с стажировками
@@ -118,15 +116,21 @@ public class IntershipInfoService {
      */
     public List<IntershipInfoResponse> searchIntership(String searchQuery) {
         MapperUtils mapper = new MapperUtils();
-        List<IntershipsInfo> intershipsInfos;
+        List<IntershipsInfo> titleResults;
+        List<IntershipsInfo> tagResults;
 
         if (searchQuery == null || searchQuery.isEmpty()) {
-            intershipsInfos = intershipInfoRepository.findAll();
-            return mapper.mappingListIntarship(intershipsInfos);
+            titleResults = intershipInfoRepository.findAll();
+            return mapper.mappingListIntarship(titleResults);
         }
 
-        intershipsInfos = intershipInfoRepository.findByTitleContaining(searchQuery);
-        return mapper.mappingListIntarship(intershipsInfos);
+        titleResults = intershipInfoRepository.findByTitleContaining(searchQuery);
+        tagResults = intershipInfoRepository.findByTitleContaining(searchQuery);
+
+        Set<IntershipsInfo> combinedResults = new HashSet<>(titleResults);
+        combinedResults.addAll(tagResults);
+
+        return mapper.mappingListIntarship(new ArrayList<>(combinedResults));
     }
 
     /**
