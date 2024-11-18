@@ -161,4 +161,17 @@ public class ExceptionAdvice {
         log.error(Arrays.toString(ex.getStackTrace()));
         return new ExceptionResponse(ex.getMessage(), UserNotEnrolledException.CODE);
     }
+
+    /**
+     * Отлов ошибки, которая появляется когда нельзя поставить оценку
+     * @param ex ошибка
+     * @return ответ ошибки
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleGradeNotSetException(GradeNotSetException ex) {
+        log.info(ex.getMessage());
+        log.error(Arrays.toString(ex.getStackTrace()));
+        return new ExceptionResponse(ex.getMessage(), GradeNotSetException.CODE);
+    }
 }

@@ -5,5 +5,6 @@ package com.example.worktodayproject.database.enums;
  */
 public enum TaskGrade {
     ACCEPTED,
-    REJECTED
+    REJECTED,
+    NOT_VERIFIED
 }

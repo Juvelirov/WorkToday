@@ -1,10 +1,11 @@
 package com.example.worktodayproject.service;
 
 import com.example.worktodayproject.database.entity.*;
+import com.example.worktodayproject.database.enums.TaskGrade;
 import com.example.worktodayproject.database.enums.TaskStatus;
 import com.example.worktodayproject.database.repository.*;
+import com.example.worktodayproject.dto.request.CheckTaskDto;
 import com.example.worktodayproject.dto.request.TaskDto;
-import com.example.worktodayproject.dto.response.PortfolioResponse;
 import com.example.worktodayproject.dto.response.TaskResponse;
 import com.example.worktodayproject.exception.custom.*;
 import com.example.worktodayproject.utils.MapperUtils;
@@ -18,13 +19,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Сервис заданий
+ * Сервис заданий для HR
  */
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Transactional
-public class TasksService {
+public class HrTasksService {
 
     MapperUtils mapperUtils = new MapperUtils();
 
@@ -71,7 +72,7 @@ public class TasksService {
         task.setUrl(taskDto.url());
         task.setFilePath(taskDto.filePath());
         task.setStatus(TaskStatus.NOT_STARTED);
-        task.setGrade(taskDto.grade());
+        task.setGrade(TaskGrade.NOT_VERIFIED);
         task.setResult(taskDto.result());
         task.setUsersInfo(usersInfoRepository.findByUsers(usersRepository.findByLogin(student.getLogin())));
         task.setIntershipsInfo(intershipsInfo);
@@ -82,12 +83,12 @@ public class TasksService {
     }
 
     /**
-     * Получить задание пользователя по его id
+     * Получить задание HR пользователю по его id
      * @param username имя пользователя
      * @param id id
      * @return ответ задачи
      */
-    public TaskResponse getUserTask(String username, Long id, String hrUsername) {
+    public TaskResponse getHrUsersTask(String username, Long id, String hrUsername) {
         Users user = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
 
@@ -101,11 +102,11 @@ public class TasksService {
     }
 
     /**
-     * Получить все задания пользователя
+     * Получить все задания HR пользователю
      * @param username имя пользователя
      * @return список заданий
      */
-    public List<TaskResponse> getAllUserTasks(String username, String hrUsername) {
+    public List<TaskResponse> getAllHrUsersTasks(String username, String hrUsername) {
         Users user = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
         Users hrUser = usersRepository.findByLogin(hrUsername);
@@ -143,5 +144,34 @@ public class TasksService {
         }
 
         tasksRepository.delete(tasks);
+    }
+
+    /**
+     * Проверить задание студента
+     * @param taskId id задания
+     * @param username имя пользователя
+     * @param hrUsername имя пользователя HR
+     * @param checkTaskDto дто оценки задания
+     */
+    public void checkUserTask(Long taskId,
+                              String username,
+                              String hrUsername,
+                              CheckTaskDto checkTaskDto) {
+        Users user = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+        Tasks tasks = tasksRepository.findByIdAndUsersInfo(taskId, usersInfo);
+        Users hrUser = usersRepository.findByLogin(hrUsername);
+        if (!tasks.getIntershipsInfo().getUser().equals(hrUser)) {
+            throw new AuthorizedUserException("Вы не привязаны к этому пользователю");
+        }
+        if (tasks.getStatus() == TaskStatus.COMPLETE) {
+            tasks.setGrade(checkTaskDto.grade());
+            if (checkTaskDto.grade() == TaskGrade.REJECTED) {
+                tasks.setStatus(TaskStatus.REWORK);
+            }
+        } else {
+            throw new GradeNotSetException(tasks.getStatus());
+        }
+        tasksRepository.save(tasks);
     }
 }

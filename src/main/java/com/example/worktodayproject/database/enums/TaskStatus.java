@@ -6,5 +6,6 @@ package com.example.worktodayproject.database.enums;
 public enum TaskStatus {
     IN_PROGRESS,
     COMPLETE,
-    NOT_STARTED
+    NOT_STARTED,
+    REWORK
 }

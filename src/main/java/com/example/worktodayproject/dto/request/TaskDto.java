@@ -12,8 +12,6 @@ import java.util.Date;
  * @param deadline дедлайн
  * @param url ссылка на доп источник
  * @param filePath файл с доп источником
- * @param status статус выполнения
- * @param grade оценка задачи
  * @param result результат в виде ссылки
  */
 public record TaskDto(String title,
@@ -21,7 +19,5 @@ public record TaskDto(String title,
                       Date deadline,
                       String url,
                       String filePath,
-                      TaskStatus status,
-                      TaskGrade grade,
                       String result) {
 }
