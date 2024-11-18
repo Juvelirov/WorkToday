@@ -6,7 +6,8 @@ package com.example.worktodayproject.security.dto.response;
  * @param login лгин
  * @param email почта
  */
-public record UserResponse(String fio,
+public record UserResponse(Long id,
+                           String fio,
                            String login,
                            String email) {
 }

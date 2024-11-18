@@ -16,5 +16,6 @@
     <include file="v2/create-enrollments-table.xml" relativeToChangelogFile="true"/>
     <include file="v2/add-title-and-description-columns.xml" relativeToChangelogFile="true"/>
     <include file="v2/update-tasks-table.xml" relativeToChangelogFile="true"/>
+    <include file="v2/add-internship-info-id-column.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

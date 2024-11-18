@@ -36,7 +36,7 @@ public class Tasks extends BaseEntity {
     @Column(name = "result")
     String result;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "internship_info_id")
     IntershipsInfo intershipsInfo;
 

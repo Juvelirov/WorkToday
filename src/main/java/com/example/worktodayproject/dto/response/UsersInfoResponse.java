@@ -26,5 +26,6 @@ public record UsersInfoResponse(Long id,
                                 String town,
                                 Optional<PortfolioResponse> portfolios,
                                 Optional<ResumeResponse> resumes,
-                                Optional<List<TaskResponse>> tasks) {
+                                Optional<List<TaskResponse>> tasks,
+                                Optional<List<ReportResponse>> result) {
 }

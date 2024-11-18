@@ -1,6 +1,7 @@
 package com.example.worktodayproject.utils;
 
 import com.example.worktodayproject.database.entity.*;
+import com.example.worktodayproject.dto.request.ReportDto;
 import com.example.worktodayproject.dto.response.*;
 import com.example.worktodayproject.security.dto.response.UserResponse;
 
@@ -22,7 +23,8 @@ public class MapperUtils {
     public IntershipInfoResponse mappingIntership(IntershipsInfo intershipsInfo) {
         List<String> tagsList = new ArrayList<>();
 
-        UserResponse userResponse = new UserResponse(intershipsInfo.getUser().getFio(),
+        UserResponse userResponse = new UserResponse(intershipsInfo.getUser().getId(),
+                intershipsInfo.getUser().getFio(),
                 intershipsInfo.getUser().getLogin(),
                 intershipsInfo.getUser().getEmail());
 
@@ -67,6 +69,8 @@ public class MapperUtils {
                 .map(tasks -> tasks.stream()
                         .map(this::mappingTasks)
                         .collect(Collectors.toList()));
+        Optional<List<ReportResponse>> reportResponses = Optional.ofNullable(usersInfo.getReports())
+                .map(reports -> reports.stream().map(this::mappingReport).collect(Collectors.toList()));
         if (usersInfo.getRecomendationFlag() == null) {
             usersInfo.setRecomendationFlag(Boolean.FALSE);
         }
@@ -81,7 +85,8 @@ public class MapperUtils {
                 usersInfo.getTown(),
                 portfolioResponse,
                 resumeResponse,
-                taskResponses);
+                taskResponses,
+                reportResponses);
     }
 
     /**
@@ -185,5 +190,31 @@ public class MapperUtils {
         }
 
         return taskResponses;
+    }
+
+    /**
+     * Превратить Reports в ReportResponse
+     * @param reports отчет
+     * @return ответ отчета
+     */
+    public ReportResponse mappingReport(Reports reports) {
+        return new ReportResponse(reports.getId(),
+                reports.getUserInfo().getId(),
+                reports.getIntershipsInfo().getId(),
+                reports.getTitle(),
+                reports.getDescription());
+    }
+
+    /**
+     * Превратить InternshipsResult в ResultResponse
+     * @param internshipsResult результат стажировки
+     * @return ответ результата
+     */
+    public ResultResponse mappingInternshipResult(InternshipsResult internshipsResult) {
+        return new ResultResponse(internshipsResult.getId(),
+                internshipsResult.getMark(),
+                internshipsResult.getRecomendation(),
+                internshipsResult.getFinalDate(),
+                mappingReport(internshipsResult.getReport()));
     }
 }
