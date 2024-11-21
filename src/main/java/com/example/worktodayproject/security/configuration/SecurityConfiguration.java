@@ -35,16 +35,16 @@ public class SecurityConfiguration{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/public/**").permitAll()
+                        .requestMatchers("/api/v1/public").permitAll()
+                        .requestMatchers("/api/v1/public/registration").permitAll()
                         .requestMatchers("/api/v1/private/admin").hasRole("ADMIN")
                         .requestMatchers("/api/v1/private/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/private/hr/**").hasAnyRole("HR", "ADMIN")
                         .requestMatchers("/api/v1/private/student/**").hasAnyRole("STUDENT", "HR", "ADMIN")
                         .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic(AbstractHttpConfigurer::disable);
         return http.build();
     }
-
-
 }
