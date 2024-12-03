@@ -1,8 +1,8 @@
-import { StudentPrivatePage } from "./pages/StudentPrivatePage";
 import "./App.css";
+import { LandingPage } from "./pages/LandingPage";
 
 function App() {
-  return <StudentPrivatePage />;
+  return <LandingPage />;
 }
 
 export default App;

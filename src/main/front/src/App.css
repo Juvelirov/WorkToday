@@ -1,3 +1,18 @@
 p {
   margin: 0;
 }
+
+.scroll-container {
+  height: 100svh;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  scroll-snap-align: start;
+}
