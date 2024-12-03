@@ -4,11 +4,14 @@ import { Input } from "./ui/input";
 
 export function SignInForm() {
   return (
-    <div className="flex flex-col items-center w-[446px] h-[526px] bg-gray-500 rounded-[50px] p-[60px]">
+    <div className="flex flex-col items-center w-[446px] h-[460px] bg-gray-500 rounded-[50px] p-[60px]">
       <div className="flex flex-col gap-7 w-full">
         <Input type="email" placeholder="Логин" />
         <Input type="password" placeholder="Пароль" />
         <Button className="bg-purple-500 w-full rounded-xl">Войти</Button>
+        <p className="text-sm">
+          Нет аккаунта ? <a href="f">Зарегистрируйтесь</a>
+        </p>
       </div>
       <Sep />
       <OneClickSign />

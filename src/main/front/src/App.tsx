@@ -1,8 +1,9 @@
 import "./App.css";
-import { LandingPage } from "./pages/LandingPage";
+import { SignInPage } from "./pages/SignInPage";
+import { SignUpPage } from "./pages/SignUpPage";
 
 function App() {
-  return <LandingPage />;
+  return <SignInPage />;
 }
 
 export default App;
