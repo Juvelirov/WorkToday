@@ -1,5 +1,6 @@
 export type s = string;
 export type n = number;
+export type b = boolean;
 
 export type ss = string[];
 export type nn = number[];

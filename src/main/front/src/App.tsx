@@ -1,9 +1,16 @@
 import "./App.css";
-import { SignInPage } from "./pages/SignInPage";
-import { SignUpPage } from "./pages/SignUpPage";
+import { SignInForm } from "./pages/SignInForm";
+import { SignUpForm } from "./pages/SignUpForm";
+import { VacanciesPage } from "./pages/VacanciesPage";
 
 function App() {
-  return <SignInPage />;
+  return (
+    <>
+      {/* <SignInForm /> */}
+      <SignUpForm />
+      {/* <VacanciesPage /> */}
+    </>
+  );
 }
 
 export default App;
