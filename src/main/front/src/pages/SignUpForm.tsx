@@ -1,9 +1,10 @@
-import { type UserDTO, apiClient } from "@/api/apiClient";
+import { apiClient } from "@/api/apiClient";
 import { cn } from "@/lib/utils";
 import type { s } from "@/types";
 import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
+import type { UserDTO } from "@/api/apiTypes";
 
 export function SignUpForm() {
   const [formData, setFormData] = useState<UserDTO>({

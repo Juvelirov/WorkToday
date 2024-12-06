@@ -1,4 +1,5 @@
-import { apiClient, type UsersInfoDTO } from "./apiClient";
+import { apiClient } from "./apiClient";
+import type { UsersInfoDTO } from "./apiTypes";
 import { endpoints } from "./endpoints";
 
 export async function fetchAllUsers() {

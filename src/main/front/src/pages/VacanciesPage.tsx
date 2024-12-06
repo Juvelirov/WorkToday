@@ -15,6 +15,7 @@ export function VacanciesPage() {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function VacancyCard() {
   return <div className="h-40 bg-black rounded-3xl" />;
 }
