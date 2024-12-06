@@ -1,34 +1,42 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { b, n, s } from "./types";
+import type { b, n, s } from "../types";
+import { API_BASE_URL } from "./endpoints";
 
-const API_BASE_URL = "http://localhost:8080/api/v1";
+export interface ApiOpts {
+  method: "GET" | "POST" | "PUT" | "DELETE";
+  body?: s;
+  headers?: Record<s, s>;
+  queryParams?: Record<s, s | n>;
+}
 
-export async function apiFetch<T>(
-  url: s,
-  options: RequestInit = {}
-): Promise<T> {
-  const token = localStorage.getItem("token"); // Get the token for private routes
+export async function apiClient<T>(endpoint: s, options: ApiOpts): Promise<T> {
+  const token = localStorage.getItem("token");
+  const url = new URL(`${API_BASE_URL}${endpoint}`);
+
+  if (options.queryParams) {
+    for (const [key, value] of Object.entries(options.queryParams)) {
+      url.searchParams.append(key, String(value));
+    }
+  }
+
   const headers = {
-    "Content-Type": "application/json", // Tells the server to expect JSON data
+    "Content-Type": "application/json",
     ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   };
 
-  const response = await fetch(`${API_BASE_URL}${url}`, {
-    ...options,
-    headers,
-  });
+  const res = await fetch(url.toString(), { ...options, headers });
 
-  if (!response.ok) {
-    const error = await response.json();
+  if (!res.ok) {
+    const error = await res.json();
     throw new Error(error.message || "An error occurred");
   }
 
-  return response.json();
+  return res.json();
 }
 
 // For admin
-interface UsersInfoDTO {
+export interface UsersInfoDTO {
   name: s;
   surname: s;
   patronymic: s;
@@ -182,13 +190,7 @@ interface ResumeResponseHUH {
 type ResumeResponseList = ResumeResponseHUH[];
 
 // student/profiles
-interface UsersInfoDTO {
-  name: s;
-  surname: s;
-  patronymic: s;
-  phoneNumber: s;
-  town: s;
-}
+// UsersInfoDTO
 
 interface UserInfoResponse {
   id: n;

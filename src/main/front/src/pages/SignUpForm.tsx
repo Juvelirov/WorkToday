@@ -1,4 +1,4 @@
-import { apiFetch, type UserDTO } from "@/api";
+import { type UserDTO, apiClient } from "@/api/apiClient";
 import { cn } from "@/lib/utils";
 import type { s } from "@/types";
 import { useState } from "react";
@@ -27,7 +27,7 @@ export function SignUpForm() {
     e.preventDefault();
     setError(null);
 
-    const result = await apiFetch<UserDTO>("/public/registration", {
+    const result = await apiClient<UserDTO>("/public/registration", {
       method: "POST",
       body: JSON.stringify(formData),
     });
