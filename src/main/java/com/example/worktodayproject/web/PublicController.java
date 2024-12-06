@@ -7,10 +7,13 @@ import com.example.worktodayproject.service.UsersInfoService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -27,9 +30,12 @@ public class PublicController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<String> signUp(@RequestBody UserDto userDto) {
+    public ResponseEntity<Map<String, Object>> signUp(@RequestBody UserDto userDto) {
         userServiceImpl.createUser(userDto);
 
-        return ResponseEntity.ok("succes");
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

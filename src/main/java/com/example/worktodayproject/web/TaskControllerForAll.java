@@ -6,11 +6,14 @@ import com.example.worktodayproject.service.StudentTasksService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Контроллер заданий для всех
@@ -46,10 +49,14 @@ public class TaskControllerForAll {
      * @return ответ
      */
     @PostMapping("/start-task/{id}")
-    public ResponseEntity<String> startTask(@PathVariable Long id,
+    public ResponseEntity<Map<String, Object>> startTask(@PathVariable Long id,
                                             Principal principal) {
         studentTasksService.startTask(principal.getName(), id);
-        return ResponseEntity.ok("success");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -60,10 +67,14 @@ public class TaskControllerForAll {
      * @return ответ
      */
     @PostMapping("/complete-task/{id}")
-    public ResponseEntity<String> completeTask(@PathVariable Long id,
+    public ResponseEntity<Map<String, Object>> completeTask(@PathVariable Long id,
                                                Principal principal,
                                                @RequestBody TaskCompleteDto taskCompleteDto) {
         studentTasksService.completeTask(principal.getName(), id, taskCompleteDto);
-        return ResponseEntity.ok("success");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

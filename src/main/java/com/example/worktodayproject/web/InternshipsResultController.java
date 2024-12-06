@@ -5,10 +5,13 @@ import com.example.worktodayproject.service.InternshipResultService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Контроллер результата стажировки
@@ -30,7 +33,7 @@ public class InternshipsResultController {
      * @return
      */
     @PostMapping("/create/{internshipId}/{username}")
-    public ResponseEntity<String> createResult(@PathVariable String username,
+    public ResponseEntity<Map<String, Object>> createResult(@PathVariable String username,
                                                @PathVariable Long internshipId,
                                                Principal principal,
                                                @RequestBody ResultDto resultDto) {
@@ -38,6 +41,10 @@ public class InternshipsResultController {
                 principal.getName(),
                 internshipId,
                 resultDto);
-        return ResponseEntity.ok("success");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

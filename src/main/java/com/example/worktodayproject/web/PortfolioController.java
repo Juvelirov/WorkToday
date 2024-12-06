@@ -6,11 +6,14 @@ import com.example.worktodayproject.service.PortfolioService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Контроллер Portfolio
@@ -30,9 +33,13 @@ public class PortfolioController {
      * @return успешный ответ
      */
     @PostMapping("/create")
-    public ResponseEntity<String> createPortfolio(@RequestBody PortfolioDto portfolioDto, Principal principal) {
+    public ResponseEntity<Map<String, Object>> createPortfolio(@RequestBody PortfolioDto portfolioDto, Principal principal) {
         portfolioService.createPortfolio(principal.getName(), portfolioDto);
-        return ResponseEntity.ok("success");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -73,8 +80,12 @@ public class PortfolioController {
      * @return успешный ответ
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePortfolio(@PathVariable Long id, Principal principal) {
+    public ResponseEntity<Map<String, Object>> deletePortfolio(@PathVariable Long id, Principal principal) {
         portfolioService.deletePortfolio(id, principal.getName());
-        return ResponseEntity.ok("success");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

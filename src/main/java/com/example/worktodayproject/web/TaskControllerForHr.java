@@ -8,11 +8,14 @@ import com.example.worktodayproject.service.HrTasksService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Контроллер заданий для HR
@@ -74,11 +77,15 @@ public class TaskControllerForHr {
      * @return ответ
      */
     @DeleteMapping("/delete/{username}/{id}")
-    public ResponseEntity<String> deleteUserTask(@PathVariable String username,
+    public ResponseEntity<Map<String, Object>> deleteUserTask(@PathVariable String username,
                                                  @PathVariable Long id,
                                                  Principal principal) {
         hrTasksService.deleteTask(id, username, principal.getName());
-        return ResponseEntity.ok("success");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -90,11 +97,15 @@ public class TaskControllerForHr {
      * @return ответ
      */
     @PostMapping("/check/{username}/{id}")
-    public ResponseEntity<String> checkUserTask(@PathVariable Long id,
+    public ResponseEntity<Map<String, Object>> checkUserTask(@PathVariable Long id,
                                                 @PathVariable String username,
                                                 Principal principal,
                                                 @RequestBody CheckTaskDto checkTaskDto) {
         hrTasksService.checkUserTask(id, username, principal.getName(), checkTaskDto);
-        return ResponseEntity.ok("success");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

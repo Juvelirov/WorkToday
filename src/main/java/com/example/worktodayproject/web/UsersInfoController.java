@@ -6,11 +6,14 @@ import com.example.worktodayproject.service.UsersInfoService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Контроллер профиля
@@ -29,10 +32,13 @@ public class UsersInfoController {
      * @param principal
      */
     @PostMapping("/my-profile/set-data")
-    public ResponseEntity<String> setProfile(@RequestBody UsersInfoDto usersInfoDto, Principal principal) {
+    public ResponseEntity<Map<String, Object>> setProfile(@RequestBody UsersInfoDto usersInfoDto, Principal principal) {
         usersInfoService.updateUsersInfo(usersInfoDto, principal.getName());
 
-        return ResponseEntity.ok("succes");
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**

@@ -5,10 +5,13 @@ import com.example.worktodayproject.service.IntershipInfoService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Контроллер стажировок для HR
@@ -27,10 +30,13 @@ public class IntershipInfoControllerHr {
      * @param principal текущий пользователь
      */
     @PostMapping("/create")
-    public ResponseEntity<String> createIntership(@RequestBody IntershipInfoDto intershipInfoDto, Principal principal) {
+    public ResponseEntity<Map<String, Object>> createIntership(@RequestBody IntershipInfoDto intershipInfoDto, Principal principal) {
         intershipInfoService.createIntership(intershipInfoDto, principal.getName());
 
-        return ResponseEntity.ok("succes");
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -40,12 +46,15 @@ public class IntershipInfoControllerHr {
      * @param principal текущий пользователь
      */
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateIntership(@PathVariable Long id,
+    public ResponseEntity<Map<String, Object>> updateIntership(@PathVariable Long id,
                                 @RequestBody IntershipInfoDto intershipInfoDto,
                                 Principal principal) {
         intershipInfoService.updateIntership(id, intershipInfoDto, principal.getName());
 
-        return ResponseEntity.ok("succes");
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -54,10 +63,13 @@ public class IntershipInfoControllerHr {
      * @param principal текущий пользователь
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteIntership(@PathVariable Long id,
+    public ResponseEntity<Map<String, Object>> deleteIntership(@PathVariable Long id,
                                 Principal principal) {
         intershipInfoService.deleteIntership(id, principal.getName());
 
-        return ResponseEntity.ok("succes");
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

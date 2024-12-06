@@ -6,11 +6,14 @@ import com.example.worktodayproject.service.ResumeService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Контроллер резюме
@@ -30,9 +33,13 @@ public class ResumeController {
      * @return ответ
      */
     @PostMapping("/create")
-    public ResponseEntity<String> createResume(@RequestBody ResumeDto resumeDto, Principal principal) {
+    public ResponseEntity<Map<String, Object>> createResume(@RequestBody ResumeDto resumeDto, Principal principal) {
         resumeService.createResume(principal.getName(), resumeDto);
-        return ResponseEntity.ok("success");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -73,8 +80,12 @@ public class ResumeController {
      * @return успешный ответ
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePortfolio(@PathVariable Long id, Principal principal) {
+    public ResponseEntity<Map<String, Object>> deletePortfolio(@PathVariable Long id, Principal principal) {
         resumeService.deleteResume(principal.getName(), id);
-        return ResponseEntity.ok("success");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
