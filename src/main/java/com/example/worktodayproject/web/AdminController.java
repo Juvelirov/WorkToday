@@ -14,6 +14,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/private/admin")
+@CrossOrigin
 public class AdminController {
 
     UserService userService;

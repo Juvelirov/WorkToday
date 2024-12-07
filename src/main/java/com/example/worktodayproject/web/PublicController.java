@@ -1,14 +1,22 @@
 package com.example.worktodayproject.web;
 
+import com.example.worktodayproject.dto.request.JwtRequest;
+import com.example.worktodayproject.dto.response.JwtResponse;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
 import com.example.worktodayproject.security.dto.request.UserDto;
+import com.example.worktodayproject.security.service.UserDetailServiceImpl;
 import com.example.worktodayproject.security.service.UserService;
 import com.example.worktodayproject.service.UsersInfoService;
+import com.example.worktodayproject.utils.JwtTokensUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -21,8 +29,11 @@ import java.util.Map;
 @RequestMapping("/api/v1/public")
 public class PublicController {
 
-    UserService userServiceImpl;
+    UserService userService;
+    UserDetailServiceImpl userDetailService;
     UsersInfoService usersInfoService;
+    JwtTokensUtils jwtTokensUtils;
+    AuthenticationManager authenticationManager;
 
     @GetMapping()
     public List<UsersInfoResponse> getAllUserInfo() {
@@ -30,12 +41,30 @@ public class PublicController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Map<String, Object>> signUp(@RequestBody UserDto userDto) {
-        userServiceImpl.createUser(userDto);
+    public ResponseEntity<?> signUp(@RequestBody UserDto userDto) {
+        userService.createUser(userDto);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest jwtRequest) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("message", "Incorrect login or password");
+
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.username(),
+                    jwtRequest.password()));
+        } catch (BadCredentialsException e) {
+            return new ResponseEntity<>(map, HttpStatus.UNAUTHORIZED);
+        }
+
+        UserDetails userDetails = userDetailService.loadUserByUsername(jwtRequest.username());
+        String token = jwtTokensUtils.generateToken(userDetails);
+
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 }
