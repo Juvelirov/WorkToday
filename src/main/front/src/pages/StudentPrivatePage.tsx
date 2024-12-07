@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
 
 export function StudentPrivatePage() {
   return (
@@ -37,15 +38,19 @@ export function StudentPrivatePage() {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-5">
-        <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
-          <p className="text-white">Стажировки</p>
-        </div>
+        <Link to="/vacancies" replace>
+          <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
+            <span className="text-white">Стажировки</span>
+          </div>
+        </Link>
         <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
           <p className="text-white">Чат с работодателем</p>
         </div>
-        <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
-          <p className="text-white">Материалы</p>
-        </div>
+        <Link to="/base" replace>
+          <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
+            <p className="text-white">Материалы</p>
+          </div>
+        </Link>
         <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
           <p className="text-white">Задания</p>
         </div>

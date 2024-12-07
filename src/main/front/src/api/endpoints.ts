@@ -5,6 +5,7 @@ export const API_BASE_URL = "http://localhost:8080/api/v1";
 export const endpoints = {
   public: {
     registration: "/public/registration",
+    login: "/public/login",
     enroll: (id: s) => `/public/${id}/enroll`,
   },
   private: {
