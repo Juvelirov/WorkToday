@@ -1,17 +1,27 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import "./App.css";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { SignInForm } from "./pages/SignInForm";
 import { SignUpForm } from "./pages/SignUpForm";
-import { VacanciesPage } from "./pages/VacanciesPage";
+import { StudentPrivatePage } from "./pages/StudentPrivatePage";
+import { ProtectedRoute } from "./router/ProtectedRoute";
+import AdminPage from "./pages/AdminPage";
 
-function App() {
+export default function App() {
   return (
-    <>
-      {/* <SignInForm /> */}
-      <SignUpForm />
-      {/* <VacanciesPage /> */}
-    </>
+    <Router>
+      <Routes>
+        <Route path="/signin" element={<SignInForm />} />
+        <Route path="/signup" element={<SignUpForm />} />
+        {/* <Route path="/vacancies" element={<VacanciesPage />} /> */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <StudentPrivatePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/admin" element={<AdminPage />} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import type { b, n, s } from "../types";
+import type { n, s } from "../types";
 import { API_BASE_URL } from "./endpoints";
 
 export interface ApiOpts {
@@ -7,10 +6,10 @@ export interface ApiOpts {
   body?: s;
   headers?: Record<s, s>;
   queryParams?: Record<s, s | n>;
+  basicAuth?: { login: s; password: s };
 }
 
 export async function apiClient<T>(endpoint: s, options: ApiOpts): Promise<T> {
-  const token = localStorage.getItem("token");
   const url = new URL(`${API_BASE_URL}${endpoint}`);
 
   if (options.queryParams) {
@@ -19,11 +18,16 @@ export async function apiClient<T>(endpoint: s, options: ApiOpts): Promise<T> {
     }
   }
 
-  const headers = {
+  const headers: Record<s, s> = {
     "Content-Type": "application/json",
-    ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   };
+
+  if (options.basicAuth) {
+    const { login, password } = options.basicAuth;
+    const encodedCredentials = btoa(`${login}:${password}`);
+    headers.Authorization = `Basic ${encodedCredentials}`;
+  }
 
   const res = await fetch(url.toString(), { ...options, headers });
 

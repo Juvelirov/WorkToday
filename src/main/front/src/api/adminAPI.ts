@@ -5,6 +5,7 @@ import { endpoints } from "./endpoints";
 export async function fetchAllUsers() {
   return apiClient<UsersInfoDTO[]>(endpoints.private.admin.allUsers, {
     method: "GET",
+    basicAuth: { login: "sidor@yandex.ru", password: "huh300" },
   });
 }
 

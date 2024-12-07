@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { apiClient } from "@/api/apiClient";
 import { cn } from "@/lib/utils";
 import type { s } from "@/types";
@@ -7,13 +8,7 @@ import { Input } from "../components/ui/input";
 import type { UserDTO } from "@/api/apiTypes";
 
 export function SignUpForm() {
-  const [formData, setFormData] = useState<UserDTO>({
-    fio: "Иванов Иван Иванович",
-    login: "ivanov@yandex.ru",
-    password: "qwerty1",
-    email: "ivanov@yandex.ru",
-    role: "student",
-  });
+  const [formData, setFormData] = useState<UserDTO>(fakeAdminD);
   const [error, setError] = useState<s | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,3 +115,19 @@ function RoleSelection({ selectedRole, onRoleChange }: RoleSelectionProps) {
     </div>
   );
 }
+
+const fakeAdminD: UserDTO = {
+  fio: "Сидоров Сидор Сидорович",
+  login: "sidor@yandex.ru",
+  password: "huh300",
+  email: "sidor@yandex.ru",
+  role: "admin",
+};
+
+const fakeStudentD: UserDTO = {
+  fio: "Иванов Иван Иванович",
+  login: "ivanov@yandex.ru",
+  password: "qwerty1",
+  email: "ivanov@yandex.ru",
+  role: "student",
+};

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 
@@ -14,9 +15,9 @@ export function SignInForm() {
         </Button>
         <p className="text-sm text-center">
           Нет аккаунта?{" "}
-          <a href="f" className="text-blue-500">
-            Зарегистрируйтесь
-          </a>
+          <Link to="/signup">
+            <span className="text-blue-700">Зарегистрируйтесь</span>
+          </Link>
         </p>
       </form>
     </div>
