@@ -131,3 +131,11 @@ const fakeStudentD: UserDTO = {
   email: "ivanov@yandex.ru",
   role: "student",
 };
+
+const fakeHRD: UserDTO = {
+  fio: "Петров Петр Петрович",
+  login: "petrov@yandex.ru",
+  password: "assword3000",
+  email: "petrov@yandex.ru",
+  role: "hr",
+};

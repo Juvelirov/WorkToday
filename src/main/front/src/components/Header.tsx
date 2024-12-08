@@ -1,3 +1,4 @@
+import { signout } from "@/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +22,7 @@ function Avatar() {
 
   const menuOptions = [
     { label: "Profile", action: () => navigate("/") },
-    { label: "Log out", action: () => alert("Logging out...") },
+    { label: "Sign out", action: signout },
   ];
 
   return (

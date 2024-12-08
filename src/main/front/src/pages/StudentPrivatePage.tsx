@@ -39,19 +39,19 @@ export function StudentPrivatePage() {
       </div>
       <div className="grid grid-cols-2 gap-5">
         <Link to="/vacancies" replace>
-          <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
+          <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500 transform transition hover:scale-105">
             <span className="text-white">Стажировки</span>
           </div>
         </Link>
-        <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
+        <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500 transform transition hover:scale-105">
           <p className="text-white">Чат с работодателем</p>
         </div>
         <Link to="/base" replace>
-          <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
+          <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500 transform transition hover:scale-105">
             <p className="text-white">Материалы</p>
           </div>
         </Link>
-        <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500">
+        <div className="w-60 h-40 p-4 rounded-2xl bg-gray-500 transform transition hover:scale-105">
           <p className="text-white">Задания</p>
         </div>
       </div>
