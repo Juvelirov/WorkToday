@@ -5,11 +5,14 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.ErrorResponse;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Отлов всех ошибок в приложении
@@ -173,5 +176,15 @@ public class ExceptionAdvice {
         log.info(ex.getMessage());
         log.error(Arrays.toString(ex.getStackTrace()));
         return new ExceptionResponse(ex.getMessage(), GradeNotSetException.CODE);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        return ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(x -> new ExceptionResponse(x.getDefaultMessage(), "400"))
+                .toList();
     }
 }

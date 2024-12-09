@@ -3,11 +3,13 @@ package com.example.worktodayproject.web;
 import com.example.worktodayproject.dto.request.ResumeDto;
 import com.example.worktodayproject.dto.response.ResumeResponse;
 import com.example.worktodayproject.service.ResumeService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,6 +24,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/api/v1/private/student/resume")
+@Validated
 public class ResumeController {
 
     ResumeService resumeService;
@@ -33,7 +36,8 @@ public class ResumeController {
      * @return ответ
      */
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> createResume(@RequestBody ResumeDto resumeDto, Principal principal) {
+    public ResponseEntity<Map<String, Object>> createResume(@Valid @RequestBody ResumeDto resumeDto,
+                                                            Principal principal) {
         resumeService.createResume(principal.getName(), resumeDto);
 
         Map<String, Object> response = new HashMap<>();

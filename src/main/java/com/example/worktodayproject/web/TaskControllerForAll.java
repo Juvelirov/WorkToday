@@ -3,11 +3,13 @@ package com.example.worktodayproject.web;
 import com.example.worktodayproject.dto.request.TaskCompleteDto;
 import com.example.worktodayproject.dto.response.TaskResponse;
 import com.example.worktodayproject.service.StudentTasksService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,6 +24,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/private/student/task")
+@Validated
 public class TaskControllerForAll {
 
     StudentTasksService studentTasksService;
@@ -69,7 +72,7 @@ public class TaskControllerForAll {
     @PostMapping("/complete-task/{id}")
     public ResponseEntity<Map<String, Object>> completeTask(@PathVariable Long id,
                                                Principal principal,
-                                               @RequestBody TaskCompleteDto taskCompleteDto) {
+                                               @Valid @RequestBody TaskCompleteDto taskCompleteDto) {
         studentTasksService.completeTask(principal.getName(), id, taskCompleteDto);
 
         Map<String, Object> response = new HashMap<>();

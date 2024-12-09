@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
- * Сервис работы с стажировками
+ * Сервис работы со стажировками
  */
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

@@ -5,11 +5,13 @@ import com.example.worktodayproject.dto.request.TaskCompleteDto;
 import com.example.worktodayproject.dto.request.TaskDto;
 import com.example.worktodayproject.dto.response.TaskResponse;
 import com.example.worktodayproject.service.HrTasksService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -24,6 +26,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/private/hr/task")
+@Validated
 public class TaskControllerForHr {
 
     HrTasksService hrTasksService;
@@ -38,7 +41,7 @@ public class TaskControllerForHr {
     @PostMapping("/create/{internshipId}/{studentId}")
     public void assignTask(@PathVariable Long internshipId,
                            @PathVariable Long studentId,
-                           @RequestBody TaskDto taskDto,
+                           @Valid @RequestBody TaskDto taskDto,
                            Principal principal) {
         hrTasksService.assignTask(internshipId, studentId, taskDto, principal.getName());
     }
@@ -100,7 +103,7 @@ public class TaskControllerForHr {
     public ResponseEntity<Map<String, Object>> checkUserTask(@PathVariable Long id,
                                                 @PathVariable String username,
                                                 Principal principal,
-                                                @RequestBody CheckTaskDto checkTaskDto) {
+                                                @Valid @RequestBody CheckTaskDto checkTaskDto) {
         hrTasksService.checkUserTask(id, username, principal.getName(), checkTaskDto);
 
         Map<String, Object> response = new HashMap<>();

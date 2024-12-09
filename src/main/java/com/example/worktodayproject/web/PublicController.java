@@ -8,6 +8,7 @@ import com.example.worktodayproject.security.service.UserDetailServiceImpl;
 import com.example.worktodayproject.security.service.UserService;
 import com.example.worktodayproject.service.UsersInfoService;
 import com.example.worktodayproject.utils.JwtTokensUtils;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -27,6 +29,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/public")
+@Validated
 public class PublicController {
 
     UserService userService;
@@ -41,7 +44,7 @@ public class PublicController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<?> signUp(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> signUp(@Valid @RequestBody UserDto userDto) {
         userService.createUser(userDto);
 
         Map<String, Object> response = new HashMap<>();
@@ -51,7 +54,7 @@ public class PublicController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest jwtRequest) {
+    public ResponseEntity<?> createAuthToken(@Valid @RequestBody JwtRequest jwtRequest) {
         Map<String, Object> map = new HashMap<>();
         map.put("message", "Incorrect login or password");
 

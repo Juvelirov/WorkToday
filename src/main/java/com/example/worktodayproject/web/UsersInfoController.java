@@ -3,11 +3,13 @@ package com.example.worktodayproject.web;
 import com.example.worktodayproject.dto.request.UsersInfoDto;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
 import com.example.worktodayproject.service.UsersInfoService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,6 +24,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/private/student/profiles")
+@Validated
 public class UsersInfoController {
 
     UsersInfoService usersInfoService;
@@ -32,7 +35,8 @@ public class UsersInfoController {
      * @param principal
      */
     @PostMapping("/my-profile/set-data")
-    public ResponseEntity<Map<String, Object>> setProfile(@RequestBody UsersInfoDto usersInfoDto, Principal principal) {
+    public ResponseEntity<Map<String, Object>> setProfile(@Valid @RequestBody UsersInfoDto usersInfoDto,
+                                                          Principal principal) {
         usersInfoService.updateUsersInfo(usersInfoDto, principal.getName());
 
         Map<String, Object> response = new HashMap<>();

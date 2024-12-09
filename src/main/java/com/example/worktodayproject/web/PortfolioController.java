@@ -3,11 +3,13 @@ package com.example.worktodayproject.web;
 import com.example.worktodayproject.dto.request.PortfolioDto;
 import com.example.worktodayproject.dto.response.PortfolioResponse;
 import com.example.worktodayproject.service.PortfolioService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,6 +24,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/private/student/portfolio")
+@Validated
 public class PortfolioController {
 
     PortfolioService portfolioService;
@@ -33,7 +36,8 @@ public class PortfolioController {
      * @return успешный ответ
      */
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> createPortfolio(@RequestBody PortfolioDto portfolioDto, Principal principal) {
+    public ResponseEntity<Map<String, Object>> createPortfolio(@Valid @RequestBody PortfolioDto portfolioDto,
+                                                               Principal principal) {
         portfolioService.createPortfolio(principal.getName(), portfolioDto);
 
         Map<String, Object> response = new HashMap<>();

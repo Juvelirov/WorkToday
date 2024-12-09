@@ -41,7 +41,7 @@ public class UserService {
         Roles role = roleRepository.findByRole(userDto.role());
 
         user.setFio(userDto.fio());
-        user.setLogin(userDto.login());
+        user.setLogin(userDto.email());
         user.setPassword(passwordEncoder.encode(userDto.password()));
         user.setEmail(userDto.email());
         user.setCreate(LocalDateTime.now());
@@ -109,10 +109,10 @@ public class UserService {
      * @param userDto дто пользователя
      */
     public void updateUser(UserDto userDto) {
-        Users user = usersRepository.findByLogin(userDto.login());
+        Users user = usersRepository.findByLogin(userDto.email());
 
         if (user != null) {
-            user.setLogin(userDto.login());
+            user.setLogin(userDto.email());
             user.setPassword(userDto.password());
             user.setEmail(userDto.email());
         }

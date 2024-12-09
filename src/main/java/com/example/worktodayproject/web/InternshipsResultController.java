@@ -2,11 +2,13 @@ package com.example.worktodayproject.web;
 
 import com.example.worktodayproject.dto.request.ResultDto;
 import com.example.worktodayproject.service.InternshipResultService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -20,6 +22,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/api/v1/private/hr/result")
+@Validated
 public class InternshipsResultController {
 
     InternshipResultService internshipResultService;
@@ -36,7 +39,7 @@ public class InternshipsResultController {
     public ResponseEntity<Map<String, Object>> createResult(@PathVariable String username,
                                                @PathVariable Long internshipId,
                                                Principal principal,
-                                               @RequestBody ResultDto resultDto) {
+                                               @Valid @RequestBody ResultDto resultDto) {
         internshipResultService.createInternshipResult(username,
                 principal.getName(),
                 internshipId,
