@@ -59,13 +59,13 @@ public class PublicController {
         map.put("message", "Incorrect login or password");
 
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.username(),
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.email(),
                     jwtRequest.password()));
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(map, HttpStatus.UNAUTHORIZED);
         }
 
-        UserDetails userDetails = userDetailService.loadUserByUsername(jwtRequest.username());
+        UserDetails userDetails = userDetailService.loadUserByUsername(jwtRequest.email());
         String token = jwtTokensUtils.generateToken(userDetails);
 
         return ResponseEntity.ok(new JwtResponse(token));
