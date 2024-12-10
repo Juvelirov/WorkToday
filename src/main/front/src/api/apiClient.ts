@@ -25,8 +25,7 @@ export async function apiClient<T>(endpoint: s, options: ApiOpts): Promise<T> {
 
   if (options.basicAuth) {
     const { login, password } = options.basicAuth;
-    const encodedCredentials = btoa(`${login}:${password}`);
-    headers.Authorization = `Basic ${encodedCredentials}`;
+    headers.Authorization = `Basic ${btoa(`${login}:${password}`)}`;
   }
 
   const res = await fetch(url.toString(), { ...options, headers });

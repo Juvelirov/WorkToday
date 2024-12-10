@@ -20,7 +20,6 @@ interface Users {
 
 export interface UserDTO {
   fio: s;
-  login: s;
   password: s;
   email: s;
   role: s;

@@ -8,7 +8,7 @@ import { Input } from "../components/ui/input";
 import type { UserDTO } from "@/api/apiTypes";
 
 export function SignUpForm() {
-  const [formData, setFormData] = useState<UserDTO>(fakeAdminD);
+  const [formData, setFormData] = useState<UserDTO>(fakeInternD);
   const [error, setError] = useState<s | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +35,7 @@ export function SignUpForm() {
     <div className="flex flex-col justify-center items-center h-screen">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col w-[446px] bg-gray-500 p-8 rounded-3xl"
+        className="flex flex-col w-[400px] bg-[#E4C1FF] p-8 rounded-3xl"
       >
         <RoleSelection
           selectedRole={formData.role}
@@ -50,7 +50,7 @@ export function SignUpForm() {
           />
           <Input
             type="email"
-            placeholder="Логин"
+            placeholder="Почта"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -70,7 +70,7 @@ export function SignUpForm() {
           </p>
         </div>
         {error && <p className="text-red-500 text-sm">{error}</p>}
-        <Button type="submit" className="bg-purple-500 w-full rounded-xl">
+        <Button type="submit" className="bg-[#8300E7] w-full rounded-xl">
           Зарегистрироваться
         </Button>
       </form>
@@ -90,7 +90,7 @@ function RoleSelection({ selectedRole, onRoleChange }: RoleSelectionProps) {
         <p
           className={cn(
             "p-1 rounded-md cursor-pointer",
-            selectedRole === "student" && "bg-gray-500"
+            selectedRole === "student" && "bg-[#E4C1FF]"
           )}
           onClick={() => onRoleChange("student")}
           onKeyUp={(e) => {
@@ -102,7 +102,7 @@ function RoleSelection({ selectedRole, onRoleChange }: RoleSelectionProps) {
         <p
           className={cn(
             "p-1 rounded-md cursor-pointer",
-            selectedRole === "hr" && "bg-gray-500"
+            selectedRole === "hr" && "bg-[#E4C1FF]"
           )}
           onClick={() => onRoleChange("hr")}
           onKeyUp={(e) => {
@@ -116,26 +116,23 @@ function RoleSelection({ selectedRole, onRoleChange }: RoleSelectionProps) {
   );
 }
 
-const fakeAdminD: UserDTO = {
-  fio: "Сидоров Сидор Сидорович",
-  login: "sidor@yandex.ru",
-  password: "huh300",
-  email: "sidor@yandex.ru",
+export const fakeAdminD: UserDTO = {
   role: "admin",
+  fio: "Максимов Максим Максимович",
+  email: "maximov@yandex.ru",
+  password: "adm123",
 };
 
-const fakeStudentD: UserDTO = {
-  fio: "Иванов Иван Иванович",
-  login: "ivanov@yandex.ru",
-  password: "qwerty1",
-  email: "ivanov@yandex.ru",
+export const fakeInternD: UserDTO = {
   role: "student",
+  fio: "Алексеев Алексей Алексеевич",
+  email: "aleks@yandex.ru",
+  password: "aah123",
 };
 
-const fakeHRD: UserDTO = {
-  fio: "Петров Петр Петрович",
-  login: "petrov@yandex.ru",
-  password: "assword3000",
-  email: "petrov@yandex.ru",
+export const fakeHRD: UserDTO = {
   role: "hr",
+  fio: "Сергеев Сергей Сергеевич",
+  email: "serega@yandex.ru",
+  password: "hr123",
 };

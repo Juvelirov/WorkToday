@@ -1,14 +1,21 @@
 import { signout } from "@/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import IB from "./IB";
 
-export function Header() {
+export default function Header() {
   return (
     <div className="flex justify-between items-center mb-6">
       <h1 className="text-xl font-bold">
-        Work<span className="text-purple-900">Today</span>
+        Work<span className="text-[#8300E7]">Today</span>
       </h1>
-      <Avatar />
+      <div className="flex gap-5">
+        <div className="flex items-center">
+          <IB nameOutlined="star_border" nameFilled="star" />
+          <IB nameOutlined="notifications_none" nameFilled="notifications" />
+        </div>
+        <Avatar />
+      </div>
     </div>
   );
 }
@@ -28,7 +35,7 @@ function Avatar() {
   return (
     <div className="relative">
       <div
-        className="rounded-xl w-12 h-12 bg-gray-500 cursor-pointer"
+        className="rounded-xl w-12 h-12 bg-[#F3DFFF] cursor-pointer"
         onClick={toggleMenu}
         onKeyUp={(e) => {
           if (e.key === "Enter" || e.key === " ") toggleMenu();

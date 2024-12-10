@@ -4,9 +4,13 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { apiClient } from "@/api/apiClient";
 import type { s } from "@/types";
+import { fakeInternD } from "./SignUpForm";
 
 export function SignInForm() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: fakeInternD.email,
+    password: fakeInternD.password,
+  });
   const [error, setError] = useState<s | null>(null);
   const navigate = useNavigate();
 
@@ -33,12 +37,12 @@ export function SignInForm() {
     <div className="flex justify-center items-center h-screen">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col w-[446px] bg-gray-500 p-8 rounded-3xl"
+        className="flex flex-col w-[400px] bg-[#E4C1FF] p-8 rounded-3xl"
       >
         <div className="flex flex-col gap-6 mb-8">
           <Input
             type="email"
-            placeholder="Логин"
+            placeholder="Почта"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -54,7 +58,7 @@ export function SignInForm() {
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
-        <Button type="submit" className="bg-purple-500 w-full rounded-xl mb-8">
+        <Button type="submit" className="bg-[#8300E7] w-full rounded-xl mb-8">
           Войти
         </Button>
 
