@@ -4,7 +4,7 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { apiClient } from "@/api/apiClient";
 import type { s } from "@/types";
-import { fakeInternD } from "./SignUpForm";
+import { fakeInternD } from "@/lib/utils";
 
 export function SignInForm() {
   const [formData, setFormData] = useState({

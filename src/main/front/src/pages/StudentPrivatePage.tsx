@@ -40,7 +40,7 @@ export function StudentPrivatePage() {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-5">
-        <Link to="/vacancies" replace>
+        <Link to="/internships" replace>
           <div className="w-60 h-40 p-4 rounded-2xl bg-[#F3DFFF] transform transition hover:scale-105">
             <span>Стажировки</span>
           </div>

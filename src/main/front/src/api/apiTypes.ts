@@ -26,15 +26,16 @@ export interface UserDTO {
 }
 
 // student/internships!
-interface IntershipInfoResponse {
+export interface InternshipInfoResponse {
   id: n;
   title: s;
   description: s;
   fields: s;
   tags: s[];
   creator: UserResponse;
+  city: s;
 }
-type UserResponse = { fio: s; login: s; email: s };
+type UserResponse = { fio: s; email: s };
 
 // hr/internships
 interface IntershipInfoDTO {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { apiClient } from "@/api/apiClient";
-import { cn } from "@/lib/utils";
+import { cn, fakeInternD } from "@/lib/utils";
 import type { s } from "@/types";
 import { useState } from "react";
 import { Button } from "../components/ui/button";
@@ -115,24 +115,3 @@ function RoleSelection({ selectedRole, onRoleChange }: RoleSelectionProps) {
     </div>
   );
 }
-
-export const fakeAdminD: UserDTO = {
-  role: "admin",
-  fio: "Максимов Максим Максимович",
-  email: "maximov@yandex.ru",
-  password: "adm123",
-};
-
-export const fakeInternD: UserDTO = {
-  role: "student",
-  fio: "Алексеев Алексей Алексеевич",
-  email: "aleks@yandex.ru",
-  password: "aah123",
-};
-
-export const fakeHRD: UserDTO = {
-  role: "hr",
-  fio: "Сергеев Сергей Сергеевич",
-  email: "serega@yandex.ru",
-  password: "hr123",
-};

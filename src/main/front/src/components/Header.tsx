@@ -11,7 +11,6 @@ export default function Header() {
       </h1>
       <div className="flex gap-5">
         <div className="flex items-center">
-          <IB nameOutlined="star_border" nameFilled="star" />
           <IB nameOutlined="notifications_none" nameFilled="notifications" />
         </div>
         <Avatar />
