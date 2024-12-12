@@ -38,6 +38,7 @@ export const fakeInternshipD: InternshipInfoResponse[] = [
     creator: {
       fio: "Иванов Иван Иванович",
       email: "ivanov@company.com",
+      company: "ТехноВижн",
     },
     city: "Москва",
   },
@@ -51,6 +52,7 @@ export const fakeInternshipD: InternshipInfoResponse[] = [
     creator: {
       fio: "Петрова Анна Сергеевна",
       email: "petrova@company.com",
+      company: "Инноватек",
     },
     city: "Екатеринбург",
   },
@@ -64,6 +66,7 @@ export const fakeInternshipD: InternshipInfoResponse[] = [
     creator: {
       fio: "Сидоров Михаил Владимирович",
       email: "sidorov@company.com",
+      company: "Цифроград",
     },
     city: "Новосибирск",
   },

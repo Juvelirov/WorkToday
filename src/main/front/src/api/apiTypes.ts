@@ -35,7 +35,7 @@ export interface InternshipInfoResponse {
   creator: UserResponse;
   city: s;
 }
-type UserResponse = { fio: s; email: s };
+type UserResponse = { fio: s; email: s; company: s };
 
 // hr/internships
 interface IntershipInfoDTO {
