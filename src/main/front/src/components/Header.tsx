@@ -2,10 +2,11 @@ import { signout } from "@/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import IB from "./IB";
+import type { Pv, v } from "@/types";
 
 export default function Header() {
   return (
-    <div className="flex justify-between items-center mb-6">
+    <div className="flex justify-between items-center mb-6 bg-white">
       <h1 className="text-xl font-bold">
         Work<span className="text-[#8300E7]">Today</span>
       </h1>
@@ -26,10 +27,15 @@ function Avatar() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
-  const menuOptions = [
-    { label: "Profile", action: () => navigate("/") },
+  const menuOpts: { label: string; action: () => v | Pv }[] = [
+    window.location.pathname !== "/"
+      ? { label: "Profile", action: () => navigate("/") }
+      : null,
+    window.location.pathname !== "/internships"
+      ? { label: "Internships", action: () => navigate("/internships") }
+      : null,
     { label: "Sign out", action: signout },
-  ];
+  ].filter((o): o is { label: string; action: () => v | Pv } => Boolean(o));
 
   return (
     <div className="relative">
@@ -50,7 +56,7 @@ function Avatar() {
           onMouseLeave={closeMenu}
         >
           <ul className="py-2">
-            {menuOptions.map((option) => (
+            {menuOpts.map((option) => (
               <li
                 key={option.label}
                 onClick={() => {

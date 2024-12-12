@@ -158,7 +158,7 @@ type ResumeResponseList = ResumeResponseHUH[];
 // student/profiles
 // UsersInfoDTO
 
-interface UserInfoResponse {
+interface UsersInfoResponse {
   id: n;
   username: s;
   name: s;

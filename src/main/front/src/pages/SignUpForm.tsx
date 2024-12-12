@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { apiClient } from "@/api/apiClient";
 import { cn, fakeInternD } from "@/lib/utils";
-import type { s } from "@/types";
+import type { s, v } from "@/types";
 import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -80,7 +80,7 @@ export function SignUpForm() {
 
 interface RoleSelectionProps {
   selectedRole: UserDTO["role"];
-  onRoleChange: (role: UserDTO["role"]) => void;
+  onRoleChange: (role: UserDTO["role"]) => v;
 }
 
 function RoleSelection({ selectedRole, onRoleChange }: RoleSelectionProps) {

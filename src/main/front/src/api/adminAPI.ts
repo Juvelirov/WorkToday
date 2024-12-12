@@ -10,7 +10,7 @@ export async function fetchAllUsers() {
 }
 
 // export async function deleteUser(login: s) {
-//   return apiClient<void>(endpoints.private.admin.deleteUser, {
+//   return apiClient<v>(endpoints.private.admin.deleteUser, {
 //     method: "DELETE",
 //     body: JSON.stringify({ login }),
 //   });
@@ -21,7 +21,7 @@ export async function fetchAllUsers() {
 // }
 
 // export async function updateUser(user: User) {
-//   return apiClient<void>(endpoints.private.admin.updateUser, {
+//   return apiClient<v>(endpoints.private.admin.updateUser, {
 //     method: "PUT",
 //     body: JSON.stringify(user),
 //   });

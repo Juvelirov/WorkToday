@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 export function InternshipSearchPage() {
   return (
-    <div className="px-32 mt-8 mb-8">
+    <div className="px-32 my-8">
       <Header />
       <Filter />
       <div className="flex flex-col gap-7">

@@ -20,7 +20,7 @@
 // }
 
 // export async function deleteInternship(id: s) {
-//   return apiClient<void>(endpoints.private.hr.deleteInternship(id), {
+//   return apiClient<v>(endpoints.private.hr.deleteInternship(id), {
 //     method: "DELETE",
 //   });
 // }
