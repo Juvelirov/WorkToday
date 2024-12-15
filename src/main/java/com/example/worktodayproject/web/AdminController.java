@@ -2,6 +2,7 @@ package com.example.worktodayproject.web;
 
 import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.security.dto.request.UserDto;
+import com.example.worktodayproject.security.dto.response.UserResponse;
 import com.example.worktodayproject.security.service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class AdminController {
      * @return список пользователей
      */
     @GetMapping("/all-users")
-    public List<Users> getUsers() {
+    public List<UserResponse> getUsers() {
         return userService.getAllUsers();
     }
 

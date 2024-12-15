@@ -25,7 +25,6 @@ public class MapperUtils {
 
         UserResponse userResponse = new UserResponse(intershipsInfo.getUser().getId(),
                 intershipsInfo.getUser().getFio(),
-                intershipsInfo.getUser().getLogin(),
                 intershipsInfo.getUser().getEmail());
 
         for (Tags tags : intershipsInfo.getTags()) {
@@ -216,5 +215,19 @@ public class MapperUtils {
                 internshipsResult.getRecomendation(),
                 internshipsResult.getFinalDate(),
                 mappingReport(internshipsResult.getReport()));
+    }
+
+    public List<UserResponse> mappingUsersList(List<Users> users) {
+        List<UserResponse> userResponses = new ArrayList<>();
+        for (Users user : users) {
+            userResponses.add(mappingUsers(user));
+        }
+        return userResponses;
+    }
+
+    public UserResponse mappingUsers(Users users) {
+        return new UserResponse(users.getId(),
+                users.getFio(),
+                users.getEmail());
     }
 }

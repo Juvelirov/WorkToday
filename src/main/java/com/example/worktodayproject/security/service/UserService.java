@@ -7,6 +7,8 @@ import com.example.worktodayproject.database.repository.RoleRepository;
 import com.example.worktodayproject.database.repository.UsersInfoRepository;
 import com.example.worktodayproject.database.repository.UsersRepository;
 import com.example.worktodayproject.security.dto.request.UserDto;
+import com.example.worktodayproject.security.dto.response.UserResponse;
+import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * CRUD пользователя
@@ -26,6 +29,7 @@ import java.util.List;
 @Transactional
 public class UserService {
 
+    MapperUtils mapperUtils = new MapperUtils();
     UsersRepository usersRepository;
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
@@ -91,8 +95,9 @@ public class UserService {
      * Получить всех пользователей
      * @return список всех пользователей
      */
-    public List<Users> getAllUsers() {
-        return usersRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        List<Users> users = usersRepository.findAll();
+        return mapperUtils.mappingUsersList(users);
     }
 
     /**
