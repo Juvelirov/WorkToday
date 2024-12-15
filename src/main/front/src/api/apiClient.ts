@@ -1,3 +1,4 @@
+import { getToken } from "@/auth";
 import type { n, s } from "../types";
 import { API_BASE_URL } from "./endpoints";
 
@@ -6,7 +7,6 @@ export interface ApiOpts {
   body?: s;
   headers?: Record<s, s>;
   queryParams?: Record<s, s | n>;
-  basicAuth?: { login: s; password: s };
 }
 
 export async function apiClient<T>(endpoint: s, options: ApiOpts): Promise<T> {
@@ -23,12 +23,13 @@ export async function apiClient<T>(endpoint: s, options: ApiOpts): Promise<T> {
     ...options.headers,
   };
 
-  if (options.basicAuth) {
-    const { login, password } = options.basicAuth;
-    headers.Authorization = `Basic ${btoa(`${login}:${password}`)}`;
-  }
+  const token = getToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(url.toString(), { ...options, headers });
+  const res = await fetch(url.toString(), {
+    ...options,
+    headers,
+  });
 
   if (!res.ok) {
     const error = await res.json();

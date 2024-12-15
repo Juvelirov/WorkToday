@@ -1,22 +1,48 @@
 import type { InternshipInfoResponse } from "@/api/apiTypes";
+import { fetchInternships } from "@/api/internAPI";
 import Bbls from "@/components/Bbls";
 import Header from "@/components/Header";
 import I from "@/components/I";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { fakeInternshipD } from "@/lib/utils";
+import type { b, Pv, s } from "@/types";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export function InternshipSearchPage() {
+  const [internships, setInternships] = useState<InternshipInfoResponse[]>();
+  const [loading, setLoading] = useState<b>(false);
+  const [error, setError] = useState<s | null>(null);
+
+  const loadInternships = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const internshipsD = await fetchInternships();
+      setInternships(internshipsD);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch internships."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="px-32 my-8">
       <Header />
-      <Filter />
+      <Filter loadInternships={loadInternships} />
       <div className="flex flex-col gap-7">
-        {fakeInternshipD.map((i) => (
+        {/* {fakeInternshipD.map((i) => (
+          <InternshipCard key={i.id} data={{ ...i }} />
+        ))} */}
+        {internships?.map((i) => (
           <InternshipCard key={i.id} data={{ ...i }} />
         ))}
       </div>
+      {loading && <div>Loading...</div>}
+      {error && <div className="text-red-500">Error: {error}</div>}
     </div>
   );
 }
@@ -43,7 +69,11 @@ function InternshipCard(p: InternshipCard) {
   );
 }
 
-function Filter() {
+interface Filter {
+  loadInternships: () => Pv;
+}
+
+function Filter(p: Filter) {
   return (
     <div className="flex items-center gap-5 mb-10 p-4 bg-[#F3DFFF] rounded-2xl">
       <div className="flex items-center gap-2 flex-grow">
@@ -54,7 +84,9 @@ function Filter() {
         <I name="location_on" />
         <Input placeholder="Город" />
       </div>
-      <Button className="bg-[#8300E7]">Найти</Button>
+      <Button className="bg-[#8300E7]" onClick={p.loadInternships}>
+        Найти
+      </Button>
     </div>
   );
 }

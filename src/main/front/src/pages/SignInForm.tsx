@@ -1,15 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+import { apiClient } from "@/api/apiClient";
+import { setToken } from "@/auth";
+import { fakeAdminD, fakeHrD, fakeInternD } from "@/lib/utils";
+import type { s } from "@/types";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { apiClient } from "@/api/apiClient";
-import type { s } from "@/types";
-import { fakeInternD } from "@/lib/utils";
 
 export function SignInForm() {
   const [formData, setFormData] = useState({
-    email: fakeInternD.email,
-    password: fakeInternD.password,
+    email: fakeAdminD.email,
+    password: fakeAdminD.password,
   });
   const [error, setError] = useState<s | null>(null);
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export function SignInForm() {
       body: JSON.stringify(formData),
     });
 
-    localStorage.setItem("token", response.token);
+    setToken(response.token);
 
     navigate("/");
   };

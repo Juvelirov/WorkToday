@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { apiClient } from "@/api/apiClient";
-import { cn, fakeInternD } from "@/lib/utils";
+import { cn, fakeAdminD, fakeHrD, fakeInternD } from "@/lib/utils";
 import type { s, v } from "@/types";
 import { useState } from "react";
 import { Button } from "../components/ui/button";
@@ -8,7 +8,7 @@ import { Input } from "../components/ui/input";
 import type { UserDTO } from "@/api/apiTypes";
 
 export function SignUpForm() {
-  const [formData, setFormData] = useState<UserDTO>(fakeInternD);
+  const [formData, setFormData] = useState<UserDTO>(fakeAdminD);
   const [error, setError] = useState<s | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,23 +78,24 @@ export function SignUpForm() {
   );
 }
 
-interface RoleSelectionProps {
+interface RoleSelection {
   selectedRole: UserDTO["role"];
   onRoleChange: (role: UserDTO["role"]) => v;
 }
 
-function RoleSelection({ selectedRole, onRoleChange }: RoleSelectionProps) {
+function RoleSelection(p: RoleSelection) {
   return (
     <div className="flex justify-center mb-8">
       <div className="flex gap-1 p-[6px] bg-white rounded-md">
         <p
           className={cn(
             "p-1 rounded-md cursor-pointer",
-            selectedRole === "student" && "bg-[#E4C1FF]"
+            p.selectedRole === "ROLE_STUDENT" && "bg-[#E4C1FF]"
           )}
-          onClick={() => onRoleChange("student")}
+          onClick={() => p.onRoleChange("ROLE_STUDENT")}
           onKeyUp={(e) => {
-            if (e.key === "Enter" || e.key === " ") onRoleChange("student");
+            if (e.key === "Enter" || e.key === " ")
+              p.onRoleChange("ROLE_STUDENT");
           }}
         >
           Практикант
@@ -102,11 +103,11 @@ function RoleSelection({ selectedRole, onRoleChange }: RoleSelectionProps) {
         <p
           className={cn(
             "p-1 rounded-md cursor-pointer",
-            selectedRole === "hr" && "bg-[#E4C1FF]"
+            p.selectedRole === "ROLE_HR" && "bg-[#E4C1FF]"
           )}
-          onClick={() => onRoleChange("hr")}
+          onClick={() => p.onRoleChange("ROLE_HR")}
           onKeyUp={(e) => {
-            if (e.key === "Enter" || e.key === " ") onRoleChange("hr");
+            if (e.key === "Enter" || e.key === " ") p.onRoleChange("ROLE_HR");
           }}
         >
           Работодатель

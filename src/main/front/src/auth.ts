@@ -1,11 +1,11 @@
-import type { b } from "./types";
+import type { s } from "./types";
 
-export function isUserAuthenticated(): b {
-  return !!localStorage.getItem("token");
-  // return true;
-}
+export const isUserAuthenticated = () => !!getToken();
 
 export function signout() {
   localStorage.removeItem("token");
   window.location.href = "/signin";
 }
+
+export const getToken = () => localStorage.getItem("token");
+export const setToken = (v: s) => localStorage.setItem("token", v);

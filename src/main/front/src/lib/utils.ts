@@ -7,23 +7,23 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const fakeAdminD: UserDTO = {
-  role: "admin",
-  fio: "Максимов Максим Максимович",
-  email: "maximov@yandex.ru",
-  password: "adm123",
+  role: "ROLE_ADMIN",
+  fio: "Шарифов Максим Максимович",
+  email: "max@yandex.ru",
+  password: "admin123",
 };
 
 export const fakeInternD: UserDTO = {
-  role: "student",
-  fio: "Алексеев Алексей Алексеевич",
-  email: "aleks@yandex.ru",
-  password: "aah123",
+  role: "ROLE_STUDENT",
+  fio: "Макаров Алексей Алексеевич",
+  email: "alek@yandex.ru",
+  password: "UHU123",
 };
 
-export const fakeHRD: UserDTO = {
-  role: "hr",
+export const fakeHrD: UserDTO = {
+  role: "ROLE_HR",
   fio: "Сергеев Сергей Сергеевич",
-  email: "serega@yandex.ru",
+  email: "serGEY@yandex.ru",
   password: "hr123",
 };
 

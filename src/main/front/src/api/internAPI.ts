@@ -1,6 +1,13 @@
-// export async function fetchMyInternships() {
-//   return apiClient<Internship[]>(endpoints.private.student.internships);
-// }
+import { apiClient } from "./apiClient";
+import type { InternshipInfoResponse } from "./apiTypes";
+import { endpoints } from "./endpoints";
+
+export async function fetchInternships() {
+  return apiClient<InternshipInfoResponse[]>(
+    endpoints.private.intern.internships.all,
+    { method: "GET" }
+  );
+}
 
 // export async function fetchInternshipDetails(id: string) {
 //   return apiClient<InternshipDetails>(
