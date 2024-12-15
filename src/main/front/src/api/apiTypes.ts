@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { s, n, b } from "@/types";
+import type { b, n, s } from "@/types";
 
 // For admin
-export interface UsersInfoDTO {
+export interface UserInfoDTO {
   name: s;
   surname: s;
   patronymic: s;
@@ -198,3 +198,74 @@ type TaskResponse = {
   result: s;
 };
 type ReportResponse = { title: s; description: s };
+
+export interface Endpoints {
+  public: {
+    registration: s;
+    login: s;
+    enroll: (id: s) => s;
+  };
+
+  private: {
+    admin: {
+      allUsers: s;
+      updateUser: s;
+      deleteUser: s;
+      getUser: (login: s) => s;
+    };
+
+    intern: {
+      internships: {
+        all: s;
+        filtered: s;
+        byId: (id: s) => s;
+      };
+      tasks: {
+        all: s;
+        byId: (id: s) => s;
+        start: (id: s) => s;
+        complete: (id: s) => s;
+      };
+      portfolio: {
+        my: s;
+        create: s;
+        get: (email: s, id: s) => s;
+        getAll: (email: s) => s;
+        delete: (id: s) => s;
+      };
+
+      resume: {
+        my: s;
+        create: s;
+        get: (email: s, id: s) => s;
+        getAll: (email: s) => s;
+        delete: (id: s) => s;
+      };
+      profiles: {
+        my: s;
+        all: s;
+        save: s;
+        get: (email: s) => s;
+      };
+    };
+
+    hr: {
+      internships: {
+        create: s;
+        update: (id: s) => s;
+        delete: (id: s) => s;
+      };
+      task: {
+        assign: (internshipId: s, internId: s) => s;
+        huh: (email: s, id: s) => s;
+        bruh: (email: s) => s;
+        aah: (email: s, id: s) => s;
+        checkhuh: (email: s, id: s) => s;
+      };
+
+      result: {
+        getResult: (internshipId: s, email: s) => s;
+      };
+    };
+  };
+}

@@ -4,7 +4,7 @@ import IB from "@/components/IB";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function StudentPrivatePage() {
+export function InternProfilePage() {
   return (
     <div className="px-32 my-8">
       <Header />

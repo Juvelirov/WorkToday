@@ -1,13 +1,13 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AdminPage from "./pages/AdminPage";
+import { InternProfilePage } from "./pages/InternProfilePage";
+import { InternshipPage } from "./pages/InternshipPage";
 import { InternshipSearchPage } from "./pages/InternshipSearchPage";
 import { KnowledgeBasePage } from "./pages/KnowledgeBasePage";
 import { LandingPage } from "./pages/LandingPage";
 import { SignInForm } from "./pages/SignInForm";
 import { SignUpForm } from "./pages/SignUpForm";
-import { StudentPrivatePage } from "./pages/StudentPrivatePage";
 import { ProtectedRoute } from "./router/ProtectedRoute";
-import { InternshipPage } from "./pages/InternshipPage";
 
 export default function App() {
   return (
@@ -17,7 +17,7 @@ export default function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <StudentPrivatePage />
+              <InternProfilePage />
             </ProtectedRoute>
           }
         />
