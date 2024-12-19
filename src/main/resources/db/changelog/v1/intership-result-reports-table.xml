@@ -1,0 +1,46 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="intership-result-reports-table" author="ElovskikhMM">
+
+        <createTable tableName="reports">
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <createTable tableName="internships_result">
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="mark" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recomendation" type="BOOLEAN">
+                <constraints nullable="true"/>
+            </column>
+            <column name="final_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="report_id" type="BIGINT">
+                <constraints foreignKeyName="report_id"
+                             referencedTableName="reports"
+                             referencedColumnNames="id"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

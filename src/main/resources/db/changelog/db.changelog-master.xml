@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <include file="v1/user-role-tables.xml" relativeToChangelogFile="true"/>
+    <include file="v1/intership-result-reports-table.xml" relativeToChangelogFile="true"/>
+    <include file="v1/intership-info-tags-table.xml" relativeToChangelogFile="true"/>
+    <include file="v1/portfolios-resumes-tasks-tables.xml" relativeToChangelogFile="true"/>
+    <include file="v1/user-info-table.xml" relativeToChangelogFile="true"/>
+    <include file="v1/update-portfolios-reports-resumes-tasks-tables.xml" relativeToChangelogFile="true"/>
+    <include file="v1/add-any-role.xml" relativeToChangelogFile="true"/>
+    <include file="v1/user-user-info.xml" relativeToChangelogFile="true"/>
+    <include file="v1/add-fio-user.xml" relativeToChangelogFile="true"/>
+
+    <include file="v2/create-enrollments-table.xml" relativeToChangelogFile="true"/>
+    <include file="v2/add-title-and-description-columns.xml" relativeToChangelogFile="true"/>
+    <include file="v2/update-tasks-table.xml" relativeToChangelogFile="true"/>
+    <include file="v2/add-internship-info-id-column.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
