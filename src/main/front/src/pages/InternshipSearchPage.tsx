@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { InternshipInfoResponse } from "@/api/apiTypes";
 import { fetchInternships } from "@/api/internAPI";
 import Bbls from "@/components/Bbls";
@@ -6,7 +7,8 @@ import I from "@/components/I";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { fakeInternshipD } from "@/lib/utils";
-import type { b, Pv, s } from "@/types";
+import type { b, P, s, v } from "@/types";
+import { MapPinIcon, SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -70,18 +72,18 @@ function InternshipCard(p: InternshipCard) {
 }
 
 interface Filter {
-  loadInternships: () => Pv;
+  loadInternships: () => P<v>;
 }
 
 function Filter(p: Filter) {
   return (
     <div className="flex items-center gap-5 mb-10 p-4 bg-[#F3DFFF] rounded-2xl">
       <div className="flex items-center gap-2 flex-grow">
-        <I name="search" />
+        <I icon={SearchIcon} />
         <Input placeholder="Должность или ключевые слова" />
       </div>
       <div className="flex items-center gap-2 flex-grow">
-        <I name="location_on" />
+        <I icon={MapPinIcon} />
         <Input placeholder="Город" />
       </div>
       <Button className="bg-[#8300E7]" onClick={p.loadInternships}>

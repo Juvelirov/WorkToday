@@ -1,12 +1,11 @@
 import type { s } from "@/types";
+import { LucideIcon } from "lucide-react";
 
 interface I {
-  name: s;
   c?: s;
+  icon: LucideIcon;
 }
 
 export default function I(p: I) {
-  return (
-    <span className={`material-icons p-1 rounded-full ${p.c}`}>{p.name}</span>
-  );
+  return <p.icon className={`p-1 w-6 h-6 rounded-full ${p.c}`} />;
 }

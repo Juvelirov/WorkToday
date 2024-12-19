@@ -2,7 +2,8 @@ import { signout } from "@/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import IB from "./IB";
-import type { Pv, v } from "@/types";
+import type { P, v } from "@/types";
+import { Bell } from "lucide-react";
 
 export default function Header() {
   return (
@@ -12,7 +13,7 @@ export default function Header() {
       </h1>
       <div className="flex gap-5">
         <div className="flex items-center">
-          <IB nameOutlined="notifications_none" nameFilled="notifications" />
+          <IB icon={Bell} />
         </div>
         <Avatar />
       </div>
@@ -27,15 +28,18 @@ function Avatar() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
-  const menuOpts: { label: string; action: () => v | Pv }[] = [
-    window.location.pathname !== "/"
-      ? { label: "Profile", action: () => navigate("/") }
+  const menuOpts: { label: string; action: () => v | P<v> }[] = [
+    window.location.pathname !== "/internProfile"
+      ? { label: "Profile", action: () => navigate("/internProfile") }
       : null,
-    window.location.pathname !== "/internships"
-      ? { label: "Internships", action: () => navigate("/internships") }
+    window.location.pathname !== "/internshipsSearch"
+      ? {
+          label: "Internships",
+          action: () => navigate("/internshipsSearch"),
+        }
       : null,
     { label: "Sign out", action: signout },
-  ].filter((o): o is { label: string; action: () => v | Pv } => Boolean(o));
+  ].filter((o): o is { label: string; action: () => v | P<v> } => Boolean(o));
 
   return (
     <div className="relative">

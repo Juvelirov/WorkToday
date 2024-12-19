@@ -1,8 +1,10 @@
-import File from "@/components/File";
+import FileBlock from "@/components/FileBlock";
 import Header from "@/components/Header";
-import IB from "@/components/IB";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { s } from "@/types";
+import { useState } from "react";
 
 export function InternProfilePage() {
   return (
@@ -46,10 +48,10 @@ export function InternProfilePage() {
         <div className="flex flex-col">
           <div className="flex flex-col">
             <h2 className="font-bold text-xl mb-4">Файлы</h2>
-            <div className="flex flex-col gap-8">
-              <Resume />
-              <Report />
-              <Portfolio />
+            <div>
+              {["Резюме", "Отчёт", "Портфолио"].map((t) => (
+                <File key={t} title={t} />
+              ))}
             </div>
           </div>
           {/* <div>
@@ -75,38 +77,42 @@ export function InternProfilePage() {
   );
 }
 
-function Resume() {
-  return (
-    <div className="flex flex-col">
-      <div className="flex justify-between items-center mb-3">
-        <h3 className="font-bold text-md">Резюме</h3>
-        <IB nameOutlined="add" iC="bg-[#F3DFFF]" />
-      </div>
-      <File name="resume.docx" />
-    </div>
-  );
+interface FileProps {
+  title: s;
 }
 
-function Report() {
-  return (
-    <div className="flex flex-col">
-      <div className="flex justify-between items-center mb-3">
-        <h3 className="font-bold text-md">Отчёт</h3>
-        <IB nameOutlined="add" iC="bg-[#F3DFFF]" />
-      </div>
-      <File name="report.docx" />
-    </div>
-  );
-}
+function File(p: FileProps) {
+  const [file, setFile] = useState<File | null>(null);
 
-function Portfolio() {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) setFile(selectedFile);
+  };
+
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-between items-center mb-3">
-        <h3 className="font-bold text-md">Портфолио</h3>
-        <IB nameOutlined="add" iC="bg-[#F3DFFF]" />
+    <div className={cn("flex flex-col mb-3", file && "mb-5")}>
+      <div className={cn("flex justify-between items-center", file && "mb-3")}>
+        <h3 className="font-bold text-md">{p.title}</h3>
+        {!file && (
+          <label
+            htmlFor={`file-upload-${p.title}`}
+            className="flex justify-center items-center w-9 cursor-pointer bg-[#F3DFFF] rounded-lg "
+          >
+            <span className="text-2xl pb-1">+</span>
+          </label>
+        )}
       </div>
-      <File name="report.docx" />
+      {file ? (
+        <FileBlock name={file.name} setFile={setFile} />
+      ) : (
+        <input
+          type="file"
+          id={`file-upload-${p.title}`}
+          className="hidden"
+          onChange={handleFileChange}
+          accept=".docx,.pdf,.jpg,.png,.txt"
+        />
+      )}
     </div>
   );
 }

@@ -1,30 +1,38 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import AdminPage from "./pages/AdminPage";
-import { InternProfilePage } from "./pages/InternProfilePage";
 import { InternshipPage } from "./pages/InternshipPage";
 import { InternshipSearchPage } from "./pages/InternshipSearchPage";
-import { KnowledgeBasePage } from "./pages/KnowledgeBasePage";
 import { LandingPage } from "./pages/LandingPage";
 import { SignInForm } from "./pages/SignInForm";
 import { SignUpForm } from "./pages/SignUpForm";
 import { ProtectedRoute } from "./router/ProtectedRoute";
+import { HrProfilePage } from "./pages/HrProfilePage";
+import { InternProfilePage } from "./pages/InternProfilePage";
 
 export default function App() {
   return (
     <Router>
       <Routes>
         <Route
-          path="/"
+          path="/internProfile"
           element={
             <ProtectedRoute>
               <InternProfilePage />
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/hrProfile"
+          element={
+            <ProtectedRoute>
+              <HrProfilePage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/signin" element={<SignInForm />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route
-          path="/internships"
+          path="/internshipsSearch"
           element={
             <ProtectedRoute>
               <InternshipSearchPage />
@@ -36,14 +44,6 @@ export default function App() {
           element={
             <ProtectedRoute>
               <InternshipPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/base"
-          element={
-            <ProtectedRoute>
-              <KnowledgeBasePage />
             </ProtectedRoute>
           }
         />

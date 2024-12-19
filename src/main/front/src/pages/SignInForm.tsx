@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { apiClient } from "@/api/apiClient";
 import { setToken } from "@/auth";
 import { fakeAdminD, fakeHrD, fakeInternD } from "@/lib/utils";
@@ -6,6 +7,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import IB from "@/components/IB";
 
 export function SignInForm() {
   const [formData, setFormData] = useState({
@@ -13,6 +16,7 @@ export function SignInForm() {
     password: fakeAdminD.password,
   });
   const [error, setError] = useState<s | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +35,17 @@ export function SignInForm() {
 
     setToken(response.token);
 
-    navigate("/");
+    switch (localStorage.getItem("role")) {
+      case "ROLE_STUDENT":
+        navigate("/internProfile");
+        break;
+      case "ROLE_HR":
+        navigate("/hrProfile");
+        break;
+      case "ROLE_ADMIN":
+        navigate("/admin");
+        break;
+    }
   };
 
   return (
@@ -48,13 +62,21 @@ export function SignInForm() {
             value={formData.email}
             onChange={handleChange}
           />
-          <Input
-            type="password"
-            placeholder="Пароль"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+          <div className="relative">
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="Пароль"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="pr-10"
+            />
+            <IB
+              bC="absolute right-2 top-1"
+              icon={showPassword ? EyeIcon : EyeClosedIcon}
+              onClick={() => setShowPassword((prev) => !prev)}
+            />
+          </div>
         </div>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}

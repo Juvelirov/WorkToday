@@ -6,10 +6,13 @@ import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import type { UserDTO } from "@/api/apiTypes";
+import { EyeIcon, EyeClosedIcon } from "lucide-react";
+import IB from "@/components/IB";
 
 export function SignUpForm() {
   const [formData, setFormData] = useState<UserDTO>(fakeAdminD);
   const [error, setError] = useState<s | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -55,13 +58,21 @@ export function SignUpForm() {
             value={formData.email}
             onChange={handleChange}
           />
-          <Input
-            type="password"
-            placeholder="Пароль"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+          <div className="relative">
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="Пароль"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="pr-10"
+            />
+            <IB
+              bC="absolute right-2 top-1"
+              icon={showPassword ? EyeIcon : EyeClosedIcon}
+              onClick={() => setShowPassword((prev) => !prev)}
+            />
+          </div>
         </div>
         <div className="flex mb-8">
           <input type="checkbox" className="mr-2" defaultChecked required />
@@ -84,34 +95,32 @@ interface RoleSelection {
 }
 
 function RoleSelection(p: RoleSelection) {
+  const roles = [
+    { id: "ROLE_STUDENT", label: "Практикант" },
+    { id: "ROLE_HR", label: "Работодатель" },
+  ];
+
+  const handleKeyUp = (e: React.KeyboardEvent, role: UserDTO["role"]) => {
+    if (e.key === "Enter" || e.key === " ") p.onRoleChange(role);
+  };
+
   return (
     <div className="flex justify-center mb-8">
       <div className="flex gap-1 p-[6px] bg-white rounded-md">
-        <p
-          className={cn(
-            "p-1 rounded-md cursor-pointer",
-            p.selectedRole === "ROLE_STUDENT" && "bg-[#E4C1FF]"
-          )}
-          onClick={() => p.onRoleChange("ROLE_STUDENT")}
-          onKeyUp={(e) => {
-            if (e.key === "Enter" || e.key === " ")
-              p.onRoleChange("ROLE_STUDENT");
-          }}
-        >
-          Практикант
-        </p>
-        <p
-          className={cn(
-            "p-1 rounded-md cursor-pointer",
-            p.selectedRole === "ROLE_HR" && "bg-[#E4C1FF]"
-          )}
-          onClick={() => p.onRoleChange("ROLE_HR")}
-          onKeyUp={(e) => {
-            if (e.key === "Enter" || e.key === " ") p.onRoleChange("ROLE_HR");
-          }}
-        >
-          Работодатель
-        </p>
+        {roles.map((role) => (
+          <button
+            key={role.id}
+            className={cn(
+              "p-1 rounded-md",
+              p.selectedRole === role.id && "bg-[#E4C1FF]"
+            )}
+            onClick={() => p.onRoleChange(role.id)}
+            onKeyUp={(e) => handleKeyUp(e, role.id)}
+            tabIndex={0}
+          >
+            {role.label}
+          </button>
+        ))}
       </div>
     </div>
   );
