@@ -7,7 +7,7 @@ export function InternshipPage() {
   const [applicationSubmitted, setApplicationSubmitted] = useState(false);
 
   return (
-    <div className="px-32 mt-8">
+    <div className="px-32 my-8">
       <Header />
       <div className="flex justify-between items-center mb-6">
         <h1 className="font-black text-3xl">{fakeInternshipD[0].title}</h1>

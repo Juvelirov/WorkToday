@@ -1,9 +1,7 @@
 import { signout } from "@/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import IB from "./IB";
-import type { P, v } from "@/types";
-import { Bell } from "lucide-react";
+import type { P, s, v } from "@/types";
 
 export default function Header() {
   return (
@@ -11,12 +9,7 @@ export default function Header() {
       <h1 className="text-xl font-bold">
         Work<span className="text-[#8300E7]">Today</span>
       </h1>
-      <div className="flex gap-5">
-        <div className="flex items-center">
-          <IB icon={Bell} />
-        </div>
-        <Avatar />
-      </div>
+      <Avatar />
     </div>
   );
 }
@@ -24,27 +17,33 @@ export default function Header() {
 function Avatar() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const imageUrl = localStorage.getItem("imgUrl") ?? "";
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
-  const menuOpts: { label: string; action: () => v | P<v> }[] = [
+  const menuOpts: { label: s; action: () => v | P<v> }[] = [
     window.location.pathname !== "/internProfile"
-      ? { label: "Profile", action: () => navigate("/internProfile") }
+      ? { label: "Профиль", action: () => navigate("/internProfile") }
       : null,
     window.location.pathname !== "/internshipsSearch"
       ? {
-          label: "Internships",
+          label: "Стажировки",
           action: () => navigate("/internshipsSearch"),
         }
       : null,
-    { label: "Sign out", action: signout },
-  ].filter((o): o is { label: string; action: () => v | P<v> } => Boolean(o));
+    { label: "Выйти", action: signout },
+  ].filter((o): o is { label: s; action: () => v | P<v> } => Boolean(o));
 
   return (
     <div className="relative">
       <div
         className="rounded-xl w-12 h-12 bg-[#F3DFFF] cursor-pointer"
+        style={{
+          backgroundImage: `url(${imageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
         onClick={toggleMenu}
         onKeyUp={(e) => {
           if (e.key === "Enter" || e.key === " ") toggleMenu();

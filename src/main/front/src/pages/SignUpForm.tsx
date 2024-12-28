@@ -10,7 +10,7 @@ import { EyeIcon, EyeClosedIcon } from "lucide-react";
 import IB from "@/components/IB";
 
 export function SignUpForm() {
-  const [formData, setFormData] = useState<UserDTO>(fakeAdminD);
+  const [formData, setFormData] = useState<UserDTO>(fakeInternD);
   const [error, setError] = useState<s | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 

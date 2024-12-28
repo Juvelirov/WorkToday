@@ -16,6 +16,7 @@ export function InternshipSearchPage() {
   const [internships, setInternships] = useState<InternshipInfoResponse[]>();
   const [loading, setLoading] = useState<b>(false);
   const [error, setError] = useState<s | null>(null);
+  // const { imgUrl } = useUser();
 
   const loadInternships = async () => {
     setLoading(true);
@@ -36,12 +37,12 @@ export function InternshipSearchPage() {
       <Header />
       <Filter loadInternships={loadInternships} />
       <div className="flex flex-col gap-7">
-        {/* {fakeInternshipD.map((i) => (
-          <InternshipCard key={i.id} data={{ ...i }} />
-        ))} */}
-        {internships?.map((i) => (
+        {fakeInternshipD.map((i) => (
           <InternshipCard key={i.id} data={{ ...i }} />
         ))}
+        {/* {internships?.map((i) => (
+          <InternshipCard key={i.id} data={{ ...i }} />
+        ))} */}
       </div>
       {loading && <div>Loading...</div>}
       {error && <div className="text-red-500">Error: {error}</div>}
@@ -84,7 +85,7 @@ function Filter(p: Filter) {
       </div>
       <div className="flex items-center gap-2 flex-grow">
         <I icon={MapPinIcon} />
-        <Input placeholder="Город" />
+        <Input placeholder="Город" defaultValue="Москва" />
       </div>
       <Button className="bg-[#8300E7]" onClick={p.loadInternships}>
         Найти

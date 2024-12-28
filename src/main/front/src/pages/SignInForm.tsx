@@ -12,8 +12,8 @@ import IB from "@/components/IB";
 
 export function SignInForm() {
   const [formData, setFormData] = useState({
-    email: fakeAdminD.email,
-    password: fakeAdminD.password,
+    email: fakeInternD.email,
+    password: fakeInternD.password,
   });
   const [error, setError] = useState<s | null>(null);
   const [showPassword, setShowPassword] = useState(false);

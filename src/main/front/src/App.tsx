@@ -6,8 +6,7 @@ import { LandingPage } from "./pages/LandingPage";
 import { SignInForm } from "./pages/SignInForm";
 import { SignUpForm } from "./pages/SignUpForm";
 import { ProtectedRoute } from "./router/ProtectedRoute";
-import { HrProfilePage } from "./pages/HrProfilePage";
-import { InternProfilePage } from "./pages/InternProfilePage";
+import { HrProfilePage, InternProfilePage } from "./pages/ProfilePage";
 
 export default function App() {
   return (

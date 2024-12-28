@@ -54,7 +54,7 @@ export const fakeInternshipD: InternshipInfoResponse[] = [
       email: "petrova@company.com",
       company: "Инноватек",
     },
-    city: "Екатеринбург",
+    city: "Москва",
   },
   {
     id: 789,
@@ -68,6 +68,6 @@ export const fakeInternshipD: InternshipInfoResponse[] = [
       email: "sidorov@company.com",
       company: "Цифроград",
     },
-    city: "Новосибирск",
+    city: "Москва",
   },
 ];

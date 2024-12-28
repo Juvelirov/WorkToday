@@ -9,7 +9,7 @@ export async function fetchInternships() {
   );
 }
 
-// export async function fetchInternshipDetails(id: string) {
+// export async function fetchInternshipDetails(id: s) {
 //   return apiClient<InternshipDetails>(
 //     endpoints.private.student.internshipById(id)
 //   );
@@ -19,7 +19,7 @@ export async function fetchInternships() {
 //   return apiClient<Task[]>(endpoints.private.student.myTasks);
 // }
 
-// export async function startTask(taskId: string) {
+// export async function startTask(taskId: s) {
 //   return apiClient<v>(endpoints.private.student.startTask(taskId), {
 //     method: "POST",
 //   });
