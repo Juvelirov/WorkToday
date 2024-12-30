@@ -4,6 +4,7 @@ import com.example.worktodayproject.database.entity.Enrollment;
 import com.example.worktodayproject.database.entity.IntershipsInfo;
 import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.entity.UsersInfo;
+import com.example.worktodayproject.database.enums.EnrollStatus;
 import com.example.worktodayproject.database.repository.EnrollmentRepository;
 import com.example.worktodayproject.database.repository.IntershipInfoRepository;
 import com.example.worktodayproject.database.repository.UsersInfoRepository;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,6 +67,7 @@ public class EnrollmentService {
         enrollment.setUsers(currentUser);
         enrollment.setIntershipsInfo(intershipsInfo);
         enrollment.setUserInfo(usersInfo);
+        enrollment.setStatus(EnrollStatus.PENDING);
         enrollmentRepository.save(enrollment);
     }
 
@@ -103,7 +106,16 @@ public class EnrollmentService {
                 .flatMap(intershipsInfo -> intershipsInfo.getEnrollments().stream())
                 .collect(Collectors.toList());
 
-        return mapperUtils.mappingEnrollList(allEnrollments);
+        List<Enrollment> enrollments = new ArrayList<>();
+
+        for (Enrollment enrollment : allEnrollments) {
+            if (!enrollment.getStatus().equals(EnrollStatus.ACCEPTED)
+                    && !enrollment.getStatus().equals(EnrollStatus.REJECTED)) {
+                enrollments.add(enrollment);
+            }
+        }
+
+        return mapperUtils.mappingEnrollList(enrollments);
     }
 
     public List<EnrollResponse> getPersonalEnrolls(String username) {
@@ -111,5 +123,43 @@ public class EnrollmentService {
         List<Enrollment> enrollments = enrollmentRepository.findByUsers(user);
 
         return mapperUtils.mappingEnrollList(enrollments);
+    }
+
+    public void setEnrollAcceptStatus(String username, String hrUsername, Long enrollId) {
+        Users hrUser = usersRepository.findByLogin(hrUsername);
+        if (hrUser == null) {
+            throw new AuthorizedUserException("HR пользователь не найден");
+        }
+
+        Users user = usersRepository.findByLogin(username);
+        Enrollment enrollment = enrollmentRepository.findByUsersAndId(user, enrollId);
+
+        if(!enrollment.getIntershipsInfo().getUser().equals(hrUser)) {
+            throw new IllegalArgumentException("HR пользователь не является владельцем стажировки");
+        }
+
+        if (enrollment.getStatus().equals(EnrollStatus.PENDING)) {
+            enrollment.setStatus(EnrollStatus.ACCEPTED);
+            enrollmentRepository.save(enrollment);
+        }
+    }
+
+    public void setEnrollRejectStatus(String username, String hrUsername, Long enrollId) {
+        Users hrUser = usersRepository.findByLogin(hrUsername);
+        if (hrUser == null) {
+            throw new AuthorizedUserException("HR пользователь не найден");
+        }
+
+        Users user = usersRepository.findByLogin(username);
+        Enrollment enrollment = enrollmentRepository.findByUsersAndId(user, enrollId);
+
+        if(!enrollment.getIntershipsInfo().getUser().equals(hrUser)) {
+            throw new IllegalArgumentException("HR пользователь не является владельцем стажировки");
+        }
+
+        if (enrollment.getStatus().equals(EnrollStatus.PENDING)) {
+            enrollment.setStatus(EnrollStatus.REJECTED);
+            enrollmentRepository.save(enrollment);
+        }
     }
 }

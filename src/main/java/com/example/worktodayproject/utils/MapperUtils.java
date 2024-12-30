@@ -246,7 +246,8 @@ public class MapperUtils {
         UsersInfoResponse usersInfoResponse = mappingUserInfo(enrollment.getUsers().getUserInfo());
 
         return new EnrollResponse(enrollment.getId(),
-                usersInfoResponse);
+                usersInfoResponse,
+                enrollment.getStatus());
     }
 
     public List<EnrollResponse> mappingEnrollList(List<Enrollment> enrollments) {

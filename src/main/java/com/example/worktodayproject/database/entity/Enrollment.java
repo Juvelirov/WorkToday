@@ -1,10 +1,8 @@
 package com.example.worktodayproject.database.entity;
 
 import com.example.worktodayproject.database.entity.base.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.example.worktodayproject.database.enums.EnrollStatus;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +17,9 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Enrollment extends BaseEntity {
+
+    @Column(name = "status")
+    EnrollStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
