@@ -60,7 +60,7 @@ public class ResultService {
             for (Enrollment enrollment1 : enrollments) {
                 UsersInfo usersInfo = usersInfoRepository.findByUsers(enrollment1.getUsers());
                 InternshipsResult existingResult = internshipResultRepository.findByUserInfo(usersInfo);
-                if(existingResult == null) {
+                if (existingResult == null) {
                     InternshipsResult internshipsResult = new InternshipsResult();
                     internshipsResult.setFio(enrollment1.getUsers().getFio());
                     if (usersInfo != null && usersInfo.getReports() != null && !usersInfo.getReports().isEmpty()) {

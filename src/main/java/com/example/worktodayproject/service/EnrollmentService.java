@@ -1,14 +1,8 @@
 package com.example.worktodayproject.service;
 
-import com.example.worktodayproject.database.entity.Enrollment;
-import com.example.worktodayproject.database.entity.IntershipsInfo;
-import com.example.worktodayproject.database.entity.Users;
-import com.example.worktodayproject.database.entity.UsersInfo;
+import com.example.worktodayproject.database.entity.*;
 import com.example.worktodayproject.database.enums.EnrollStatus;
-import com.example.worktodayproject.database.repository.EnrollmentRepository;
-import com.example.worktodayproject.database.repository.IntershipInfoRepository;
-import com.example.worktodayproject.database.repository.UsersInfoRepository;
-import com.example.worktodayproject.database.repository.UsersRepository;
+import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.response.EnrollResponse;
 import com.example.worktodayproject.exception.custom.AuthorizedUserException;
 import com.example.worktodayproject.exception.custom.IntershipTitleNotFoundException;
@@ -40,6 +34,8 @@ public class EnrollmentService {
     UsersRepository usersRepository;
     IntershipInfoRepository intershipInfoRepository;
     UsersInfoRepository usersInfoRepository;
+    InternshipResultRepository internshipResultRepository;
+    UsersInfoService usersInfoService;
 
     /**
      * Записать пользователя на стажировку
@@ -68,6 +64,11 @@ public class EnrollmentService {
         enrollment.setIntershipsInfo(intershipsInfo);
         enrollment.setUserInfo(usersInfo);
         enrollment.setStatus(EnrollStatus.PENDING);
+
+        InternshipsResult internshipsResult = internshipResultRepository.findByUserInfo(usersInfo);
+
+        usersInfoService.setInternshipResult(internshipsResult, login);
+
         enrollmentRepository.save(enrollment);
     }
 

@@ -141,4 +141,12 @@ public class UsersInfoService {
         usersInfo.getReports().add(report);
         usersInfoRepository.save(usersInfo);
     }
+
+    public void setInternshipResult(InternshipsResult internshipsResult, String username) {
+        Users currentUser = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
+
+        usersInfo.getResults().add(internshipsResult);
+        usersInfoRepository.save(usersInfo);
+    }
 }

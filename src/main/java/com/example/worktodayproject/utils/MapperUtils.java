@@ -75,6 +75,8 @@ public class MapperUtils {
                         .collect(Collectors.toList()));
         Optional<List<ReportResponse>> reportResponses = Optional.ofNullable(usersInfo.getReports())
                 .map(reports -> reports.stream().map(this::mappingReport).collect(Collectors.toList()));
+        Optional<List<InternshipStatusResponse>> internshipStatusResponses = Optional.ofNullable(usersInfo.getResults())
+                .map(reports -> reports.stream().map(this::mappingInternshipResultToInternshipStatus).collect(Collectors.toList()));
         if (usersInfo.getRecomendationFlag() == null) {
             usersInfo.setRecomendationFlag(Boolean.FALSE);
         }
@@ -91,7 +93,15 @@ public class MapperUtils {
                 portfolioResponse,
                 resumeResponse,
                 intershipsInfosResponse,
+                internshipStatusResponses,
                 reportResponses);
+    }
+
+    public InternshipStatusResponse mappingInternshipResultToInternshipStatus(InternshipsResult internshipsResult) {
+        return new InternshipStatusResponse(internshipsResult.getId(),
+                internshipsResult.getStatus(),
+                internshipsResult.getMark(),
+                internshipsResult.getRecomendation());
     }
 
     private IntershipInfoResponse mappingEnrollToInternship(Enrollment enrollment) {

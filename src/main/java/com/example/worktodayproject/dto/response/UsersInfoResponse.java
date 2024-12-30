@@ -23,5 +23,6 @@ public record UsersInfoResponse(Long id,
                                 Optional<PortfolioResponse> portfolios,
                                 Optional<ResumeResponse> resumes,
                                 Optional<List<IntershipInfoResponse>> internships,
+                                Optional<List<InternshipStatusResponse>> internshipStatus,
                                 Optional<List<ReportResponse>> reports) {
 }

@@ -32,7 +32,7 @@ public class InternshipsResult extends BaseEntity {
     @JoinColumn(name = "report_id")
     Reports report;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_info_id")
     UsersInfo userInfo;
 }
