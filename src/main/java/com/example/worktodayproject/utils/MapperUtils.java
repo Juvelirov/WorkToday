@@ -69,9 +69,9 @@ public class MapperUtils {
                 .map(this::mappingPortfolio);
         Optional<ResumeResponse> resumeResponse = Optional.ofNullable(usersInfo.getResume())
                 .map(this::mappingResume);
-        Optional<List<TaskResponse>> taskResponses = Optional.ofNullable(usersInfo.getTasks())
-                .map(tasks -> tasks.stream()
-                        .map(this::mappingTasks)
+        Optional<List<IntershipInfoResponse>> intershipsInfosResponse = Optional.ofNullable(usersInfo.getEnrollments())
+                .map(enrollments -> enrollments.stream()
+                        .map(this::mappingEnrollToInternship)
                         .collect(Collectors.toList()));
         Optional<List<ReportResponse>> reportResponses = Optional.ofNullable(usersInfo.getReports())
                 .map(reports -> reports.stream().map(this::mappingReport).collect(Collectors.toList()));
@@ -90,8 +90,16 @@ public class MapperUtils {
                 usersInfo.getUserPhoto(),
                 portfolioResponse,
                 resumeResponse,
-                taskResponses,
+                intershipsInfosResponse,
                 reportResponses);
+    }
+
+    private IntershipInfoResponse mappingEnrollToInternship(Enrollment enrollment) {
+        if (enrollment == null || enrollment.getIntershipsInfo() == null) {
+            return null;
+        }
+        IntershipsInfo intershipsInfo = enrollment.getIntershipsInfo();
+        return mappingIntership(intershipsInfo);
     }
 
     /**
@@ -169,7 +177,6 @@ public class MapperUtils {
      */
     public TaskResponse mappingTasks(Tasks task) {
         return new TaskResponse(task.getId(),
-                task.getUsersInfo().getId(),
                 task.getIntershipsInfo().getId(),
                 task.getTitle(),
                 task.getInfo(),
@@ -233,5 +240,21 @@ public class MapperUtils {
                 users.getFio(),
                 users.getEmail(),
                 users.getUserInfo().getUserPhoto());
+    }
+
+    public EnrollResponse mappingEnroll(Enrollment enrollment) {
+        UsersInfoResponse usersInfoResponse = mappingUserInfo(enrollment.getUsers().getUserInfo());
+
+        return new EnrollResponse(enrollment.getId(),
+                usersInfoResponse);
+    }
+
+    public List<EnrollResponse> mappingEnrollList(List<Enrollment> enrollments) {
+        List<EnrollResponse> enrollResponses = new ArrayList<>();
+        for (Enrollment enrollment : enrollments) {
+            enrollResponses.add(mappingEnroll(enrollment));
+        }
+
+        return enrollResponses;
     }
 }

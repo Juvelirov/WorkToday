@@ -5,6 +5,8 @@ import com.example.worktodayproject.database.entity.IntershipsInfo;
 import com.example.worktodayproject.database.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * Взаимодействие с таблицей enrollments
  */
@@ -17,4 +19,8 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
      * @return
      */
     boolean existsByUsersAndIntershipsInfo(Users currentUser, IntershipsInfo intershipsInfo);
+
+    void deleteByUsersAndIntershipsInfoId(Users users, Long internshipInfoId);
+
+    List<Enrollment> findByUsers(Users users);
 }

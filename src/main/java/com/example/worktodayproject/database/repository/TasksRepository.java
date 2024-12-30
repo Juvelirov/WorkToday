@@ -11,18 +11,4 @@ import java.util.List;
  */
 public interface TasksRepository extends JpaRepository<Tasks, Long> {
 
-    /**
-     * Получить задачу пользователя по его id
-     * @param id id
-     * @param usersInfo имя пользователя
-     * @return задание
-     */
-    Tasks findByIdAndUsersInfo(Long id, UsersInfo usersInfo);
-
-    /**
-     * Получить все задание по профилю
-     * @param usersInfo профиль
-     * @return все задания
-     */
-    List<Tasks> findAllByUsersInfo(UsersInfo usersInfo);
 }

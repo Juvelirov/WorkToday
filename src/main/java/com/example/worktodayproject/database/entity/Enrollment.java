@@ -27,4 +27,8 @@ public class Enrollment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "intership_id")
     IntershipsInfo intershipsInfo;
+
+    @ManyToOne
+    @JoinColumn(name = "user_info_id")
+    UsersInfo userInfo;
 }

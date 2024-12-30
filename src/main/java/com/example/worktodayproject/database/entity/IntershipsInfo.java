@@ -47,6 +47,10 @@ public class IntershipsInfo extends BaseEntity {
     @OneToMany(mappedBy = "intershipsInfo")
     List<Enrollment> enrollments = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "user_info_id")
+    UsersInfo userInfo;
+
     @ManyToMany
     @JoinTable(
             name = "tag_interships_info",

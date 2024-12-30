@@ -45,6 +45,9 @@ public class UsersInfo extends BaseEntity {
     @OneToMany(mappedBy = "userInfo")
     List<Reports> reports = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usersInfo")
-    List<Tasks> tasks = new ArrayList<>();
+    @OneToMany(mappedBy = "userInfo")
+    List<IntershipsInfo> intershipsInfo = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userInfo")
+    List<Enrollment> enrollments = new ArrayList<>();
 }

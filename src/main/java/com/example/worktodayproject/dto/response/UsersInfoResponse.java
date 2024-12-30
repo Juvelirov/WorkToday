@@ -1,5 +1,6 @@
 package com.example.worktodayproject.dto.response;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,6 @@ public record UsersInfoResponse(Long id,
                                 String avatarPath,
                                 Optional<PortfolioResponse> portfolios,
                                 Optional<ResumeResponse> resumes,
-                                Optional<List<TaskResponse>> tasks,
+                                Optional<List<IntershipInfoResponse>> internships,
                                 Optional<List<ReportResponse>> reports) {
 }

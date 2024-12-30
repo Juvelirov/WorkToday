@@ -39,8 +39,4 @@ public class Tasks extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "internship_info_id")
     IntershipsInfo intershipsInfo;
-
-    @ManyToOne
-    @JoinColumn(name="user_info_id")
-    UsersInfo usersInfo;
 }

@@ -34,16 +34,16 @@ public class TaskControllerForAll {
      * @param principal текущий пользователь
      * @return список заданий пользователя
      */
-    @GetMapping("/my-tasks")
-    public List<TaskResponse> getMyTasks(Principal principal) {
-        return studentTasksService.getAllUsersTasks(principal.getName());
-    }
+//    @GetMapping("/my-tasks")
+//    public List<TaskResponse> getMyTasks(Principal principal) {
+//        return studentTasksService.getAllUsersTasks(principal.getName());
+//    }
 
-    @GetMapping("/my-tasks/{id}")
-    public TaskResponse getMyTask(@PathVariable Long id,
-                                  Principal principal) {
-        return studentTasksService.getUsersTask(principal.getName(), id);
-    }
+//    @GetMapping("/my-tasks/{id}")
+//    public TaskResponse getMyTask(@PathVariable Long id,
+//                                  Principal principal) {
+//        return studentTasksService.getUsersTask(principal.getName(), id);
+//    }
 
     /**
      * Начать задание
@@ -51,16 +51,16 @@ public class TaskControllerForAll {
      * @param principal текущий пользователь
      * @return ответ
      */
-    @PostMapping("/start-task/{id}")
-    public ResponseEntity<Map<String, Object>> startTask(@PathVariable Long id,
-                                            Principal principal) {
-        studentTasksService.startTask(principal.getName(), id);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @PostMapping("/start-task/{id}")
+//    public ResponseEntity<Map<String, Object>> startTask(@PathVariable Long id,
+//                                            Principal principal) {
+//        studentTasksService.startTask(principal.getName(), id);
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("status", "success");
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     /**
      * Завершить задание
@@ -69,15 +69,15 @@ public class TaskControllerForAll {
      * @param taskCompleteDto дто завершенной задачи
      * @return ответ
      */
-    @PostMapping("/complete-task/{id}")
-    public ResponseEntity<Map<String, Object>> completeTask(@PathVariable Long id,
-                                               Principal principal,
-                                               @Valid @RequestBody TaskCompleteDto taskCompleteDto) {
-        studentTasksService.completeTask(principal.getName(), id, taskCompleteDto);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @PostMapping("/complete-task/{id}")
+//    public ResponseEntity<Map<String, Object>> completeTask(@PathVariable Long id,
+//                                               Principal principal,
+//                                               @Valid @RequestBody TaskCompleteDto taskCompleteDto) {
+//        studentTasksService.completeTask(principal.getName(), id, taskCompleteDto);
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("status", "success");
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 }

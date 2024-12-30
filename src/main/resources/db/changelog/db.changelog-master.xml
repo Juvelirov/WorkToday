@@ -19,5 +19,7 @@
 
     <include file="v3/add-user-photo.xml" relativeToChangelogFile="true"/>
     <include file="v3/new-internship-info.xml" relativeToChangelogFile="true"/>
+    <include file="v3/add-internship-in-profile.xml" relativeToChangelogFile="true"/>
+    <include file="v3/enroll-column.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

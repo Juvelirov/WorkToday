@@ -53,12 +53,12 @@ public class TaskControllerForHr {
      * @param principal текущий пользователь
      * @return ответ задачи
      */
-    @GetMapping("/{username}/{id}")
-    public TaskResponse getUserTask(@PathVariable String username,
-                                    @PathVariable Long id,
-                                    Principal principal) {
-        return hrTasksService.getHrUsersTask(username, id, principal.getName());
-    }
+//    @GetMapping("/{username}/{id}")
+//    public TaskResponse getUserTask(@PathVariable String username,
+//                                    @PathVariable Long id,
+//                                    Principal principal) {
+//        return hrTasksService.getHrUsersTask(username, id, principal.getName());
+//    }
 
     /**
      * Получить все задания пользователя, которому привязан hr
@@ -66,11 +66,11 @@ public class TaskControllerForHr {
      * @param username имя пользователя
      * @return список задач
      */
-    @GetMapping("/{username}")
-    public List<TaskResponse> getAllUsersTasks(@PathVariable String username,
-                                               Principal principal) {
-        return hrTasksService.getAllHrUsersTasks(username, principal.getName());
-    }
+//    @GetMapping("/{username}")
+//    public List<TaskResponse> getAllUsersTasks(@PathVariable String username,
+//                                               Principal principal) {
+//        return hrTasksService.getAllHrUsersTasks(username, principal.getName());
+//    }
 
     /**
      * Удалить задание пользователя, к которому привязан hr
@@ -99,16 +99,16 @@ public class TaskControllerForHr {
      * @param checkTaskDto дто проверки задания
      * @return ответ
      */
-    @PostMapping("/check/{username}/{id}")
-    public ResponseEntity<Map<String, Object>> checkUserTask(@PathVariable Long id,
-                                                @PathVariable String username,
-                                                Principal principal,
-                                                @Valid @RequestBody CheckTaskDto checkTaskDto) {
-        hrTasksService.checkUserTask(id, username, principal.getName(), checkTaskDto);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @PostMapping("/check/{username}/{id}")
+//    public ResponseEntity<Map<String, Object>> checkUserTask(@PathVariable Long id,
+//                                                @PathVariable String username,
+//                                                Principal principal,
+//                                                @Valid @RequestBody CheckTaskDto checkTaskDto) {
+//        hrTasksService.checkUserTask(id, username, principal.getName(), checkTaskDto);
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("status", "success");
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 }

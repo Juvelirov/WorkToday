@@ -6,7 +6,6 @@ import com.example.worktodayproject.database.enums.TaskStatus;
 import java.util.Date;
 
 public record TaskResponse(Long id,
-                           Long userInfoId,
                            Long intershipId,
                            String title,
                            String info,

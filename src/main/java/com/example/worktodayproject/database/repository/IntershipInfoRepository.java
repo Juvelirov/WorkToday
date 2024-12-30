@@ -44,4 +44,6 @@ public interface IntershipInfoRepository extends JpaRepository<IntershipsInfo, L
     List<IntershipsInfo> findByTagNameContaining(@Param("tagName") String tagName);
 
     void deleteByUser(Users users);
+
+    List<IntershipsInfo> findByUser(Users user);
 }

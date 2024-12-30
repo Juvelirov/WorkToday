@@ -74,10 +74,7 @@ public class HrTasksService {
         task.setStatus(TaskStatus.NOT_STARTED);
         task.setGrade(TaskGrade.NOT_VERIFIED);
         task.setResult(taskDto.result());
-        task.setUsersInfo(usersInfoRepository.findByUsers(usersRepository.findByLogin(student.getLogin())));
         task.setIntershipsInfo(intershipsInfo);
-
-        usersInfoService.setTaskForUserInfo(task, student.getLogin());
 
         tasksRepository.save(task);
     }
@@ -88,38 +85,38 @@ public class HrTasksService {
      * @param id id
      * @return ответ задачи
      */
-    public TaskResponse getHrUsersTask(String username, Long id, String hrUsername) {
-        Users user = usersRepository.findByLogin(username);
-        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
-
-        Tasks tasks = tasksRepository.findByIdAndUsersInfo(id, usersInfo);
-        Users hrUser = usersRepository.findByLogin(hrUsername);
-        if (!tasks.getIntershipsInfo().getUser().equals(hrUser)) {
-            throw new AuthorizedUserException("Вы не привязаны к этому пользователю");
-        }
-
-        return mapperUtils.mappingTasks(tasks);
-    }
+//    public TaskResponse getHrUsersTask(String username, Long id, String hrUsername) {
+//        Users user = usersRepository.findByLogin(username);
+//        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+//
+//        Tasks tasks = tasksRepository.findByIdAndUsersInfo(id, usersInfo);
+//        Users hrUser = usersRepository.findByLogin(hrUsername);
+//        if (!tasks.getIntershipsInfo().getUser().equals(hrUser)) {
+//            throw new AuthorizedUserException("Вы не привязаны к этому пользователю");
+//        }
+//
+//        return mapperUtils.mappingTasks(tasks);
+//    }
 
     /**
      * Получить все задания HR пользователю
      * @param username имя пользователя
      * @return список заданий
      */
-    public List<TaskResponse> getAllHrUsersTasks(String username, String hrUsername) {
-        Users user = usersRepository.findByLogin(username);
-        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
-        Users hrUser = usersRepository.findByLogin(hrUsername);
-        List<Tasks> tasks = tasksRepository.findAllByUsersInfo(usersInfo);
-
-        for (Tasks userTasks : tasks) {
-            if (!userTasks.getIntershipsInfo().getUser().equals(hrUser)) {
-                throw new AuthorizedUserException("Вы не привязаны к этому пользователю");
-            }
-        }
-
-        return mapperUtils.mappingTasksList(tasks);
-    }
+//    public List<TaskResponse> getAllHrUsersTasks(String username, String hrUsername) {
+//        Users user = usersRepository.findByLogin(username);
+//        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+//        Users hrUser = usersRepository.findByLogin(hrUsername);
+//        List<Tasks> tasks = tasksRepository.findAllByUsersInfo(usersInfo);
+//
+//        for (Tasks userTasks : tasks) {
+//            if (!userTasks.getIntershipsInfo().getUser().equals(hrUser)) {
+//                throw new AuthorizedUserException("Вы не привязаны к этому пользователю");
+//            }
+//        }
+//
+//        return mapperUtils.mappingTasksList(tasks);
+//    }
 
     /**
      * Удалить задачу пользователю
@@ -139,10 +136,6 @@ public class HrTasksService {
             throw new AuthorizedUserException("Вы не привязаны к этому пользователю");
         }
 
-        if (!tasks.getUsersInfo().getUsers().equals(currentUser)) {
-            throw new AuthorizedUserException("Текущий пользователь не является автором этой задачи.");
-        }
-
         tasksRepository.delete(tasks);
     }
 
@@ -153,25 +146,25 @@ public class HrTasksService {
      * @param hrUsername имя пользователя HR
      * @param checkTaskDto дто оценки задания
      */
-    public void checkUserTask(Long taskId,
-                              String username,
-                              String hrUsername,
-                              CheckTaskDto checkTaskDto) {
-        Users user = usersRepository.findByLogin(username);
-        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
-        Tasks tasks = tasksRepository.findByIdAndUsersInfo(taskId, usersInfo);
-        Users hrUser = usersRepository.findByLogin(hrUsername);
-        if (!tasks.getIntershipsInfo().getUser().equals(hrUser)) {
-            throw new AuthorizedUserException("Вы не привязаны к этому пользователю");
-        }
-        if (tasks.getStatus() == TaskStatus.COMPLETE) {
-            tasks.setGrade(checkTaskDto.grade());
-            if (checkTaskDto.grade() == TaskGrade.REJECTED) {
-                tasks.setStatus(TaskStatus.REWORK);
-            }
-        } else {
-            throw new GradeNotSetException(tasks.getStatus());
-        }
-        tasksRepository.save(tasks);
-    }
+//    public void checkUserTask(Long taskId,
+//                              String username,
+//                              String hrUsername,
+//                              CheckTaskDto checkTaskDto) {
+//        Users user = usersRepository.findByLogin(username);
+//        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+//        Tasks tasks = tasksRepository.findByIdAndUsersInfo(taskId, usersInfo);
+//        Users hrUser = usersRepository.findByLogin(hrUsername);
+//        if (!tasks.getIntershipsInfo().getUser().equals(hrUser)) {
+//            throw new AuthorizedUserException("Вы не привязаны к этому пользователю");
+//        }
+//        if (tasks.getStatus() == TaskStatus.COMPLETE) {
+//            tasks.setGrade(checkTaskDto.grade());
+//            if (checkTaskDto.grade() == TaskGrade.REJECTED) {
+//                tasks.setStatus(TaskStatus.REWORK);
+//            }
+//        } else {
+//            throw new GradeNotSetException(tasks.getStatus());
+//        }
+//        tasksRepository.save(tasks);
+//    }
 }

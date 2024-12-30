@@ -141,17 +141,4 @@ public class UsersInfoService {
         usersInfo.getReports().add(report);
         usersInfoRepository.save(usersInfo);
     }
-
-    /**
-     * Добавить задачу пользователю
-     * @param task задача
-     * @param username пользователь
-     */
-    public void setTaskForUserInfo(Tasks task, String username) {
-        Users currentUser = usersRepository.findByLogin(username);
-        UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
-
-        usersInfo.getTasks().add(task);
-        usersInfoRepository.save(usersInfo);
-    }
 }

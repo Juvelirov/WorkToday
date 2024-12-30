@@ -3,8 +3,10 @@ package com.example.worktodayproject.service;
 import com.example.worktodayproject.database.entity.IntershipsInfo;
 import com.example.worktodayproject.database.entity.Tags;
 import com.example.worktodayproject.database.entity.Users;
+import com.example.worktodayproject.database.entity.UsersInfo;
 import com.example.worktodayproject.database.repository.IntershipInfoRepository;
 import com.example.worktodayproject.database.repository.TagsRepository;
+import com.example.worktodayproject.database.repository.UsersInfoRepository;
 import com.example.worktodayproject.database.repository.UsersRepository;
 import com.example.worktodayproject.dto.request.IntershipInfoDto;
 import com.example.worktodayproject.dto.response.IntershipInfoResponse;
@@ -30,6 +32,7 @@ public class IntershipInfoService {
 
     TagsRepository tagsRepository;
     IntershipInfoRepository intershipInfoRepository;
+    UsersInfoRepository usersInfoRepository;
     UsersRepository usersRepository;
 
     /**
@@ -38,7 +41,9 @@ public class IntershipInfoService {
     public void createIntership(IntershipInfoDto intershipInfoDto, String username) {
         IntershipsInfo intershipsInfo = new IntershipsInfo();
         Users user = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
         intershipsInfo.setUser(user);
+        intershipsInfo.setUserInfo(usersInfo);
         saveIntership(intershipsInfo, intershipInfoDto);
     }
 

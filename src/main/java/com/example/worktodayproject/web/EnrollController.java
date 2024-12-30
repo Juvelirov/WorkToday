@@ -1,5 +1,6 @@
 package com.example.worktodayproject.web;
 
+import com.example.worktodayproject.dto.response.EnrollResponse;
 import com.example.worktodayproject.exception.custom.AuthorizedUserException;
 import com.example.worktodayproject.service.EnrollmentService;
 import lombok.AccessLevel;
@@ -7,13 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -45,5 +44,21 @@ public class EnrollController {
         response.put("message", String.format("User: %s enrolled to %d internship", username, id));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{internshipId}/cancel")
+    public ResponseEntity<?> cancelEnroll(Principal principal,
+                                          @PathVariable Long internshipId) {
+        enrollmentService.cancelEnroll(principal.getName(), internshipId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/my-enrolls")
+    public List<EnrollResponse> getEnrolls(Principal principal) {
+        return enrollmentService.getPersonalEnrolls(principal.getName());
     }
 }

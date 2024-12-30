@@ -42,40 +42,40 @@ public class StudentTasksService {
      * @param id id
      * @return ответ задачи
      */
-    public TaskResponse getUsersTask(String username, Long id) {
-        Users user = usersRepository.findByLogin(username);
-        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
-        Tasks tasks = tasksRepository.findByIdAndUsersInfo(id, usersInfo);
-
-        return mapperUtils.mappingTasks(tasks);
-    }
+//    public TaskResponse getUsersTask(String username, Long id) {
+//        Users user = usersRepository.findByLogin(username);
+//        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+//        Tasks tasks = tasksRepository.findByIdAndUsersInfo(id, usersInfo);
+//
+//        return mapperUtils.mappingTasks(tasks);
+//    }
 
     /**
      * Получить все задания пользователя
      * @param username имя пользователя
      * @return список заданий
      */
-    public List<TaskResponse> getAllUsersTasks(String username) {
-        Users user = usersRepository.findByLogin(username);
-        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
-        List<Tasks> tasks = tasksRepository.findAllByUsersInfo(usersInfo);
-
-        return mapperUtils.mappingTasksList(tasks);
-    }
+//    public List<TaskResponse> getAllUsersTasks(String username) {
+//        Users user = usersRepository.findByLogin(username);
+//        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+//        List<Tasks> tasks = tasksRepository.findAllByUsersInfo(usersInfo);
+//
+//        return mapperUtils.mappingTasksList(tasks);
+//    }
 
     /**
      * Начать выполнять задание
      * @param username имя текущего пользователя
      * @param taskId id задачи
      */
-    public void startTask(String username, Long taskId) {
-        Users user = usersRepository.findByLogin(username);
-        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
-        Tasks tasks = tasksRepository.findByIdAndUsersInfo(taskId, usersInfo);
-
-        tasks.setStatus(TaskStatus.IN_PROGRESS);
-        tasksRepository.save(tasks);
-    }
+//    public void startTask(String username, Long taskId) {
+//        Users user = usersRepository.findByLogin(username);
+//        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+//        Tasks tasks = tasksRepository.findByIdAndUsersInfo(taskId, usersInfo);
+//
+//        tasks.setStatus(TaskStatus.IN_PROGRESS);
+//        tasksRepository.save(tasks);
+//    }
 
     /**
      * Завершить выполнение задачи
@@ -83,14 +83,14 @@ public class StudentTasksService {
      * @param taskId id задания
      * @param taskCompleteDto дто завершенного задания
      */
-    public void completeTask(String username, Long taskId, TaskCompleteDto taskCompleteDto) {
-        Users user = usersRepository.findByLogin(username);
-        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
-        Tasks tasks = tasksRepository.findByIdAndUsersInfo(taskId, usersInfo);
-
-        tasks.setStatus(TaskStatus.COMPLETE);
-        tasks.setGrade(TaskGrade.NOT_VERIFIED);
-        tasks.setResult(taskCompleteDto.result());
-        tasksRepository.save(tasks);
-    }
+//    public void completeTask(String username, Long taskId, TaskCompleteDto taskCompleteDto) {
+//        Users user = usersRepository.findByLogin(username);
+//        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+//        Tasks tasks = tasksRepository.findByIdAndUsersInfo(taskId, usersInfo);
+//
+//        tasks.setStatus(TaskStatus.COMPLETE);
+//        tasks.setGrade(TaskGrade.NOT_VERIFIED);
+//        tasks.setResult(taskCompleteDto.result());
+//        tasksRepository.save(tasks);
+//    }
 }
