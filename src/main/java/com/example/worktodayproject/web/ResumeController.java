@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -31,13 +32,14 @@ public class ResumeController {
 
     /**
      * Создать резюме для пользователя
-     * @param resumeDto дто резюме
      * @param principal текущий пользователь
      * @return ответ
      */
-    @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> createResume(@Valid @RequestBody ResumeDto resumeDto,
+    @PostMapping(value = "/create", consumes = { "multipart/form-data" })
+    public ResponseEntity<Map<String, Object>> createResume(@RequestParam(value = "url", required = false) String url,
+                                                            @RequestParam(value = "filePath", required = false) MultipartFile filePath,
                                                             Principal principal) {
+        ResumeDto resumeDto = new ResumeDto(url, filePath);
         resumeService.createResume(principal.getName(), resumeDto);
 
         Map<String, Object> response = new HashMap<>();

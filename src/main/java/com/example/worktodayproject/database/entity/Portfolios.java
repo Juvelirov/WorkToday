@@ -17,10 +17,6 @@ import java.util.Date;
 @Setter
 public class Portfolios extends BaseEntity {
 
-    @Column(name = "title")
-    String title;
-    @Column(name = "description")
-    String description;
     @Column(name="file_path")
     String filePath;
     @Column(name="url")

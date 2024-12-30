@@ -25,7 +25,8 @@ public class MapperUtils {
 
         UserResponse userResponse = new UserResponse(intershipsInfo.getUser().getId(),
                 intershipsInfo.getUser().getFio(),
-                intershipsInfo.getUser().getEmail());
+                intershipsInfo.getUser().getEmail(),
+                intershipsInfo.getUser().getUserInfo().getUserPhoto());
 
         for (Tags tags : intershipsInfo.getTags()) {
             tagsList.add(tags.getName());
@@ -33,7 +34,11 @@ public class MapperUtils {
 
         return new IntershipInfoResponse(intershipsInfo.getId(),
                 intershipsInfo.getTitle(),
-                intershipsInfo.getDescription(),
+                intershipsInfo.getCompany(),
+                intershipsInfo.getDuties(),
+                intershipsInfo.getRequirements(),
+                intershipsInfo.getTask(),
+                intershipsInfo.getTown(),
                 intershipsInfo.getFields(),
                 tagsList,
                 userResponse);
@@ -74,14 +79,15 @@ public class MapperUtils {
             usersInfo.setRecomendationFlag(Boolean.FALSE);
         }
 
+        String fio = usersInfo.getName() + " " + usersInfo.getSurname() + " " + usersInfo.getPatronymic();
+
         return new UsersInfoResponse(usersInfo.getId(),
                 usersInfo.getUsers().getUsername(),
-                usersInfo.getName(),
-                usersInfo.getSurname(),
-                usersInfo.getPatronymic(),
+                fio,
                 usersInfo.getRecomendationFlag(),
                 usersInfo.getPhoneNumber(),
                 usersInfo.getTown(),
+                usersInfo.getUserPhoto(),
                 portfolioResponse,
                 resumeResponse,
                 taskResponses,
@@ -110,8 +116,6 @@ public class MapperUtils {
     public PortfolioResponse mappingPortfolio(Portfolios portfolios) {
         return new PortfolioResponse(portfolios.getId(),
                 portfolios.getUserInfo().getUsers().getId(),
-                portfolios.getTitle(),
-                portfolios.getDescription(),
                 portfolios.getFilePath(),
                 portfolios.getUrl(),
                 portfolios.getUploadDate());
@@ -200,8 +204,7 @@ public class MapperUtils {
         return new ReportResponse(reports.getId(),
                 reports.getUserInfo().getId(),
                 reports.getIntershipsInfo().getId(),
-                reports.getTitle(),
-                reports.getDescription());
+                reports.getFilePath());
     }
 
     /**
@@ -228,6 +231,7 @@ public class MapperUtils {
     public UserResponse mappingUsers(Users users) {
         return new UserResponse(users.getId(),
                 users.getFio(),
-                users.getEmail());
+                users.getEmail(),
+                users.getUserInfo().getUserPhoto());
     }
 }

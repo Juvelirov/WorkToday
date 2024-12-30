@@ -7,5 +7,6 @@ package com.example.worktodayproject.security.dto.response;
  */
 public record UserResponse(Long id,
                            String fio,
-                           String email) {
+                           String email,
+                           String avatarPath) {
 }

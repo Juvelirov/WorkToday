@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="new-internship-info" author="ElovskikhMM">
+
+        <addColumn tableName="interships_info">
+
+            <column name="company" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duties" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="requirements" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="town" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+        </addColumn>
+
+    </changeSet>
+</databaseChangeLog>

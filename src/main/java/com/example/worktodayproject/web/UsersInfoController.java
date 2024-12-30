@@ -2,6 +2,7 @@ package com.example.worktodayproject.web;
 
 import com.example.worktodayproject.dto.request.UsersInfoDto;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
+import com.example.worktodayproject.security.service.UserService;
 import com.example.worktodayproject.service.UsersInfoService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -28,15 +30,22 @@ import java.util.Map;
 public class UsersInfoController {
 
     UsersInfoService usersInfoService;
+    UserService userService;
 
     /**
      * Установить данные в профиль
-     * @param usersInfoDto
      * @param principal
      */
-    @PostMapping("/my-profile/set-data")
-    public ResponseEntity<Map<String, Object>> setProfile(@Valid @RequestBody UsersInfoDto usersInfoDto,
+    @PostMapping(value = "/my-profile/set-data", consumes = { "multipart/form-data" })
+    public ResponseEntity<?> setProfile(@RequestParam(value = "name", required = false) String name,
+                                        @RequestParam(value = "surname", required = false) String surname,
+                                        @RequestParam(value = "patronymic", required = false) String patronymic,
+                                        @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
+                                        @RequestParam(value = "town", required = false) String town,
+                                        @RequestParam(value = "avatar", required = false) MultipartFile avatar,
                                                           Principal principal) {
+        UsersInfoDto usersInfoDto = new UsersInfoDto(name, surname, patronymic, phoneNumber, town, avatar);
+
         usersInfoService.updateUsersInfo(usersInfoDto, principal.getName());
 
         Map<String, Object> response = new HashMap<>();
@@ -53,6 +62,16 @@ public class UsersInfoController {
     @GetMapping("/my-profile")
     public UsersInfoResponse getUserInfo(Principal principal) {
         return usersInfoService.getUserInfo(principal.getName());
+    }
+
+    @DeleteMapping("/delete-account")
+    public ResponseEntity<?> deleteAccount(Principal principal) {
+        userService.deleteUser(principal.getName());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**

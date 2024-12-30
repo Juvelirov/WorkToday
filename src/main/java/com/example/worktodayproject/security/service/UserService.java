@@ -3,6 +3,7 @@ package com.example.worktodayproject.security.service;
 import com.example.worktodayproject.database.entity.Roles;
 import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.entity.UsersInfo;
+import com.example.worktodayproject.database.repository.IntershipInfoRepository;
 import com.example.worktodayproject.database.repository.RoleRepository;
 import com.example.worktodayproject.database.repository.UsersInfoRepository;
 import com.example.worktodayproject.database.repository.UsersRepository;
@@ -34,6 +35,7 @@ public class UserService {
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
     UsersInfoRepository usersInfoRepository;
+    IntershipInfoRepository intershipInfoRepository;
 
 
     /**
@@ -88,6 +90,11 @@ public class UserService {
      * @param login имя пользователя
      */
     public void deleteUser(String login) {
+        Users user = usersRepository.findByLogin(login);
+
+        usersInfoRepository.deleteByUsers(user);
+        intershipInfoRepository.deleteByUser(user);
+
         usersRepository.deleteByLogin(login);
     }
 

@@ -9,6 +9,7 @@ import com.example.worktodayproject.database.repository.UsersRepository;
 import com.example.worktodayproject.dto.request.PortfolioDto;
 import com.example.worktodayproject.dto.response.PortfolioResponse;
 import com.example.worktodayproject.exception.custom.PortfolioNotFoundException;
+import com.example.worktodayproject.utils.FileProcessingUtils;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -30,6 +31,9 @@ import java.util.Optional;
 public class PortfolioService {
 
     MapperUtils mapperUtils = new MapperUtils();
+    FileProcessingUtils fileProcessingUtils = new FileProcessingUtils();
+
+    static String UPLOAD_PATH = "src/main/resources/static/portfolio";
 
     UsersInfoService usersInfoService;
     PortfoliosRepository portfoliosRepository;
@@ -43,10 +47,10 @@ public class PortfolioService {
      */
     public void createPortfolio(String username, PortfolioDto portfolioDto) {
         Users currentUser = usersRepository.findByLogin(username);
+        String fileUrl = fileProcessingUtils.uploadFile(portfolioDto.filePath(), UPLOAD_PATH);
+
         Portfolios portfolio = new Portfolios();
-        portfolio.setTitle(portfolioDto.title());
-        portfolio.setDescription(portfolioDto.description());
-        portfolio.setFilePath(portfolioDto.filePath());
+        portfolio.setFilePath(fileUrl);
         portfolio.setUrl(portfolioDto.url());
         portfolio.setUploadDate(LocalDateTime.now());
         portfolio.setUserInfo(usersInfoRepository.findByUsers(currentUser));

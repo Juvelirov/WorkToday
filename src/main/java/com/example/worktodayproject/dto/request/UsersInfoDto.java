@@ -2,6 +2,7 @@ package com.example.worktodayproject.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Дто профиля
@@ -21,5 +22,6 @@ public record UsersInfoDto(@NotNull(message = "Имя не может быть �
                            @NotBlank(message = "Отчество не может быть пустым")
                            String patronymic,
                            String phoneNumber,
-                           String town) {
+                           String town,
+                           MultipartFile avatarUrl) {
 }

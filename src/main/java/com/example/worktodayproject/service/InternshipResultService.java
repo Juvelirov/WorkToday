@@ -60,8 +60,7 @@ public class InternshipResultService {
         }
 
         Reports reports = new Reports();
-        reports.setTitle(resultDto.report().title());
-        reports.setDescription(resultDto.report().description());
+
         reports.setUserInfo(usersInfo);
         reports.setIntershipsInfo(intershipsInfo);
 
@@ -73,7 +72,6 @@ public class InternshipResultService {
 
         usersInfo.setRecomendationFlag(resultDto.recommendation());
 
-        reports.setResult(internshipsResult);
         usersInfo.getReports().add(reports);
 
         internshipResultRepository.save(internshipsResult);

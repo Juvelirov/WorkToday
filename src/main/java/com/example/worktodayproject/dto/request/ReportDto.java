@@ -2,16 +2,10 @@ package com.example.worktodayproject.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Дто отчета
- * @param title название
- * @param description описание
  */
-public record ReportDto(@NotNull(message = "Название не может быть пустым")
-                        @NotBlank(message = "Название не может быть пустым")
-                        String title,
-                        @NotNull(message = "Описание не может быть пустым")
-                        @NotBlank(message = "Название не может быть пустым")
-                        String description) {
+public record ReportDto(MultipartFile filePath) {
 }

@@ -15,17 +15,12 @@ import java.util.Date;
 @Getter
 @Setter
 public class Reports extends BaseEntity {
-    @Column(name="title")
-    String title;
-    @Column(name="description")
-    String description;
+    @Column(name="file_path")
+    String filePath;
 
     @ManyToOne
     @JoinColumn(name="user_info_id")
     UsersInfo userInfo;
-
-    @OneToOne(mappedBy = "report")
-    InternshipsResult result;
 
     @ManyToOne
     @JoinColumn(name = "internship_info_id")

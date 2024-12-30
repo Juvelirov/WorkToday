@@ -1,6 +1,7 @@
 package com.example.worktodayproject.database.repository;
 
 import com.example.worktodayproject.database.entity.IntershipsInfo;
+import com.example.worktodayproject.database.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
@@ -42,5 +43,5 @@ public interface IntershipInfoRepository extends JpaRepository<IntershipsInfo, L
     @Query("SELECT i FROM IntershipsInfo i JOIN i.tags t WHERE t.name LIKE %:tagName%")
     List<IntershipsInfo> findByTagNameContaining(@Param("tagName") String tagName);
 
-
+    void deleteByUser(Users users);
 }

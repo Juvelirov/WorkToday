@@ -18,12 +18,21 @@ import java.util.Set;
 @Getter
 @Setter
 public class IntershipsInfo extends BaseEntity {
+
+    @Column(name = "company")
+    String company;
     @Column(name="title")
     String title;
-    @Column(name="description")
-    String description;
+    @Column(name = "duties")
+    String duties;
+    @Column(name = "requirements")
+    String requirements;
+    @Column(name = "task")
+    String task;
     @Column(name="fields")
     String fields;
+    @Column(name = "town")
+    String town;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")

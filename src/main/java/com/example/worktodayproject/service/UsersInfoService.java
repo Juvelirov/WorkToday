@@ -5,6 +5,7 @@ import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.request.UsersInfoDto;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
 import com.example.worktodayproject.exception.custom.UserInfoNotFoundException;
+import com.example.worktodayproject.utils.FileProcessingUtils;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -24,6 +25,9 @@ import java.util.List;
 public class UsersInfoService {
 
     MapperUtils mapperUtils = new MapperUtils();
+    FileProcessingUtils fileProcessingUtils = new FileProcessingUtils();
+
+    static String UPLOAD_PATH = "src/main/resources/static/image";
 
     UsersInfoRepository usersInfoRepository;
     UsersRepository usersRepository;
@@ -51,6 +55,11 @@ public class UsersInfoService {
         }
         if (usersInfoDto.town() != null) {
             usersInfo.setTown(usersInfoDto.town());
+        }
+        if (usersInfoDto.avatarUrl() != null
+                && !usersInfoDto.avatarUrl().isEmpty()) {
+            String avatarUrl = fileProcessingUtils.uploadFile(usersInfoDto.avatarUrl(), UPLOAD_PATH);
+            usersInfo.setUserPhoto(avatarUrl);
         }
 
         usersInfoRepository.save(usersInfo);
@@ -122,6 +131,14 @@ public class UsersInfoService {
         UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
 
         usersInfo.setResume(resumes);
+        usersInfoRepository.save(usersInfo);
+    }
+
+    public void setReportForUserInfo(Reports report, String username) {
+        Users currentUser = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
+
+        usersInfo.getReports().add(report);
         usersInfoRepository.save(usersInfo);
     }
 

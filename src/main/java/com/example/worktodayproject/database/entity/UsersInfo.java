@@ -29,6 +29,8 @@ public class UsersInfo extends BaseEntity {
     String phoneNumber;
     @Column(name="town")
     String town;
+    @Column(name = "user_photo")
+    String userPhoto;
 
     @OneToOne
     @JoinColumn(name = "user_id")

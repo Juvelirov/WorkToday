@@ -11,6 +11,5 @@ package com.example.worktodayproject.dto.response;
 public record ReportResponse(Long id,
                              Long userInfoId,
                              Long internshipId,
-                             String title,
-                             String description) {
+                             String filePath) {
 }

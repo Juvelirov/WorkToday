@@ -154,7 +154,11 @@ public class IntershipInfoService {
      */
     private void saveIntership(IntershipsInfo info, IntershipInfoDto infoDto) {
         info.setTitle(infoDto.title());
-        info.setDescription(infoDto.description());
+        info.setCompany(infoDto.company());
+        info.setDuties(infoDto.duties());
+        info.setRequirements(infoDto.requirements());
+        info.setTask(infoDto.task());
+        info.setTown(infoDto.town());
         info.setFields(infoDto.fields());
 
         for (String tag : infoDto.tags()) {

@@ -10,6 +10,7 @@ import com.example.worktodayproject.dto.request.ResumeDto;
 import com.example.worktodayproject.dto.response.ResumeResponse;
 import com.example.worktodayproject.exception.custom.ResumeNotFoundException;
 import com.example.worktodayproject.exception.custom.UnauthorizedException;
+import com.example.worktodayproject.utils.FileProcessingUtils;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -31,6 +32,9 @@ import java.util.Optional;
 public class ResumeService {
 
     MapperUtils mapperUtils = new MapperUtils();
+    FileProcessingUtils fileProcessingUtils = new FileProcessingUtils();
+
+    static String UPLOAD_PATH = "src/main/resources/static/resume";
 
     UsersInfoService usersInfoService;
     UsersInfoRepository usersInfoRepository;
@@ -44,14 +48,15 @@ public class ResumeService {
      */
     public void createResume(String username, ResumeDto resumeDto) {
         Users users = usersRepository.findByLogin(username);
+        String fileUrl = fileProcessingUtils.uploadFile(resumeDto.filePath(), UPLOAD_PATH);
+
         Resumes resumes = new Resumes();
         resumes.setUrl(resumeDto.url());
-        resumes.setFilePath(resumeDto.filePath());
+        resumes.setFilePath(fileUrl);
         resumes.setUploadDate(LocalDateTime.now());
         resumes.setUserInfo(usersInfoRepository.findByUsers(users));
 
         usersInfoService.setResumeForUserInfo(resumes, username);
-
         resumesRepository.save(resumes);
     }
 

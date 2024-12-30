@@ -1,5 +1,7 @@
 package com.example.worktodayproject.dto.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDateTime;
 
 /**
@@ -8,5 +10,5 @@ import java.time.LocalDateTime;
  * @param filePath путь до файла
  */
 public record ResumeDto(String url,
-                        String filePath) {
+                        MultipartFile filePath) {
 }
