@@ -2,7 +2,7 @@ package com.example.worktodayproject.database.entity;
 
 import com.example.worktodayproject.database.entity.base.BaseEntity;
 import com.example.worktodayproject.database.enums.TaskGrade;
-import com.example.worktodayproject.database.enums.TaskStatus;
+import com.example.worktodayproject.database.enums.ResultStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class Tasks extends BaseEntity {
     String filePath;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    TaskStatus status;
+    ResultStatus status;
     @Enumerated(EnumType.STRING)
     @Column(name = "grade")
     TaskGrade grade;

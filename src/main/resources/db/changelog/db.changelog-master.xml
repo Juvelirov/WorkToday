@@ -22,5 +22,6 @@
     <include file="v3/add-internship-in-profile.xml" relativeToChangelogFile="true"/>
     <include file="v3/enroll-column.xml" relativeToChangelogFile="true"/>
     <include file="v3/enroll-status.xml" relativeToChangelogFile="true"/>
+    <include file="v3/result-columns.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

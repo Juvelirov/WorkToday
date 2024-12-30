@@ -2,11 +2,9 @@ package com.example.worktodayproject.service;
 
 import com.example.worktodayproject.database.entity.*;
 import com.example.worktodayproject.database.enums.TaskGrade;
-import com.example.worktodayproject.database.enums.TaskStatus;
+import com.example.worktodayproject.database.enums.ResultStatus;
 import com.example.worktodayproject.database.repository.*;
-import com.example.worktodayproject.dto.request.CheckTaskDto;
 import com.example.worktodayproject.dto.request.TaskDto;
-import com.example.worktodayproject.dto.response.TaskResponse;
 import com.example.worktodayproject.exception.custom.*;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
@@ -15,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -71,7 +68,7 @@ public class HrTasksService {
         task.setDeadline(taskDto.deadline());
         task.setUrl(taskDto.url());
         task.setFilePath(taskDto.filePath());
-        task.setStatus(TaskStatus.NOT_STARTED);
+        task.setStatus(ResultStatus.NOT_STARTED);
         task.setGrade(TaskGrade.NOT_VERIFIED);
         task.setResult(taskDto.result());
         task.setIntershipsInfo(intershipsInfo);

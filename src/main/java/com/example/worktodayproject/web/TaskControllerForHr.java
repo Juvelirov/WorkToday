@@ -38,13 +38,13 @@ public class TaskControllerForHr {
      * @param taskDto дто задачи
      * @param principal текущий пользователь
      */
-    @PostMapping("/create/{internshipId}/{studentId}")
-    public void assignTask(@PathVariable Long internshipId,
-                           @PathVariable Long studentId,
-                           @Valid @RequestBody TaskDto taskDto,
-                           Principal principal) {
-        hrTasksService.assignTask(internshipId, studentId, taskDto, principal.getName());
-    }
+//    @PostMapping("/create/{internshipId}/{studentId}")
+//    public void assignTask(@PathVariable Long internshipId,
+//                           @PathVariable Long studentId,
+//                           @Valid @RequestBody TaskDto taskDto,
+//                           Principal principal) {
+//        hrTasksService.assignTask(internshipId, studentId, taskDto, principal.getName());
+//    }
 
     /**
      * Получить задание пользователя, к которому привязан hr
@@ -79,17 +79,17 @@ public class TaskControllerForHr {
      * @param principal текущий пользователь
      * @return ответ
      */
-    @DeleteMapping("/delete/{username}/{id}")
-    public ResponseEntity<Map<String, Object>> deleteUserTask(@PathVariable String username,
-                                                 @PathVariable Long id,
-                                                 Principal principal) {
-        hrTasksService.deleteTask(id, username, principal.getName());
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @DeleteMapping("/delete/{username}/{id}")
+//    public ResponseEntity<Map<String, Object>> deleteUserTask(@PathVariable String username,
+//                                                 @PathVariable Long id,
+//                                                 Principal principal) {
+//        hrTasksService.deleteTask(id, username, principal.getName());
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("status", "success");
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     /**
      * Проверить задание пользователя

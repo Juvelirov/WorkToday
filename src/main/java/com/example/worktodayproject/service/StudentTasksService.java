@@ -1,22 +1,12 @@
 package com.example.worktodayproject.service;
 
-import com.example.worktodayproject.database.entity.Tasks;
-import com.example.worktodayproject.database.entity.Users;
-import com.example.worktodayproject.database.entity.UsersInfo;
-import com.example.worktodayproject.database.enums.TaskGrade;
-import com.example.worktodayproject.database.enums.TaskStatus;
 import com.example.worktodayproject.database.repository.*;
-import com.example.worktodayproject.dto.request.TaskCompleteDto;
-import com.example.worktodayproject.dto.response.TaskResponse;
-import com.example.worktodayproject.exception.custom.AuthorizedUserException;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Сервис заданий для студентов

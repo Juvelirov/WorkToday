@@ -1,7 +1,7 @@
 package com.example.worktodayproject.dto.response;
 
 import com.example.worktodayproject.database.enums.TaskGrade;
-import com.example.worktodayproject.database.enums.TaskStatus;
+import com.example.worktodayproject.database.enums.ResultStatus;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ public record TaskResponse(Long id,
                            Date deadline,
                            String url,
                            String filePath,
-                           TaskStatus status,
+                           ResultStatus status,
                            TaskGrade grade,
                            String result) {
 }

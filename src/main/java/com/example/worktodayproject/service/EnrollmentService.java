@@ -104,7 +104,7 @@ public class EnrollmentService {
 
         List<Enrollment> allEnrollments = hrCreatedInterships.stream()
                 .flatMap(intershipsInfo -> intershipsInfo.getEnrollments().stream())
-                .collect(Collectors.toList());
+                .toList();
 
         List<Enrollment> enrollments = new ArrayList<>();
 

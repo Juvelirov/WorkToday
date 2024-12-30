@@ -1,6 +1,7 @@
 package com.example.worktodayproject.database.entity;
 
 import com.example.worktodayproject.database.entity.base.BaseEntity;
+import com.example.worktodayproject.database.enums.ResultStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,6 +16,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class InternshipsResult extends BaseEntity {
+
+    @Column(name = "fio")
+    String fio;
+    @Column(name = "status")
+    ResultStatus status;
     @Column(name="mark")
     double mark;
     @Column(name="recomendation")
@@ -25,4 +31,8 @@ public class InternshipsResult extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "report_id")
     Reports report;
+
+    @OneToOne
+    @JoinColumn(name = "user_info_id")
+    UsersInfo userInfo;
 }

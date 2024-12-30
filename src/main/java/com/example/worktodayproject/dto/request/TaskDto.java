@@ -1,7 +1,5 @@
 package com.example.worktodayproject.dto.request;
 
-import com.example.worktodayproject.database.enums.TaskGrade;
-import com.example.worktodayproject.database.enums.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

@@ -219,12 +219,23 @@ public class MapperUtils {
      * @param internshipsResult результат стажировки
      * @return ответ результата
      */
-    public ResultResponse mappingInternshipResult(InternshipsResult internshipsResult) {
-        return new ResultResponse(internshipsResult.getId(),
+    public AnalyticResponse mappingInternshipResult(InternshipsResult internshipsResult) {
+        UsersInfoResponse usersInfoResponse = mappingUserInfo(internshipsResult.getUserInfo());
+
+        return new AnalyticResponse(internshipsResult.getId(),
+                internshipsResult.getFio(),
+                internshipsResult.getStatus(),
                 internshipsResult.getMark(),
                 internshipsResult.getRecomendation(),
-                internshipsResult.getFinalDate(),
-                mappingReport(internshipsResult.getReport()));
+                usersInfoResponse);
+    }
+
+    public List<AnalyticResponse> mappingIternshipResultList(List<InternshipsResult> internshipsResults) {
+        List<AnalyticResponse> analyticResponses = new ArrayList<>();
+        for (InternshipsResult internshipsResult : internshipsResults) {
+            analyticResponses.add(mappingInternshipResult(internshipsResult));
+        }
+        return analyticResponses;
     }
 
     public List<UserResponse> mappingUsersList(List<Users> users) {
