@@ -1,5 +1,6 @@
 package com.example.worktodayproject.web;
 
+import com.dropbox.core.DbxException;
 import com.example.worktodayproject.dto.request.ReportDto;
 import com.example.worktodayproject.service.ReportsService;
 import lombok.AccessLevel;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +27,7 @@ public class ReportController {
     @PostMapping(value = "/create/{internshipId}", consumes = { "multipart/form-data" })
     public ResponseEntity<?> createReport(@RequestParam(value = "filePath", required = false) MultipartFile filePath,
                                           @PathVariable Long internshipId,
-                                          Principal principal) {
+                                          Principal principal) throws IOException, DbxException {
         ReportDto reportDto = new ReportDto(filePath);
         reportsService.createReport(principal.getName(), internshipId, reportDto);
 

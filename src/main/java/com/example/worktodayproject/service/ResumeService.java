@@ -1,5 +1,6 @@
 package com.example.worktodayproject.service;
 
+import com.dropbox.core.DbxException;
 import com.example.worktodayproject.database.entity.Resumes;
 import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.entity.UsersInfo;
@@ -10,7 +11,6 @@ import com.example.worktodayproject.dto.request.ResumeDto;
 import com.example.worktodayproject.dto.response.ResumeResponse;
 import com.example.worktodayproject.exception.custom.ResumeNotFoundException;
 import com.example.worktodayproject.exception.custom.UnauthorizedException;
-import com.example.worktodayproject.utils.FileProcessingUtils;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -32,23 +33,22 @@ import java.util.Optional;
 public class ResumeService {
 
     MapperUtils mapperUtils = new MapperUtils();
-    FileProcessingUtils fileProcessingUtils = new FileProcessingUtils();
-
-    static String UPLOAD_PATH = "src/main/resources/static/resume";
 
     UsersInfoService usersInfoService;
     UsersInfoRepository usersInfoRepository;
     UsersRepository usersRepository;
     ResumesRepository resumesRepository;
+    DropBoxService dropBoxService;
 
     /**
      * Создать резюме для пользователя
      * @param username текущий пользователь
      * @param resumeDto дто резюме
      */
-    public void createResume(String username, ResumeDto resumeDto) {
+    public void createResume(String username, ResumeDto resumeDto) throws IOException, DbxException {
         Users users = usersRepository.findByLogin(username);
-        String fileUrl = fileProcessingUtils.uploadFile(resumeDto.filePath(), UPLOAD_PATH);
+        String fileName = dropBoxService.generateFileName(resumeDto.filePath().getOriginalFilename());
+        String fileUrl = dropBoxService.uploadFile(resumeDto.filePath(), fileName);
 
         Resumes resumes = new Resumes();
         resumes.setUrl(resumeDto.url());

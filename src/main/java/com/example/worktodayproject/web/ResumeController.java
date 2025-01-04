@@ -1,9 +1,9 @@
 package com.example.worktodayproject.web;
 
+import com.dropbox.core.DbxException;
 import com.example.worktodayproject.dto.request.ResumeDto;
 import com.example.worktodayproject.dto.response.ResumeResponse;
 import com.example.worktodayproject.service.ResumeService;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ResumeController {
     @PostMapping(value = "/create", consumes = { "multipart/form-data" })
     public ResponseEntity<Map<String, Object>> createResume(@RequestParam(value = "url", required = false) String url,
                                                             @RequestParam(value = "filePath", required = false) MultipartFile filePath,
-                                                            Principal principal) {
+                                                            Principal principal) throws IOException, DbxException {
         ResumeDto resumeDto = new ResumeDto(url, filePath);
         resumeService.createResume(principal.getName(), resumeDto);
 

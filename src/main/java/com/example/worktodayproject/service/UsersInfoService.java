@@ -1,11 +1,11 @@
 package com.example.worktodayproject.service;
 
+import com.dropbox.core.DbxException;
 import com.example.worktodayproject.database.entity.*;
 import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.request.UsersInfoDto;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
 import com.example.worktodayproject.exception.custom.UserInfoNotFoundException;
-import com.example.worktodayproject.utils.FileProcessingUtils;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,19 +26,17 @@ import java.util.List;
 public class UsersInfoService {
 
     MapperUtils mapperUtils = new MapperUtils();
-    FileProcessingUtils fileProcessingUtils = new FileProcessingUtils();
-
-    static String UPLOAD_PATH = "src/main/resources/static/image";
 
     UsersInfoRepository usersInfoRepository;
     UsersRepository usersRepository;
+    DropBoxService dropBoxService;
 
     /**
      * Обновить информацию о пользователе
      * @param usersInfoDto дто
      * @param username логин
      */
-    public void updateUsersInfo(UsersInfoDto usersInfoDto, String username) {
+    public void updateUsersInfo(UsersInfoDto usersInfoDto, String username) throws IOException, DbxException {
         Users user = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
 
@@ -58,7 +57,8 @@ public class UsersInfoService {
         }
         if (usersInfoDto.avatarUrl() != null
                 && !usersInfoDto.avatarUrl().isEmpty()) {
-            String avatarUrl = fileProcessingUtils.uploadFile(usersInfoDto.avatarUrl(), UPLOAD_PATH);
+            String fileName = dropBoxService.generateFileName(usersInfoDto.avatarUrl().getOriginalFilename());
+            String avatarUrl = dropBoxService.uploadFile(usersInfoDto.avatarUrl(), fileName);
             usersInfo.setUserPhoto(avatarUrl);
         }
 

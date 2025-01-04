@@ -25,6 +25,10 @@ spring:
     multipart:
       enabled: true
 
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/static/portfolio/,classpath:/static/report/,classpath:/static/resume/,classpath:/static /image/
+
   spring:
     security:
       oauth2:
@@ -43,3 +47,6 @@ spring:
               token-uri: https://oauth.vk.com/access_token
               user-info-uri: https://api.vk.com/method/users.get?v=5.103&fields=uid,first_name,last_name,screen_name,photo_200
               user-name-attribute: response
+
+dropbox:
+  app_secret: ${DROPBOX_KEY}

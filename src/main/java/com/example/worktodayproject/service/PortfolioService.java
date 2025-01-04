@@ -1,5 +1,6 @@
 package com.example.worktodayproject.service;
 
+import com.dropbox.core.DbxException;
 import com.example.worktodayproject.database.entity.Portfolios;
 import com.example.worktodayproject.database.entity.Users;
 import com.example.worktodayproject.database.entity.UsersInfo;
@@ -9,7 +10,6 @@ import com.example.worktodayproject.database.repository.UsersRepository;
 import com.example.worktodayproject.dto.request.PortfolioDto;
 import com.example.worktodayproject.dto.response.PortfolioResponse;
 import com.example.worktodayproject.exception.custom.PortfolioNotFoundException;
-import com.example.worktodayproject.utils.FileProcessingUtils;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -31,23 +32,22 @@ import java.util.Optional;
 public class PortfolioService {
 
     MapperUtils mapperUtils = new MapperUtils();
-    FileProcessingUtils fileProcessingUtils = new FileProcessingUtils();
-
-    static String UPLOAD_PATH = "src/main/resources/static/portfolio";
 
     UsersInfoService usersInfoService;
     PortfoliosRepository portfoliosRepository;
     UsersRepository usersRepository;
     UsersInfoRepository usersInfoRepository;
+    DropBoxService dropBoxService;
 
     /**
      * Создать портфолио для текущего пользователя
      * @param username имя текущего пользователя
      * @param portfolioDto дто портфолио
      */
-    public void createPortfolio(String username, PortfolioDto portfolioDto) {
+    public void createPortfolio(String username, PortfolioDto portfolioDto) throws IOException, DbxException {
         Users currentUser = usersRepository.findByLogin(username);
-        String fileUrl = fileProcessingUtils.uploadFile(portfolioDto.filePath(), UPLOAD_PATH);
+        String fileName = dropBoxService.generateFileName(portfolioDto.filePath().getOriginalFilename());
+        String fileUrl = dropBoxService.uploadFile(portfolioDto.filePath(), fileName);
 
         Portfolios portfolio = new Portfolios();
         portfolio.setFilePath(fileUrl);

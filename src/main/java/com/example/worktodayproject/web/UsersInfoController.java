@@ -1,10 +1,10 @@
 package com.example.worktodayproject.web;
 
+import com.dropbox.core.DbxException;
 import com.example.worktodayproject.dto.request.UsersInfoDto;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
 import com.example.worktodayproject.security.service.UserService;
 import com.example.worktodayproject.service.UsersInfoService;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ public class UsersInfoController {
                                         @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
                                         @RequestParam(value = "town", required = false) String town,
                                         @RequestParam(value = "avatar", required = false) MultipartFile avatar,
-                                                          Principal principal) {
+                                                          Principal principal) throws IOException, DbxException {
         UsersInfoDto usersInfoDto = new UsersInfoDto(name, surname, patronymic, phoneNumber, town, avatar);
 
         usersInfoService.updateUsersInfo(usersInfoDto, principal.getName());

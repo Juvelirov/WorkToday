@@ -1,9 +1,9 @@
 package com.example.worktodayproject.web;
 
+import com.dropbox.core.DbxException;
 import com.example.worktodayproject.dto.request.PortfolioDto;
 import com.example.worktodayproject.dto.response.PortfolioResponse;
 import com.example.worktodayproject.service.PortfolioService;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class PortfolioController {
     @PostMapping(value = "/create", consumes = { "multipart/form-data" })
     public ResponseEntity<Map<String, Object>> createPortfolio(@RequestParam(value = "url", required = false) String url,
                                                                @RequestParam(value = "filePath", required = false) MultipartFile filePath,
-                                                               Principal principal) {
+                                                               Principal principal) throws IOException, DbxException {
         PortfolioDto portfolioDto = new PortfolioDto(filePath, url);
         portfolioService.createPortfolio(principal.getName(), portfolioDto);
 

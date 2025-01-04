@@ -1,5 +1,6 @@
 package com.example.worktodayproject.service;
 
+import com.dropbox.core.DbxException;
 import com.example.worktodayproject.database.entity.IntershipsInfo;
 import com.example.worktodayproject.database.entity.Reports;
 import com.example.worktodayproject.database.entity.Users;
@@ -9,13 +10,13 @@ import com.example.worktodayproject.database.repository.ReportsRepository;
 import com.example.worktodayproject.database.repository.UsersInfoRepository;
 import com.example.worktodayproject.database.repository.UsersRepository;
 import com.example.worktodayproject.dto.request.ReportDto;
-import com.example.worktodayproject.utils.FileProcessingUtils;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -27,14 +28,12 @@ import java.util.Optional;
 @Transactional
 public class ReportsService {
 
-    static String UPLOAD_PATH = "src/main/resources/static/report";
-    FileProcessingUtils fileProcessingUtils = new FileProcessingUtils();
-
     ReportsRepository reportsRepository;
     UsersInfoRepository usersInfoRepository;
     UsersRepository usersRepository;
     IntershipInfoRepository intershipInfoRepository;
     UsersInfoService usersInfoService;
+    DropBoxService dropBoxService;
 
     /**
      * Создать отчет по студенту от HR
@@ -42,12 +41,13 @@ public class ReportsService {
      * @param internshipId id стажировки
      * @param reportDto дто отчетов
      */
-    public void createReport(String username, Long internshipId, ReportDto reportDto) {
+    public void createReport(String username, Long internshipId, ReportDto reportDto) throws IOException, DbxException {
         Users user = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
         Optional<IntershipsInfo> intershipsInfoOptional = intershipInfoRepository.findById(internshipId);
         IntershipsInfo intershipsInfo = intershipsInfoOptional.get();
-        String fileUrl = fileProcessingUtils.uploadFile(reportDto.filePath(), UPLOAD_PATH);
+        String fileName = dropBoxService.generateFileName(reportDto.filePath().getOriginalFilename());
+        String fileUrl = dropBoxService.uploadFile(reportDto.filePath(), fileName);
 
         Reports reports = new Reports();
         reports.setFilePath(fileUrl);
