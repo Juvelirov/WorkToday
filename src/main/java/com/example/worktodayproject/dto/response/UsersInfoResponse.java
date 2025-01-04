@@ -3,6 +3,7 @@ package com.example.worktodayproject.dto.response;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Ответ профиля пользователя
@@ -22,7 +23,7 @@ public record UsersInfoResponse(Long id,
                                 String avatarPath,
                                 Optional<PortfolioResponse> portfolios,
                                 Optional<ResumeResponse> resumes,
-                                Optional<List<IntershipInfoResponse>> internships,
-                                Optional<List<InternshipStatusResponse>> internshipStatus,
-                                Optional<List<ReportResponse>> reports) {
+                                Optional<Set<IntershipInfoResponse>> internships,
+                                Optional<Set<InternshipStatusResponse>> internshipStatus,
+                                Optional<Set<ReportResponse>> reports) {
 }

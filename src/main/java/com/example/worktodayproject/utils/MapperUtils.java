@@ -8,6 +8,7 @@ import com.example.worktodayproject.security.dto.response.UserResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -69,14 +70,14 @@ public class MapperUtils {
                 .map(this::mappingPortfolio);
         Optional<ResumeResponse> resumeResponse = Optional.ofNullable(usersInfo.getResume())
                 .map(this::mappingResume);
-        Optional<List<IntershipInfoResponse>> intershipsInfosResponse = Optional.ofNullable(usersInfo.getEnrollments())
+        Optional<Set<IntershipInfoResponse>> intershipsInfosResponse = Optional.ofNullable(usersInfo.getEnrollments())
                 .map(enrollments -> enrollments.stream()
                         .map(this::mappingEnrollToInternship)
-                        .collect(Collectors.toList()));
-        Optional<List<ReportResponse>> reportResponses = Optional.ofNullable(usersInfo.getReports())
-                .map(reports -> reports.stream().map(this::mappingReport).collect(Collectors.toList()));
-        Optional<List<InternshipStatusResponse>> internshipStatusResponses = Optional.ofNullable(usersInfo.getResults())
-                .map(reports -> reports.stream().map(this::mappingInternshipResultToInternshipStatus).collect(Collectors.toList()));
+                        .collect(Collectors.toSet()));
+        Optional<Set<ReportResponse>> reportResponses = Optional.ofNullable(usersInfo.getReports())
+                .map(reports -> reports.stream().map(this::mappingReport).collect(Collectors.toSet()));
+        Optional<Set<InternshipStatusResponse>> internshipStatusResponses = Optional.ofNullable(usersInfo.getResults())
+                .map(reports -> reports.stream().map(this::mappingInternshipResultToInternshipStatus).collect(Collectors.toSet()));
         if (usersInfo.getRecomendationFlag() == null) {
             usersInfo.setRecomendationFlag(Boolean.FALSE);
         }

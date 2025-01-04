@@ -1,15 +1,11 @@
 package com.example.worktodayproject.service;
 
 import com.dropbox.core.DbxException;
-import com.example.worktodayproject.database.entity.IntershipsInfo;
-import com.example.worktodayproject.database.entity.Reports;
-import com.example.worktodayproject.database.entity.Users;
-import com.example.worktodayproject.database.entity.UsersInfo;
-import com.example.worktodayproject.database.repository.IntershipInfoRepository;
-import com.example.worktodayproject.database.repository.ReportsRepository;
-import com.example.worktodayproject.database.repository.UsersInfoRepository;
-import com.example.worktodayproject.database.repository.UsersRepository;
+import com.example.worktodayproject.database.entity.*;
+import com.example.worktodayproject.database.enums.EnrollStatus;
+import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.request.ReportDto;
+import com.example.worktodayproject.exception.custom.AuthorizedUserException;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +28,7 @@ public class ReportsService {
     UsersInfoRepository usersInfoRepository;
     UsersRepository usersRepository;
     IntershipInfoRepository intershipInfoRepository;
+    EnrollmentRepository enrollmentRepository;
     UsersInfoService usersInfoService;
     DropBoxService dropBoxService;
 
@@ -46,6 +43,17 @@ public class ReportsService {
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
         Optional<IntershipsInfo> intershipsInfoOptional = intershipInfoRepository.findById(internshipId);
         IntershipsInfo intershipsInfo = intershipsInfoOptional.get();
+
+        Enrollment userEnrollment = enrollmentRepository.findByUsersAndIntershipsInfoId(user, internshipId);
+        boolean isStudentEnrolled = enrollmentRepository.existsByUsersAndIntershipsInfo(user, intershipsInfo);
+        if (!isStudentEnrolled) {
+            throw new AuthorizedUserException("Student " + username + " is not enrolled in" +
+                    " internship with id " + internshipId);
+        }
+        if (userEnrollment.getStatus().equals(EnrollStatus.PENDING)) {
+            throw new AuthorizedUserException("Internship in waiting");
+        }
+
         String fileName = dropBoxService.generateFileName(reportDto.filePath().getOriginalFilename());
         String fileUrl = dropBoxService.uploadFile(reportDto.filePath(), fileName);
 
@@ -55,7 +63,6 @@ public class ReportsService {
         reports.setIntershipsInfo(intershipsInfo);
 
         usersInfoService.setReportForUserInfo(reports, username);
-
         reportsRepository.save(reports);
     }
 
