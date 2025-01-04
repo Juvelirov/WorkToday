@@ -20,37 +20,37 @@ import java.util.Map;
 /**
  * Контроллер заданий для всех
  */
-@RestController
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
-@RequestMapping("/api/v1/private/student/task")
-@Validated
-public class TaskControllerForAll {
-
-    StudentTasksService studentTasksService;
-
-    /**
-     * Получить все задания текущего пользователя
-     * @param principal текущий пользователь
-     * @return список заданий пользователя
-     */
+//@RestController
+//@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+//@RequiredArgsConstructor
+//@RequestMapping("/api/v1/private/student/task")
+//@Validated
+//public class TaskControllerForAll {
+//
+//    StudentTasksService studentTasksService;
+//
+//    /**
+//     * Получить все задания текущего пользователя
+//     * @param principal текущий пользователь
+//     * @return список заданий пользователя
+//     */
 //    @GetMapping("/my-tasks")
 //    public List<TaskResponse> getMyTasks(Principal principal) {
 //        return studentTasksService.getAllUsersTasks(principal.getName());
 //    }
-
+//
 //    @GetMapping("/my-tasks/{id}")
 //    public TaskResponse getMyTask(@PathVariable Long id,
 //                                  Principal principal) {
 //        return studentTasksService.getUsersTask(principal.getName(), id);
 //    }
-
-    /**
-     * Начать задание
-     * @param id id задания
-     * @param principal текущий пользователь
-     * @return ответ
-     */
+//
+//    /**
+//     * Начать задание
+//     * @param id id задания
+//     * @param principal текущий пользователь
+//     * @return ответ
+//     */
 //    @PostMapping("/start-task/{id}")
 //    public ResponseEntity<Map<String, Object>> startTask(@PathVariable Long id,
 //                                            Principal principal) {
@@ -61,14 +61,14 @@ public class TaskControllerForAll {
 //
 //        return new ResponseEntity<>(response, HttpStatus.OK);
 //    }
-
-    /**
-     * Завершить задание
-     * @param id id задания
-     * @param principal текущий пользователь
-     * @param taskCompleteDto дто завершенной задачи
-     * @return ответ
-     */
+//
+//    /**
+//     * Завершить задание
+//     * @param id id задания
+//     * @param principal текущий пользователь
+//     * @param taskCompleteDto дто завершенной задачи
+//     * @return ответ
+//     */
 //    @PostMapping("/complete-task/{id}")
 //    public ResponseEntity<Map<String, Object>> completeTask(@PathVariable Long id,
 //                                               Principal principal,
@@ -80,4 +80,4 @@ public class TaskControllerForAll {
 //
 //        return new ResponseEntity<>(response, HttpStatus.OK);
 //    }
-}
+//}
