@@ -17,12 +17,8 @@ import java.util.List;
 @Setter
 public class UsersInfo extends BaseEntity {
 
-    @Column(name="name")
-    String name;
-    @Column(name="surname")
-    String surname;
-    @Column(name="patronymic")
-    String patronymic;
+    @Column(name = "fio")
+    String fio;
     @Column(name="recomendation_flag")
     Boolean recomendationFlag;
     @Column(name="phone_number")

@@ -55,30 +55,30 @@ public class ResumeController {
      * @param id идентификатор резюме
      * @return ответ резюме
      */
-    @GetMapping("/{username}/{id}")
-    public ResumeResponse getUserResume(@PathVariable String username, @PathVariable Long id) {
-        return resumeService.getUserResume(username, id);
-    }
-
-    /**
-     * Получить все резюме пользователя
-     * @param username имя пользователя
-     * @return список резюме
-     */
-    @GetMapping("/{username}")
-    public List<ResumeResponse> getAllUserResumes(@PathVariable String username) {
-        return resumeService.getAllUserResume(username);
-    }
-
-    /**
-     * Получить все резюме текущего пользователя
-     * @param principal текущий пользователь
-     * @return список резюме
-     */
-    @GetMapping("/my-resume")
-    public List<ResumeResponse> getCurrentUserPortfolios(Principal principal) {
-        return resumeService.getAllUserResume(principal.getName());
-    }
+//    @GetMapping("/{username}/{id}")
+//    public ResumeResponse getUserResume(@PathVariable String username, @PathVariable Long id) {
+//        return resumeService.getUserResume(username, id);
+//    }
+//
+//    /**
+//     * Получить все резюме пользователя
+//     * @param username имя пользователя
+//     * @return список резюме
+//     */
+//    @GetMapping("/{username}")
+//    public List<ResumeResponse> getAllUserResumes(@PathVariable String username) {
+//        return resumeService.getAllUserResume(username);
+//    }
+//
+//    /**
+//     * Получить все резюме текущего пользователя
+//     * @param principal текущий пользователь
+//     * @return список резюме
+//     */
+//    @GetMapping("/my-resume")
+//    public List<ResumeResponse> getCurrentUserPortfolios(Principal principal) {
+//        return resumeService.getAllUserResume(principal.getName());
+//    }
 
     /**
      * Удалить резюме по его id

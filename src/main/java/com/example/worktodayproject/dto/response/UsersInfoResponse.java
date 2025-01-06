@@ -11,8 +11,6 @@ import java.util.Set;
  * @param recommendation рекомендация на стажировку
  * @param phoneNumber номер телефона
  * @param town город
- * @param portfolios портфолио пользователя
- * @param resumes резюме пользователя
  */
 public record UsersInfoResponse(Long id,
                                 String email,
@@ -21,8 +19,8 @@ public record UsersInfoResponse(Long id,
                                 String phoneNumber,
                                 String town,
                                 String avatarPath,
-                                Optional<PortfolioResponse> portfolios,
-                                Optional<ResumeResponse> resumes,
+                                Optional<PortfolioResponse> portfolio,
+                                Optional<ResumeResponse> resume,
                                 Optional<Set<IntershipInfoResponse>> internships,
                                 Optional<Set<InternshipStatusResponse>> internshipStatus,
                                 Optional<Set<ReportResponse>> reports) {

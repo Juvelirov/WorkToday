@@ -79,10 +79,7 @@ public class UserService {
      * Отправить ФИО в профиль
      */
     private void setFioOnBio(String fio, UsersInfo usersInfo) {
-        String[] splitFio = fio.split(" ");
-        usersInfo.setName(splitFio[0]);
-        usersInfo.setSurname(splitFio[1]);
-        usersInfo.setPatronymic(splitFio[2]);
+        usersInfo.setFio(fio);
     }
 
     /**

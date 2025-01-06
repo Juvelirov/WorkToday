@@ -82,11 +82,9 @@ public class MapperUtils {
             usersInfo.setRecomendationFlag(Boolean.FALSE);
         }
 
-        String fio = usersInfo.getName() + " " + usersInfo.getSurname() + " " + usersInfo.getPatronymic();
-
         return new UsersInfoResponse(usersInfo.getId(),
                 usersInfo.getUsers().getUsername(),
-                fio,
+                usersInfo.getFio(),
                 usersInfo.getRecomendationFlag(),
                 usersInfo.getPhoneNumber(),
                 usersInfo.getTown(),

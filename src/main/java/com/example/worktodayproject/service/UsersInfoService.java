@@ -40,14 +40,8 @@ public class UsersInfoService {
         Users user = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
 
-        if (usersInfoDto.name() != null) {
-            usersInfo.setName(usersInfoDto.name());
-        }
-        if (usersInfoDto.surname() != null) {
-            usersInfo.setSurname(usersInfoDto.surname());
-        }
-        if (usersInfoDto.patronymic() != null) {
-            usersInfo.setPatronymic(usersInfoDto.patronymic());
+        if (usersInfoDto.fio() != null) {
+            usersInfo.setFio(usersInfoDto.fio());
         }
         if (usersInfoDto.phoneNumber() != null) {
             usersInfo.setPhoneNumber(usersInfoDto.phoneNumber());

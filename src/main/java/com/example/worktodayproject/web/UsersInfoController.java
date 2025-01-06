@@ -38,14 +38,12 @@ public class UsersInfoController {
      * @param principal
      */
     @PostMapping(value = "/my-profile/set-data", consumes = { "multipart/form-data" })
-    public ResponseEntity<?> setProfile(@RequestParam(value = "name", required = false) String name,
-                                        @RequestParam(value = "surname", required = false) String surname,
-                                        @RequestParam(value = "patronymic", required = false) String patronymic,
+    public ResponseEntity<?> setProfile(@RequestParam(value = "fio", required = false) String fio,
                                         @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
                                         @RequestParam(value = "town", required = false) String town,
                                         @RequestParam(value = "avatar", required = false) MultipartFile avatar,
                                                           Principal principal) throws IOException, DbxException {
-        UsersInfoDto usersInfoDto = new UsersInfoDto(name, surname, patronymic, phoneNumber, town, avatar);
+        UsersInfoDto usersInfoDto = new UsersInfoDto(fio, phoneNumber, town, avatar);
 
         usersInfoService.updateUsersInfo(usersInfoDto, principal.getName());
 

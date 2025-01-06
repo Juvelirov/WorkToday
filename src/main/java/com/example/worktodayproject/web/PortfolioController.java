@@ -55,30 +55,30 @@ public class PortfolioController {
      * @param id идентификатор профиля
      * @return ответ портфолио
      */
-    @GetMapping("/{username}/{id}")
-    public PortfolioResponse getUserPortfolio(@PathVariable String username, @PathVariable Long id) {
-        return portfolioService.getUserPortfolio(username, id);
-    }
-
-    /**
-     * Получить все портфолио пользователя
-     * @param username имя пользователя
-     * @return список портфолио
-     */
-    @GetMapping("/{username}")
-    public List<PortfolioResponse> getAllUserPortfolios(@PathVariable String username) {
-        return portfolioService.getAllUserPortfolios(username);
-    }
-
-    /**
-     * Получить все портфолио текущего пользователя
-     * @param principal текущий пользователь
-     * @return список портфолио
-     */
-    @GetMapping("/my-portfolio")
-    public List<PortfolioResponse> getCurrentUserPortfolios(Principal principal) {
-        return portfolioService.getAllUserPortfolios(principal.getName());
-    }
+//    @GetMapping("/{username}/{id}")
+//    public PortfolioResponse getUserPortfolio(@PathVariable String username, @PathVariable Long id) {
+//        return portfolioService.getUserPortfolio(username, id);
+//    }
+//
+//    /**
+//     * Получить все портфолио пользователя
+//     * @param username имя пользователя
+//     * @return список портфолио
+//     */
+//    @GetMapping("/{username}")
+//    public List<PortfolioResponse> getAllUserPortfolios(@PathVariable String username) {
+//        return portfolioService.getAllUserPortfolios(username);
+//    }
+//
+//    /**
+//     * Получить все портфолио текущего пользователя
+//     * @param principal текущий пользователь
+//     * @return список портфолио
+//     */
+//    @GetMapping("/my-portfolio")
+//    public List<PortfolioResponse> getCurrentUserPortfolios(Principal principal) {
+//        return portfolioService.getAllUserPortfolios(principal.getName());
+//    }
 
     /**
      * Удалить портфолио по его id
