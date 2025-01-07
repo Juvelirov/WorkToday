@@ -1,6 +1,7 @@
 package com.example.worktodayproject.web;
 
 import com.example.worktodayproject.dto.request.IntershipInfoDto;
+import com.example.worktodayproject.dto.response.IntershipInfoResponse;
 import com.example.worktodayproject.service.IntershipInfoService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -35,10 +36,11 @@ public class IntershipInfoControllerHr {
     @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> createIntership(@Valid @RequestBody IntershipInfoDto intershipInfoDto,
                                                                Principal principal) {
-        intershipInfoService.createIntership(intershipInfoDto, principal.getName());
+        Long id = intershipInfoService.createIntership(intershipInfoDto, principal.getName());
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
+        response.put("ID", id);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

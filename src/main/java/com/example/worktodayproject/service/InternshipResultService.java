@@ -40,7 +40,7 @@ public class InternshipResultService {
      * @param internshipId id стажировки
      * @param resultDto дто результатов
      */
-    public void createInternshipResult(String username,
+    public Long createInternshipResult(String username,
                                        String hrUsername,
                                        Long internshipId,
                                        ResultDto resultDto) {
@@ -77,5 +77,7 @@ public class InternshipResultService {
         internshipResultRepository.save(internshipsResult);
         reportsRepository.save(reports);
         usersInfoRepository.save(usersInfo);
+
+        return internshipsResult.getId();
     }
 }

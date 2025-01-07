@@ -28,20 +28,19 @@ public class EnrollController {
 
     /**
      * Записать пользователя на стажировку
-     * @param id идентификатор стажировки
      * @return ответ
      */
-    @PostMapping("/{id}/enroll")
-    public ResponseEntity<Map<String, Object>> enrollUser(@PathVariable Long id, Principal principal) {
+    @PostMapping("/{internshipId}/enroll")
+    public ResponseEntity<Map<String, Object>> enrollUser(@PathVariable Long internshipId, Principal principal) {
         if (principal == null) {
             throw new AuthorizedUserException("Только авторизованные пользователи могут записаться на стажировку");
         }
         String username = principal.getName();
-        enrollmentService.enrollUser(username, id);
+        enrollmentService.enrollUser(username, internshipId);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");
-        response.put("message", String.format("User: %s enrolled to %d internship", username, id));
+        response.put("message", String.format("User: %s enrolled to %d internship", username, internshipId));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -38,13 +38,15 @@ public class IntershipInfoService {
     /**
      * Создать стажировку
      */
-    public void createIntership(IntershipInfoDto intershipInfoDto, String username) {
+    public Long createIntership(IntershipInfoDto intershipInfoDto, String username) {
         IntershipsInfo intershipsInfo = new IntershipsInfo();
         Users user = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
         intershipsInfo.setUser(user);
         intershipsInfo.setUserInfo(usersInfo);
         saveIntership(intershipsInfo, intershipInfoDto);
+
+        return intershipsInfo.getId();
     }
 
     /**
