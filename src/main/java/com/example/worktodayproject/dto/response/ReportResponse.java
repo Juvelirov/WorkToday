@@ -5,8 +5,6 @@ package com.example.worktodayproject.dto.response;
  * @param id id
  * @param userInfoId id профиля
  * @param internshipId id стажировки
- * @param title название
- * @param description описание
  */
 public record ReportResponse(Long id,
                              Long userInfoId,

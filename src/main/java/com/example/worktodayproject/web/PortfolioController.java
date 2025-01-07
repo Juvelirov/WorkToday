@@ -37,10 +37,9 @@ public class PortfolioController {
      * @return успешный ответ
      */
     @PostMapping(value = "/create", consumes = { "multipart/form-data" })
-    public ResponseEntity<Map<String, Object>> createPortfolio(@RequestParam(value = "url", required = false) String url,
-                                                               @RequestParam(value = "filePath", required = false) MultipartFile filePath,
+    public ResponseEntity<Map<String, Object>> createPortfolio(@RequestParam(value = "filePath", required = false) MultipartFile filePath,
                                                                Principal principal) throws IOException, DbxException {
-        PortfolioDto portfolioDto = new PortfolioDto(filePath, url);
+        PortfolioDto portfolioDto = new PortfolioDto(filePath);
         portfolioService.createPortfolio(principal.getName(), portfolioDto);
 
         Map<String, Object> response = new HashMap<>();

@@ -6,6 +6,7 @@ import com.example.worktodayproject.database.enums.EnrollStatus;
 import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.request.ReportDto;
 import com.example.worktodayproject.exception.custom.AuthorizedUserException;
+import com.example.worktodayproject.exception.custom.InternshipNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,10 @@ public class ReportsService {
     public void createReport(String username, Long internshipId, ReportDto reportDto) throws IOException, DbxException {
         Users user = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+
+        if (!intershipInfoRepository.existsById(internshipId)) {
+            throw new InternshipNotFoundException(internshipId);
+        }
         Optional<IntershipsInfo> intershipsInfoOptional = intershipInfoRepository.findById(internshipId);
         IntershipsInfo intershipsInfo = intershipsInfoOptional.get();
 

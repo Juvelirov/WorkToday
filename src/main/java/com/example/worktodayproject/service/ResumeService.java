@@ -51,7 +51,6 @@ public class ResumeService {
         String fileUrl = dropBoxService.uploadFile(resumeDto.filePath(), fileName);
 
         Resumes resumes = new Resumes();
-        resumes.setUrl(resumeDto.url());
         resumes.setFilePath(fileUrl);
         resumes.setUploadDate(LocalDateTime.now());
         resumes.setUserInfo(usersInfoRepository.findByUsers(users));

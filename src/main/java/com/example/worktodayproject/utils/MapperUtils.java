@@ -134,7 +134,6 @@ public class MapperUtils {
         return new PortfolioResponse(portfolios.getId(),
                 portfolios.getUserInfo().getUsers().getId(),
                 portfolios.getFilePath(),
-                portfolios.getUrl(),
                 portfolios.getUploadDate());
     }
 
@@ -160,7 +159,6 @@ public class MapperUtils {
     public ResumeResponse mappingResume(Resumes resumes) {
         return new ResumeResponse(resumes.getId(),
                 resumes.getUserInfo().getUsers().getId(),
-                resumes.getUrl(),
                 resumes.getFilePath(),
                 resumes.getUploadDate());
     }

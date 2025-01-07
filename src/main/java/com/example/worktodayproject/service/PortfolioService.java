@@ -51,7 +51,6 @@ public class PortfolioService {
 
         Portfolios portfolio = new Portfolios();
         portfolio.setFilePath(fileUrl);
-        portfolio.setUrl(portfolioDto.url());
         portfolio.setUploadDate(LocalDateTime.now());
         portfolio.setUserInfo(usersInfoRepository.findByUsers(currentUser));
 
