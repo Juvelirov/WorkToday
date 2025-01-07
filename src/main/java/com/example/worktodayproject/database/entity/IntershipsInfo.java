@@ -29,8 +29,6 @@ public class IntershipsInfo extends BaseEntity {
     String requirements;
     @Column(name = "task")
     String task;
-    @Column(name="fields")
-    String fields;
     @Column(name = "town")
     String town;
 

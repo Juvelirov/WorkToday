@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Ответ стажировки
  * @param title название
- * @param fields -
  * @param tags теги
  * @param creator создатель
  */
@@ -18,7 +17,6 @@ public record IntershipInfoResponse(Long id,
                                     String requirements,
                                     String task,
                                     String town,
-                                    String fields,
                                     List<String> tags,
                                     UserResponse creator) {
 }

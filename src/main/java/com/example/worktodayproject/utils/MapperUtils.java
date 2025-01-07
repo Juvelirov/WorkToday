@@ -40,7 +40,6 @@ public class MapperUtils {
                 intershipsInfo.getRequirements(),
                 intershipsInfo.getTask(),
                 intershipsInfo.getTown(),
-                intershipsInfo.getFields(),
                 tagsList,
                 userResponse);
     }

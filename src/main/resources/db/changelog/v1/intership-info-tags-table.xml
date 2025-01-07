@@ -13,9 +13,6 @@
             <column name="title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="fields" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
             <column name="creator_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>

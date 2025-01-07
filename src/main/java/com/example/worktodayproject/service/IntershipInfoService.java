@@ -166,7 +166,6 @@ public class IntershipInfoService {
         info.setRequirements(infoDto.requirements());
         info.setTask(infoDto.task());
         info.setTown(infoDto.town());
-        info.setFields(infoDto.fields());
 
         for (String tag : infoDto.tags()) {
             Tags tags = new Tags();

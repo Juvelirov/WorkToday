@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * Дто стажировки
  * @param title название
- * @param fields -
  * @param tags теги
  */
 public record IntershipInfoDto(@NotBlank(message = "Название стажировки не может быть пустым")
@@ -29,6 +28,5 @@ public record IntershipInfoDto(@NotBlank(message = "Название стажи�
                                @NotBlank(message = "Город не может быть пустым")
                                @NotNull(message = "Город не может быть пустым")
                                String town,
-                               String fields,
                                List<String> tags) {
 }
