@@ -1,26 +1,26 @@
-// import type { s } from "@/types";
-// import { apiClient } from "./apiClient";
-// import { endpoints } from "./endpoints";
+import { n, v } from "@/types";
+import { apiClient } from "./apiClient";
+import { InternshipInfoDTO } from "./apiTypes";
+import { endpoints } from "./endpoints";
 
-// export async function createInternship(internship: InternshipCreateDto) {
-//   return apiClient<Internship>(endpoints.private.hr.createInternship, {
-//     method: "POST",
-//     body: JSON.stringify(internship),
-//   });
-// }
+export async function createInternship(internship: InternshipInfoDTO) {
+  return apiClient<v>(endpoints.private.hr.internships.create, {
+    method: "POST",
+    body: JSON.stringify(internship),
+    headers: { "Content-Type": "application/json" },
+  });
+}
 
-// export async function updateInternship(
-//   id: s,
-//   internship: InternshipUpdateDto
-// ) {
-//   return apiClient<Internship>(endpoints.private.hr.updateInternship(id), {
-//     method: "PUT",
-//     body: JSON.stringify(internship),
-//   });
-// }
+export async function updateInternship(id: n, internship: InternshipInfoDTO) {
+  return apiClient<v>(endpoints.private.hr.internships.update(id), {
+    method: "PUT",
+    body: JSON.stringify(internship),
+    headers: { "Content-Type": "application/json" },
+  });
+}
 
-// export async function deleteInternship(id: s) {
-//   return apiClient<v>(endpoints.private.hr.deleteInternship(id), {
-//     method: "DELETE",
-//   });
-// }
+export async function deleteInternship(id: n) {
+  return apiClient<v>(endpoints.private.hr.internships.delete(id), {
+    method: "DELETE",
+  });
+}

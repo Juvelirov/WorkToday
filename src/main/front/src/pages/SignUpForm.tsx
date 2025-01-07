@@ -29,6 +29,9 @@ export function SignUpForm() {
     const result = await apiClient<UserDTO>("/public/registration", {
       method: "POST",
       body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     console.log("Registration successful:", result);

@@ -31,6 +31,9 @@ export function SignInForm() {
     const response = await apiClient<{ token: s }>("/public/login", {
       method: "POST",
       body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     setToken(response.token);

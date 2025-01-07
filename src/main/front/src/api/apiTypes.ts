@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { b, n, s } from "@/types";
+import type { b, n, s, ss } from "@/types";
 
 // For admin
 export interface UserInfoDTO {
@@ -38,9 +38,13 @@ export interface InternshipInfoResponse {
 type UserResponse = { fio: s; email: s; company: s };
 
 // hr/internships
-interface IntershipInfoDTO {
+export interface InternshipInfoDTO {
   title: s;
-  description: s;
+  company: s;
+  duties: s;
+  requirements: s;
+  task: s;
+  town: s;
   fields: s;
   tags: s[];
 }
@@ -114,27 +118,25 @@ interface PortfolioDTO {
   url: s;
 }
 
-interface MyPortfolioResponse {
-  id: n;
-  userId: n;
-  title: s;
-  description: s;
-  url: s;
-  filePath: s;
-  uploadDate: s;
-}
+// interface MyPortfolioResponse {
+//   id: n;
+//   userId: n;
+//   title: s;
+//   description: s;
+//   url: s;
+//   filePath: s;
+//   uploadDate: s;
+// }
 
-type MyPortfolioResponseList = MyPortfolioResponse[];
+// export type MyPortfolioResponseList = MyPortfolioResponse[];
 
-// student/resume
 interface ResumeDTO {
   url: s;
   filePath: s;
 }
 
-// hr/result
 interface ResultDTO {
-  mark: n; // double
+  mark: n;
   recommendation: b;
   report: ReportDTO;
 }
@@ -144,7 +146,6 @@ interface ReportDTO {
   description: s;
 }
 
-// ResumeResponse
 interface ResumeResponseHUH {
   id: n;
   userId: n;
@@ -158,32 +159,49 @@ type ResumeResponseList = ResumeResponseHUH[];
 // student/profiles
 // UsersInfoDTO
 
-interface UsersInfoResponse {
+export interface UsersInfoResponse {
   id: n;
-  username: s;
-  name: s;
-  surname: s;
-  patronymic: s;
-  recommendations: s;
+  email: s;
+  fio: s;
+  recommendation: b;
   phoneNumber: s;
   town: s;
-  portfolios: PortfolioResponse;
-  resumes: ResumeResponse;
-  tasks: TaskResponse[];
-  result: ReportResponse[];
+  avatarPath: s;
+  portfolio: PortfolioResponse | undefined;
+  resume: ResumeResponse;
+  reports: ReportResponse[];
 }
 
-type PortfolioResponse = {
+export type PortfolioResponse = {
   id: n;
   userId: n;
-  title: s;
-  description: s;
   filePath: s;
   url: s;
-  uploadDate: s; // ISO 8601 date-time format
+  uploadDate: s;
 };
 
-type ResumeResponse = { id: n; userId: n; url: s; filePath: s; uploadDate: s };
+export interface UpdateProfile {
+  fio: s;
+  phoneNumber: s;
+  town: s;
+  avatar: File | undefined;
+}
+
+export interface ResumeResponse {
+  id: n;
+  userId: n;
+  url: s;
+  filePath: s;
+  uploadDate: s;
+}
+
+export interface FileResponse {
+  id: n;
+  userId: n;
+  filePath: s;
+  uploadDate: s;
+}
+
 type TaskResponse = {
   id: n;
   userInfoId: n;
@@ -201,6 +219,8 @@ type ReportResponse = { title: s; description: s };
 
 export interface Endpoints {
   public: {
+    cancel: (internshipId: s) => s;
+    myEnrolls: s;
     registration: s;
     login: s;
     enroll: (id: s) => s;
@@ -220,31 +240,33 @@ export interface Endpoints {
         filtered: s;
         byId: (id: s) => s;
       };
-      tasks: {
-        all: s;
-        byId: (id: s) => s;
-        start: (id: s) => s;
-        complete: (id: s) => s;
+
+      report: {
+        create: (internshipId: s) => s;
+        delete: (internshipId: s) => s;
       };
+
       portfolio: {
-        my: s;
+        // my: s;
         create: s;
         get: (email: s, id: s) => s;
         getAll: (email: s) => s;
-        delete: (id: s) => s;
+        delete: (id: n) => s;
       };
 
       resume: {
-        my: s;
+        // my: s;
         create: s;
         get: (email: s, id: s) => s;
         getAll: (email: s) => s;
-        delete: (id: s) => s;
+        delete: (id: n) => s;
       };
+
       profiles: {
         my: s;
         all: s;
         save: s;
+        delete: s;
         get: (email: s) => s;
       };
     };
@@ -252,16 +274,28 @@ export interface Endpoints {
     hr: {
       internships: {
         create: s;
-        update: (id: s) => s;
-        delete: (id: s) => s;
+        update: (id: n) => s;
+        delete: (id: n) => s;
       };
-      task: {
-        assign: (internshipId: s, internId: s) => s;
-        huh: (email: s, id: s) => s;
-        bruh: (email: s) => s;
-        aah: (email: s, id: s) => s;
-        checkhuh: (email: s, id: s) => s;
+
+      analytics: {
+        get: s;
+        setResult: (internshipResultId: s) => s;
       };
+
+      enrolls: {
+        get: s;
+        accept: (username: s, enrollId: s) => s;
+        reject: (username: s, enrollId: s) => s;
+      };
+
+      // task: {
+      //   assign: (internshipId: s, internId: s) => s;
+      //   huh: (email: s, id: s) => s;
+      //   bruh: (email: s) => s;
+      //   aah: (email: s, id: s) => s;
+      //   checkhuh: (email: s, id: s) => s;
+      // };
 
       result: {
         getResult: (internshipId: s, email: s) => s;

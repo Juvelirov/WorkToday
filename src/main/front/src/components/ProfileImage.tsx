@@ -5,9 +5,9 @@ import I from "./I";
 import IB from "./IB";
 
 interface ProfileImage {
-  image: File | null;
-  setImage: (image: File | null) => v;
-  imageUrl: s;
+  avatar: File | undefined;
+  setAvatar: (image: File | undefined) => v;
+  avatarPath: s;
 }
 
 export default function ProfileImage(p: ProfileImage) {
@@ -15,10 +15,13 @@ export default function ProfileImage(p: ProfileImage) {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
-    if (selectedFile) p.setImage(selectedFile);
+    if (selectedFile) p.setAvatar(selectedFile);
   };
 
-  const removeImage = () => p.setImage(null);
+  const removeImage = () => {
+    p.setAvatar(undefined);
+    localStorage.removeItem("imgUrl");
+  };
 
   return (
     <div
@@ -27,7 +30,7 @@ export default function ProfileImage(p: ProfileImage) {
       onMouseLeave={() => setHovered(false)}
     >
       <div className="relative">
-        {!p.image && !p.imageUrl ? (
+        {!p.avatar && !p.avatarPath ? (
           <label
             htmlFor="profile-image-upload"
             className="w-60 h-60 bg-cover rounded-3xl flex items-center bg-[#F3DFFF] justify-center cursor-pointer"
@@ -38,7 +41,7 @@ export default function ProfileImage(p: ProfileImage) {
           <div
             className="w-60 h-60 bg-cover rounded-3xl flex items-center bg-[#F3DFFF] justify-center"
             style={{
-              backgroundImage: `url(${p.imageUrl})`,
+              backgroundImage: `url(${p.avatarPath})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -51,7 +54,7 @@ export default function ProfileImage(p: ProfileImage) {
           accept="image/*"
           onChange={handleImageChange}
         />
-        {(p.image || p.imageUrl) && hovered && (
+        {(p.avatar || p.avatarPath) && hovered && (
           <div className="absolute bottom-[-20px] right-[90px] flex gap-1 p-1 bg-[#F3DFFF] rounded-lg">
             <label
               htmlFor="profile-image-upload"
@@ -63,7 +66,7 @@ export default function ProfileImage(p: ProfileImage) {
           </div>
         )}
       </div>
-      {!(p.image || p.imageUrl) && hovered && (
+      {!(p.avatar || p.avatarPath) && hovered && (
         <div className="absolute top-[180px] left-[180px] bg-[#E4C1FF] text-gray text-xs rounded-lg py-1 px-2 z-10 pointer-events-none">
           Загрузите изображение
         </div>

@@ -4,7 +4,7 @@ import { API_BASE_URL } from "./endpoints";
 
 export interface ApiOpts {
   method: "GET" | "POST" | "PUT" | "DELETE";
-  body?: s;
+  body?: s | FormData;
   headers?: Record<s, s>;
   queryParams?: Record<s, s | n>;
 }
@@ -19,7 +19,6 @@ export async function apiClient<T>(endpoint: s, options: ApiOpts): Promise<T> {
   }
 
   const headers: Record<s, s> = {
-    "Content-Type": "application/json",
     ...options.headers,
   };
 

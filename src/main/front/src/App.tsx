@@ -6,7 +6,9 @@ import { LandingPage } from "./pages/LandingPage";
 import { SignInForm } from "./pages/SignInForm";
 import { SignUpForm } from "./pages/SignUpForm";
 import { ProtectedRoute } from "./router/ProtectedRoute";
-import { HrProfilePage, InternProfilePage } from "./pages/ProfilePage";
+import { InternProfilePage } from "./pages/ProfilePage";
+import AnalyticsPage from "./pages/AnalyticsPage";
+import { InternshipCreationPage } from "./pages/InternshipCreationPage";
 
 export default function App() {
   return (
@@ -20,14 +22,14 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/hrProfile"
           element={
             <ProtectedRoute>
               <HrProfilePage />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route path="/signin" element={<SignInForm />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route
@@ -43,6 +45,22 @@ export default function App() {
           element={
             <ProtectedRoute>
               <InternshipPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/internshipCreate"
+          element={
+            <ProtectedRoute>
+              <InternshipCreationPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <AnalyticsPage />
             </ProtectedRoute>
           }
         />

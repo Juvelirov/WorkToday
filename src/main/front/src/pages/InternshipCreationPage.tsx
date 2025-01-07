@@ -1,39 +1,9 @@
-import { InternshipInfoResponse } from "@/api/apiTypes";
 import Header from "@/components/Header";
-import { Button } from "@/components/ui/button";
-import { b, s } from "@/types";
-import { useState } from "react";
 
-export function InternshipPage() {
-  const [applicationSubmitted, setApplicationSubmitted] = useState(false);
-  const [internship, setInternship] = useState<InternshipInfoResponse | null>(
-    null
-  );
-  // const [error, setError] = useState<s | null>(null);
-  // const [loading, setLoading] = useState<b>(true);
-
+export function InternshipCreationPage() {
   return (
     <div className="px-32 my-8">
       <Header />
-      <div className="flex justify-between items-center mb-6">
-        {/* <h1 className="font-black text-3xl">{fakeInternshipD[0].title}</h1> */}
-        <h1 className="font-black text-3xl">{internship?.title}</h1>
-        {applicationSubmitted && (
-          <div className="bg-green-200 px-3 py-2 rounded-full">
-            <p className="text-green-900 text-sm">Заявка подана</p>
-          </div>
-        )}
-      </div>
-      <div className="flex justify-between items-center mb-6">
-        <p>
-          От компании{" "}
-          <span className="bg-[#F3DFFF] rounded-full p-2 text-sm">
-            {/* {fakeInternshipD[0].creator.company} */}
-            {internship?.creator.company}
-          </span>
-        </p>
-        <HrAvatar />
-      </div>
       <h2 className="font-bold text-2xl mb-2">Обязанности</h2>
       <p className="mb-6">
         В рамках стажировки вы будете участвовать в разработке новых
@@ -66,33 +36,6 @@ export function InternshipPage() {
         API и базами данных (SQL и NoSQL); а также soft skills, такие как умение
         эффективно общаться, ответственность и умение работать в команде.
       </p>
-      <div className="flex justify-center items-center">
-        {!applicationSubmitted && (
-          <Button
-            className="bg-[#8300E7]"
-            onClick={() => setApplicationSubmitted(true)}
-          >
-            Подать заявку
-          </Button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export function HrAvatar() {
-  return (
-    <div>
-      <div
-        className="rounded-xl w-12 h-12 bg-[#F3DFFF] cursor-pointer"
-        style={{
-          backgroundImage: `url()`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        tabIndex={0}
-        role="button"
-      />
     </div>
   );
 }
