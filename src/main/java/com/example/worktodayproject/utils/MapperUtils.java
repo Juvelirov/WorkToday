@@ -263,6 +263,7 @@ public class MapperUtils {
         UsersInfoResponse usersInfoResponse = mappingUserInfo(enrollment.getUsers().getUserInfo());
 
         return new EnrollResponse(enrollment.getId(),
+                enrollment.getIntershipsInfo().getId(),
                 usersInfoResponse,
                 enrollment.getStatus());
     }
