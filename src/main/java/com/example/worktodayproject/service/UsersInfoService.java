@@ -5,6 +5,7 @@ import com.example.worktodayproject.database.entity.*;
 import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.request.UsersInfoDto;
 import com.example.worktodayproject.dto.response.UsersInfoResponse;
+import com.example.worktodayproject.exception.custom.AuthorizedUserException;
 import com.example.worktodayproject.exception.custom.UserInfoNotFoundException;
 import com.example.worktodayproject.utils.MapperUtils;
 import jakarta.transaction.Transactional;
@@ -141,6 +142,19 @@ public class UsersInfoService {
         UsersInfo usersInfo = usersInfoRepository.findByUsers(currentUser);
 
         usersInfo.getResults().add(internshipsResult);
+        usersInfoRepository.save(usersInfo);
+    }
+
+    public void deleteAvatar(String username) {
+        Users user = usersRepository.findByLogin(username);
+        UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
+
+        if (usersInfo.getUserPhoto() != null
+                && !usersInfo.getUserPhoto().isEmpty()) {
+            usersInfo.setUserPhoto(null);
+        } else {
+            throw new AuthorizedUserException("User already doesn't have avatar");
+        }
         usersInfoRepository.save(usersInfo);
     }
 }

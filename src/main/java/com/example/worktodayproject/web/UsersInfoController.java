@@ -91,4 +91,12 @@ public class UsersInfoController {
     public List<UsersInfoResponse> getAllUserInfo() {
         return usersInfoService.getAllUsersInfo();
     }
+
+    @DeleteMapping("/my-profile/delete-avatar")
+    public ResponseEntity<?> deleteAvatar(Principal principal) {
+        usersInfoService.deleteAvatar(principal.getName());
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
