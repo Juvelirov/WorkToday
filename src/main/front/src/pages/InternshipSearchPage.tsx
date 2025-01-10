@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { InternshipInfoResponse } from "@/api/apiTypes";
 import { fetchInternships, searchInternships } from "@/api/internAPI";
 import Bbls from "@/components/Bbls";
@@ -16,7 +15,6 @@ export function InternshipSearchPage() {
   const [loading, setLoading] = useState<b>(false);
   const [error, setError] = useState<s | null>(null);
 
-  // Fetch all internships on initial render
   useEffect(() => {
     loadAllInternships();
   }, []);
@@ -26,6 +24,7 @@ export function InternshipSearchPage() {
     setError(null);
     try {
       const internshipsD = await fetchInternships();
+      console.log(internshipsD);
       setInternships(internshipsD);
     } catch (err) {
       setError(
@@ -70,13 +69,13 @@ interface InternshipCard {
   data: InternshipInfoResponse;
 }
 
-function InternshipCard(p: InternshipCard) {
+function InternshipCard({ data }: InternshipCard) {
   return (
-    <Link to={`/internship/${p.data.id}`}>
+    <Link to={`/internship/${data.id}`}>
       <div className="relative bg-[#F3DFFF] rounded-3xl p-6 transform transition hover:scale-105">
-        <h3 className="font-bold mb-3">{p.data.title}</h3>
-        <p className="w-2/3">{p.data.description}</p>
-        <Bbls city={p.data.city} company={p.data.creator.company} />
+        <h3 className="font-bold mb-3">{data.title}</h3>
+        <p className="w-2/3">{data.requirements}</p>
+        <Bbls city={data.town} company={data.company} />
       </div>
     </Link>
   );
@@ -88,7 +87,7 @@ interface Filter {
 
 function Filter(p: Filter) {
   const [query, setQuery] = useState<s>("");
-  const [city, setCity] = useState<s>("Москва");
+  const [city, setCity] = useState<s>("");
 
   const handleSearch = () => {
     p.onSearch(query.trim(), city.trim());
@@ -112,7 +111,10 @@ function Filter(p: Filter) {
           onChange={(e) => setCity(e.target.value)}
         />
       </div>
-      <Button className="bg-[#8300E7]" onClick={handleSearch}>
+      <Button
+        className="bg-[#8300E7] hover:bg-[#8300E7]"
+        onClick={handleSearch}
+      >
         Найти
       </Button>
     </div>

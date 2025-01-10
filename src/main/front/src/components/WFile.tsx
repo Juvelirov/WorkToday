@@ -75,8 +75,8 @@ interface FileBlock {
 export function FileBlock(p: FileBlock) {
   const handleDownload = () => {
     const a = document.createElement("a");
-    a.href = p.filePath; // Use the filePath from the server
-    // a.download = p.fileName; // Use the filename from the path
+    a.href = p.filePath;
+    // a.download = ;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

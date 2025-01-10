@@ -1,5 +1,5 @@
 import { deleteProfile } from "@/api/internAPI";
-import {  signout } from "@/auth";
+import { signout } from "@/auth";
 import { s, v, P } from "@/types";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,14 @@ export default function Avatar() {
       : null,
     {
       label: "Удалить аккаунт",
-      action: () => (navigate("/signup"), deleteProfile()),
+      action: () => {
+        navigate("/signup");
+        localStorage.removeItem("internshipId");
+        localStorage.removeItem("internshipData");
+        localStorage.removeItem("imgUrl");
+        localStorage.removeItem("enrolledInternships");
+        deleteProfile();
+      },
     },
     { label: "Выйти", action: signout },
   ].filter((o): o is { label: s; action: () => v | P<v> } => Boolean(o));
@@ -49,7 +56,7 @@ export default function Avatar() {
 
       {isMenuOpen && (
         <div
-          className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg"
+          className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-20"
           onMouseLeave={closeMenu}
         >
           <ul className="py-2">

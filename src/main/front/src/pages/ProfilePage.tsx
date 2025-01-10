@@ -1,9 +1,10 @@
-import { UsersInfoResponse } from "@/api/apiTypes";
+import { EnrollResponse, UsersInfoResponse } from "@/api/apiTypes";
 import {
   createPortfolio,
   createResume,
   deletePortfolio,
   deleteResume,
+  fetchMyEnrolls,
   fetchMyProfile,
   updateProfile,
 } from "@/api/internAPI";
@@ -23,33 +24,53 @@ export function InternProfilePage() {
   const [profileD, setProfileD] = useState<UsersInfoResponse | undefined>(
     undefined
   );
-  console.log(refreshKey);
+  const [myEnrolls, setMyEnrolls] = useState<EnrollResponse[]>([]);
 
   useEffect(() => {
     const loadProfile = async () => {
       const profileD = await fetchMyProfile();
+      console.log(profileD);
       setProfileD(profileD);
     };
 
     loadProfile();
   }, [refreshKey]);
 
+  useEffect(() => {
+    const loadMyEnrolls = async () => {
+      const myEnrolls = await fetchMyEnrolls();
+      console.log(myEnrolls);
+      setMyEnrolls(myEnrolls);
+    };
+
+    loadMyEnrolls();
+  }, []);
+
   const refreshPage = () => setRefreshKey((prevKey) => ++prevKey);
 
   if (!profileD) return <div>Loading...</div>;
   return (
-    <ProfileBase role="intern" profileD={profileD} onRefresh={refreshPage} />
+    <ProfileBase
+      role="intern"
+      profileD={profileD}
+      onRefresh={refreshPage}
+      myEnrolls={myEnrolls}
+    />
   );
 }
+
+// export function HrProfilePage() {
+//   return <ProfileBase role="hr" />;
+// }
 
 interface ProfileBase {
   role: "intern" | "hr";
   profileD: UsersInfoResponse;
   onRefresh: F<v>;
+  myEnrolls: EnrollResponse[];
 }
 
 function ProfileBase(p: ProfileBase) {
-  // const [profileD, setProfileD] = useState<UsersInfoResponse | undefined>(p.profileD.)
   const [avatar, setAvatar] = useState<File | undefined>(undefined);
   const [avatarPath, setAvatarPath] = useState<s>(
     localStorage.getItem("imgUrl") ?? p.profileD.avatarPath ?? ""
@@ -113,7 +134,7 @@ function ProfileBase(p: ProfileBase) {
   return (
     <div className="px-32 my-8">
       <Header />
-      <div className="flex gap-16">
+      <div className="flex gap-16 mb-5">
         <div className="flex flex-col items-center justify-center gap-12">
           <div className="flex gap-8">
             <ProfileImage
@@ -153,7 +174,7 @@ function ProfileBase(p: ProfileBase) {
           </div>
           {isChanged && (
             <Button
-              className="bg-[#F3DFFF] text-black rounded-full"
+              className="bg-[#F3DFFF] text-black rounded-full hover:bg-[#F3DFFF]"
               onClick={handleSave}
             >
               Сохранить изменения
@@ -180,21 +201,29 @@ function ProfileBase(p: ProfileBase) {
               />
             </div>
           </div>
-          {/* {p.role === "hr" && ( */}
-          <div>
-            <h2 className="font-bold text-xl mb-10">Ссылки</h2>
-            <div className="flex justify-evenly gap-5">
-              <Link to="/analytics">
-                <div className="flex items-center gap-4 rounded-2xl p-4 bg-[#F3DFFF]">
-                  <I icon={ScrollTextIcon} />
-                  <p>Аналитика</p>
-                </div>
-              </Link>
+          {p.role === "hr" && (
+            <div>
+              <h2 className="font-bold text-xl mb-10">Ссылки</h2>
+              <div className="flex justify-evenly gap-5">
+                <Link to="/analytics">
+                  <div className="flex items-center gap-4 rounded-2xl p-4 bg-[#F3DFFF]">
+                    <I icon={ScrollTextIcon} />
+                    <p>Аналитика</p>
+                  </div>
+                </Link>
+              </div>
             </div>
-          </div>
-          {/* )} */}
+          )}
         </div>
       </div>
+      {p.myEnrolls.length > 0 && (
+        <div>
+          <h2 className="font-bold text-xl">Мои стажировки</h2>
+          {p.myEnrolls.map((e) => (
+            <div key={e.enrollId}>huh</div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

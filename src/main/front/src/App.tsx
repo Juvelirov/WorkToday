@@ -4,34 +4,46 @@ import { InternshipPage } from "./pages/InternshipPage";
 import { InternshipSearchPage } from "./pages/InternshipSearchPage";
 import { LandingPage } from "./pages/LandingPage";
 import { SignInForm } from "./pages/SignInForm";
-import { SignUpForm } from "./pages/SignUpForm";
+import SignUpForm from "./pages/SignUpForm";
 import { ProtectedRoute } from "./router/ProtectedRoute";
-import { InternProfilePage } from "./pages/ProfilePage";
+import { HrProfilePage, InternProfilePage } from "./pages/ProfilePage";
 import AnalyticsPage from "./pages/AnalyticsPage";
-import { InternshipCreationPage } from "./pages/InternshipCreationPage";
+import InternshipCreationPage from "./pages/InternshipCreationPage";
+import AnotherUserProfilePage from "./pages/AnotherProfilePage";
+import NoAuthPage from "./pages/NoAuthPage";
 
 export default function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/signin" element={<SignInForm />} />
         <Route
           path="/internProfile"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["ROLE_STUDENT", "ROLE_ADMIN"]}>
               <InternProfilePage />
             </ProtectedRoute>
           }
         />
-        {/* <Route
+        <Route
           path="/hrProfile"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["ROLE_HR", "ROLE_ADMIN"]}>
               <HrProfilePage />
             </ProtectedRoute>
           }
-        /> */}
-        <Route path="/signin" element={<SignInForm />} />
-        <Route path="/signup" element={<SignUpForm />} />
+        />
+        <Route
+          path="/profile/:email"
+          element={
+            <ProtectedRoute>
+              <AnotherUserProfilePage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/internshipsSearch"
           element={
@@ -41,7 +53,7 @@ export default function App() {
           }
         />
         <Route
-          path="/internship"
+          path="/internship/:id"
           element={
             <ProtectedRoute>
               <InternshipPage />
@@ -51,7 +63,7 @@ export default function App() {
         <Route
           path="/internshipCreate"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["ROLE_HR", "ROLE_ADMIN"]}>
               <InternshipCreationPage />
             </ProtectedRoute>
           }
@@ -59,20 +71,20 @@ export default function App() {
         <Route
           path="/analytics"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["ROLE_HR", "ROLE_ADMIN"]}>
               <AnalyticsPage />
             </ProtectedRoute>
           }
         />
+        <Route path="/no-auth" element={<NoAuthPage />} />
         <Route
           path="/admin"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
               <AdminPage />
             </ProtectedRoute>
           }
         />
-        <Route path="/landing" element={<LandingPage />} />
       </Routes>
     </Router>
   );

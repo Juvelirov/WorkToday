@@ -1,6 +1,7 @@
 import { apiClient } from "./apiClient";
 import { endpoints } from "./endpoints";
 import type {
+  EnrollResponse,
   InternshipInfoResponse,
   UpdateProfile,
   UsersInfoResponse,
@@ -8,7 +9,7 @@ import type {
 import { n, P, s, v } from "@/types";
 
 // Profile
-export async function fetchMyProfile(): P<UsersInfoResponse> {
+export async function fetchMyProfile() {
   return apiClient<UsersInfoResponse>(endpoints.private.intern.profiles.my, {
     method: "GET",
   });
@@ -32,6 +33,13 @@ export async function deleteProfile(): P<v> {
   return apiClient(endpoints.private.intern.profiles.delete, {
     method: "DELETE",
   });
+}
+
+export async function fetchAnotherProfile(email: s) {
+  return apiClient<UsersInfoResponse>(
+    endpoints.private.intern.profiles.get(email),
+    { method: "GET" }
+  );
 }
 
 // Portfolio
@@ -108,9 +116,28 @@ export async function searchInternships(query: s): P<InternshipInfoResponse[]> {
   );
 }
 
-export async function fetchInternshipDetails(id: s): P<InternshipInfoResponse> {
+export async function fetchInternship(id: n): P<InternshipInfoResponse> {
   return apiClient<InternshipInfoResponse>(
     endpoints.private.intern.internships.byId(id),
     { method: "GET" }
   );
+}
+
+// Enroll
+export async function enroll(id: n) {
+  return apiClient<v>(endpoints.public.enroll(id), {
+    method: "POST",
+  });
+}
+
+export async function cancelEnroll(id: n) {
+  return apiClient<v>(endpoints.public.cancel(id), {
+    method: "DELETE",
+  });
+}
+
+export async function fetchMyEnrolls() {
+  return apiClient<EnrollResponse[]>(endpoints.public.myEnrolls, {
+    method: "GET",
+  });
 }

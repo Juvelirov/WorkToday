@@ -21,7 +21,10 @@ export function LandingPage() {
           <div className="w-96 h-96 bg-[#8300E7] rounded-3xl" />
         </div>
         <div className="flex justify-center">
-          <Button className="bg-[#8300E7]" onClick={() => navigate("/signup")}>
+          <Button
+            className="bg-[#8300E7] hover:bg-[#8300E7]"
+            onClick={() => navigate("/signup")}
+          >
             Зарегистрироваться
           </Button>
         </div>

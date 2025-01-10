@@ -1,13 +1,20 @@
 import type { s } from "./types";
 
-export const isUserAuthenticated = () => !!getToken();
+export const isUserAuth = () => !!getToken();
+
+export const saveBasicInfo = (token: s, role: s) => {
+  localStorage.setItem("token", token);
+  localStorage.setItem("role", role);
+};
 
 export function signout() {
+  window.location.href = "/signin";
   localStorage.removeItem("token");
   localStorage.removeItem("role");
-  window.location.href = "/signin";
+  localStorage.removeItem("imgUrl");
 }
 
+export const getRole = () => localStorage.getItem("role");
 export const getToken = () => localStorage.getItem("token");
 export const setToken = (v: s) => {
   localStorage.setItem("role", "ROLE_STUDENT");

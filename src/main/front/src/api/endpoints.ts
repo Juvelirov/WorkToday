@@ -17,7 +17,7 @@ export const endpoints: Endpoints = {
     myEnrolls: `${BASE_PATHS.public}/my-enrolls`,
     registration: `${BASE_PATHS.public}/registration`,
     login: `${BASE_PATHS.public}/login`,
-    enroll: (id) => `${BASE_PATHS.public}/${id}/enroll`,
+    enroll: (internshipId) => `${BASE_PATHS.public}/${internshipId}/enroll`,
   },
 
   private: {
@@ -82,7 +82,7 @@ export const endpoints: Endpoints = {
       },
 
       enrolls: {
-        get: `${BASE_PATHS.private.hr}/enrolls/`,
+        get: `${BASE_PATHS.private.hr}/enrolls`,
         accept: (username, enrollId) =>
           `${BASE_PATHS.private.hr}/enrolls/accept/${username}/${enrollId}`,
         reject: (username, enrollId) =>
