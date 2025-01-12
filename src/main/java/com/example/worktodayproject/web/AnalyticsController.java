@@ -1,6 +1,7 @@
 package com.example.worktodayproject.web;
 
 import com.example.worktodayproject.dto.request.ResultDto;
+import com.example.worktodayproject.dto.request.ResultForAllDto;
 import com.example.worktodayproject.dto.response.AnalyticResponse;
 import com.example.worktodayproject.service.ResultService;
 import jakarta.validation.Valid;
@@ -36,6 +37,17 @@ public class AnalyticsController {
                                        @PathVariable Long internshipResultId,
                                        @Valid @RequestBody ResultDto resultDto) {
         resultService.setMarkAndRecommendation(principal.getName(), internshipResultId, resultDto);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/set-result-all")
+    public ResponseEntity<?> setResultAll(Principal principal,
+                                       @Valid @RequestBody List<ResultForAllDto> resultDto) {
+        resultService.setMarkAndRecommendationAll(principal.getName(), resultDto);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");

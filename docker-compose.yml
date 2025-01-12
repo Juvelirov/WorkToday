@@ -1,8 +1,17 @@
-version: '3.8'
+version: "3.9"
 
 services:
+  frontend:
+    image: gasomar/worktoday:v1.3
+    container_name: worktoday_frontend
+    ports:
+      - "5173:80"
+    restart: unless-stopped
+
+    depends_on:
+      - app
   app:
-    image: alivkas/work-today-project:1.17
+    image: alivkas/work-today-project:1.23
     ports:
       - "8080:8080"
     environment:

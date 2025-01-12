@@ -36,16 +36,14 @@ public class ReportsService {
     /**
      * Создать отчет по студенту от HR
      * @param username имя пользователя
-     * @param internshipId id стажировки
      * @param reportDto дто отчетов
      */
-    public void createReport(String username, Long internshipId, ReportDto reportDto) throws IOException, DbxException {
+    public void createReport(String username, ReportDto reportDto) throws IOException, DbxException {
         Users user = usersRepository.findByLogin(username);
         UsersInfo usersInfo = usersInfoRepository.findByUsers(user);
 
-        if (!intershipInfoRepository.existsById(internshipId)) {
-            throw new InternshipNotFoundException(internshipId);
-        }
+        Long internshipId = usersInfo.getEnrollments().getFirst().getIntershipsInfo().getId();
+
         Optional<IntershipsInfo> intershipsInfoOptional = intershipInfoRepository.findById(internshipId);
         IntershipsInfo intershipsInfo = intershipsInfoOptional.get();
 

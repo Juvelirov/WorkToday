@@ -35,7 +35,7 @@ public class DropBoxService {
         dbxClientV2.files().deleteV2(path);
     }
 
-    public String generateShareableLink(String path) throws DbxException {
+    private String generateShareableLink(String path) throws DbxException {
         SharedLinkMetadata sharedLinkMetadata = dbxClientV2.sharing()
                 .createSharedLinkWithSettings(path);
         String url = sharedLinkMetadata.getUrl();

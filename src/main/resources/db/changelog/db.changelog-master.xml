@@ -24,5 +24,6 @@
     <include file="v3/enroll-status.xml" relativeToChangelogFile="true"/>
     <include file="v3/result-columns.xml" relativeToChangelogFile="true"/>
     <include file="v3/fio.xml" relativeToChangelogFile="true"/>
+<!--    <include file="v3/add-file-name.xml" relativeToChangelogFile="true"/>-->
 
 </databaseChangeLog>

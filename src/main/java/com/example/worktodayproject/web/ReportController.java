@@ -24,12 +24,11 @@ public class ReportController {
 
     ReportsService reportsService;
 
-    @PostMapping(value = "/create/{internshipId}", consumes = { "multipart/form-data" })
+    @PostMapping(value = "/create", consumes = { "multipart/form-data" })
     public ResponseEntity<?> createReport(@RequestParam(value = "filePath", required = false) MultipartFile filePath,
-                                          @PathVariable Long internshipId,
                                           Principal principal) throws IOException, DbxException {
         ReportDto reportDto = new ReportDto(filePath);
-        reportsService.createReport(principal.getName(), internshipId, reportDto);
+        reportsService.createReport(principal.getName(), reportDto);
 
         Map<String, Object> response = new HashMap<>();
         response.put("status", "success");

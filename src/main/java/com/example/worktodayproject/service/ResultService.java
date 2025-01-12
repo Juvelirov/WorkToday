@@ -5,6 +5,7 @@ import com.example.worktodayproject.database.enums.EnrollStatus;
 import com.example.worktodayproject.database.enums.ResultStatus;
 import com.example.worktodayproject.database.repository.*;
 import com.example.worktodayproject.dto.request.ResultDto;
+import com.example.worktodayproject.dto.request.ResultForAllDto;
 import com.example.worktodayproject.dto.response.AnalyticResponse;
 import com.example.worktodayproject.exception.custom.AuthorizedUserException;
 import com.example.worktodayproject.utils.MapperUtils;
@@ -16,8 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,47 +43,48 @@ public class ResultService {
 
         List<IntershipsInfo> hrCreatedInterships = intershipInfoRepository.findByUser(hrUser);
 
-        List<Enrollment> allEnrollments = hrCreatedInterships.stream()
+        List<Enrollment> acceptedEnrollments = hrCreatedInterships.stream()
                 .flatMap(intershipsInfo -> intershipsInfo.getEnrollments().stream())
                 .filter(enrollment -> enrollment.getStatus().equals(EnrollStatus.ACCEPTED))
-                .collect(Collectors.toList());
+                .toList();
+
+        Set<UsersInfo> uniqueUsersInfos = acceptedEnrollments.stream()
+                .map(enrollment -> usersInfoRepository.findByUsers(enrollment.getUsers()))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
 
         List<InternshipsResult> internshipsResults = new ArrayList<>();
-        List<Enrollment> enrollments = new ArrayList<>();
 
-        for(Enrollment enrollment : allEnrollments) {
-            if (!enrollment.getStatus().equals(EnrollStatus.PENDING)
-                    && !enrollment.getStatus().equals(EnrollStatus.REJECTED)) {
-                enrollments.add(enrollment);
-            }
+        for(UsersInfo usersInfo : uniqueUsersInfos) {
+            Optional<InternshipsResult> existingResultOptional = internshipResultRepository.findFirstByUserInfo(usersInfo);
+            InternshipsResult internshipsResult;
 
-            for (Enrollment enrollment1 : enrollments) {
-                UsersInfo usersInfo = usersInfoRepository.findByUsers(enrollment1.getUsers());
-                InternshipsResult existingResult = internshipResultRepository.findByUserInfo(usersInfo);
-                if (existingResult == null) {
-                    InternshipsResult internshipsResult = new InternshipsResult();
-                    internshipsResult.setFio(enrollment1.getUsers().getFio());
+            if(existingResultOptional.isPresent()) {
+                internshipsResult = existingResultOptional.get();
+                if(internshipsResult.getStatus().equals(ResultStatus.IN_PROGRESS)) {
                     if (usersInfo != null && usersInfo.getReports() != null && !usersInfo.getReports().isEmpty()) {
                         internshipsResult.setStatus(ResultStatus.REVIEW);
-                    } else {
-                        internshipsResult.setStatus(ResultStatus.IN_PROGRESS);
+                        internshipResultRepository.save(internshipsResult);
                     }
-                    internshipsResult.setMark(0);
-                    internshipsResult.setRecomendation(Boolean.FALSE);
-                    internshipsResult.setUserInfo(usersInfo);
-                    internshipsResult.setFinalDate(LocalDateTime.now());
-                    internshipResultRepository.save(internshipsResult);
-                    internshipsResults.add(internshipsResult);
-                }  else {
-                    if(existingResult.getStatus().equals(ResultStatus.IN_PROGRESS)) {
-                        if(usersInfo != null && usersInfo.getReports() != null && !usersInfo.getReports().isEmpty()) {
-                            existingResult.setStatus(ResultStatus.REVIEW);
-                            internshipResultRepository.save(existingResult);
-                        }
-                    }
-                    internshipsResults.add(existingResult);
                 }
+            } else {
+                internshipsResult = new InternshipsResult();
+                Users users = usersInfo.getUsers();
+                if(users != null) {
+                    internshipsResult.setFio(users.getFio());
+                }
+                if (usersInfo != null && usersInfo.getReports() != null && !usersInfo.getReports().isEmpty()) {
+                    internshipsResult.setStatus(ResultStatus.REVIEW);
+                } else {
+                    internshipsResult.setStatus(ResultStatus.IN_PROGRESS);
+                }
+                internshipsResult.setMark(0);
+                internshipsResult.setRecomendation(Boolean.FALSE);
+                internshipsResult.setUserInfo(usersInfo);
+                internshipsResult.setFinalDate(LocalDateTime.now());
+                internshipResultRepository.save(internshipsResult);
             }
+            internshipsResults.add(internshipsResult);
         }
         return mapperUtils.mappingIternshipResultList(internshipsResults);
     }
@@ -106,6 +107,30 @@ public class ResultService {
             internshipsResult.setRecomendation(resultDto.recommendation());
             internshipsResult.setStatus(resultDto.status());
             internshipResultRepository.save(internshipsResult);
+        }
+    }
+
+    public void setMarkAndRecommendationAll(String hrUsername, List<ResultForAllDto> resultDto) {
+        Users hrUser = usersRepository.findByLogin(hrUsername);
+        if (hrUser == null) {
+            throw new AuthorizedUserException("HR пользователь не найден");
+        }
+        for (ResultForAllDto resultDto1 : resultDto) {
+            InternshipsResult internshipsResult = internshipResultRepository.findById(resultDto1.internshipResultId())
+                    .orElseThrow(() -> new IllegalArgumentException("Запись с id: " + resultDto1.internshipResultId() + " не найдена"));
+
+            if (!isHrCreatorOfInternshipResult(hrUser, internshipsResult)) {
+                throw new IllegalArgumentException("HR пользователь не является владельцем стажировки");
+            }
+
+            if (internshipsResult.getStatus().equals(ResultStatus.IN_PROGRESS)
+                    || internshipsResult.getStatus().equals(ResultStatus.REVIEW)
+                    || internshipsResult.getStatus().equals(ResultStatus.REWORK)) {
+                internshipsResult.setMark(resultDto1.mark());
+                internshipsResult.setRecomendation(resultDto1.recommendation());
+                internshipsResult.setStatus(resultDto1.status());
+                internshipResultRepository.save(internshipsResult);
+            }
         }
     }
 
